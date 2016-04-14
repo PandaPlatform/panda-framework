@@ -1,0 +1,31 @@
+{
+    "name": "panda/log",
+    "description": "The Panda framework log package.",
+    "license": "MIT",
+    "homepage": "http://pandaphp.org",
+    "support": {
+        "issues": "https://github.com/panda/framework/issues",
+        "source": "https://github.com/panda/framework"
+    },
+    "authors": [
+        {
+            "name": "Ioannis Papikas",
+            "email": "papikas.ioan@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "monolog/monolog": "~1.11"
+    },
+    "autoload": {
+        "psr-4": {
+            "Panda\\Log\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    },
+    "minimum-stability": "dev"
+}
