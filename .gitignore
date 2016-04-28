@@ -1,5 +1,11 @@
-/vendor
+# Composer files
 composer.lock
+vendor
+
+# OS Helper files
 .php_cs.cache
 .DS_Store
 Thumbs.db
+
+# IDE-relative files and folders
+.idea
