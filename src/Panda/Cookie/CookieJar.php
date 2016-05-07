@@ -16,13 +16,13 @@ namespace Panda\Cookie;
 use \InvalidArgumentException;
 
 /**
- * Cookie box collection
+ * Cookie collection
  *
  * Creates, edits and deletes cookies.
  *
  * @version    0.1
  */
-class CookieBox
+class CookieJar
 {
     /**
      * The default path (if specified).

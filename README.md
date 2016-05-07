@@ -10,7 +10,7 @@ We are working on our documentation for the framework which will can found on th
 
 ## Contributing
 
-Thank you for considering contributing to the Panda framework! The contribution guide can be found in the [Panda documentation](http://pandaphp.com/docs/contributions).
+Thank you for considering contributing to the Panda framework! The contribution guide can be found in the [Panda documentation](http://pandaphp.org/docs/contributions).
 
 ## Security Vulnerabilities
 
