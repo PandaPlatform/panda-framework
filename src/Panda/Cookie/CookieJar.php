@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Panda framework Environment component.
+ * This file is part of the Panda framework.
  *
  * (c) Ioannis Papikas <papikas.ioan@gmail.com>
  *
@@ -13,14 +13,15 @@ declare(strict_types = 1);
 
 namespace Panda\Cookie;
 
-use \InvalidArgumentException;
+use InvalidArgumentException;
+use Symfony\Component\HttpFoundation\Cookie;
 
 /**
  * Cookie collection
  *
  * Creates, edits and deletes cookies.
  *
- * @version    0.1
+ * @version 0.1
  */
 class CookieJar
 {
@@ -67,7 +68,7 @@ class CookieJar
     public static function getInstance()
     {
         if (empty(static::$instance)) {
-            static::$instance = new Cookie();
+            static::$instance = new CookieJar();
         }
 
         return static::$instance;
@@ -99,7 +100,7 @@ class CookieJar
     public function setOptions($path = "/", $domain = null, $secure = false)
     {
         $this->path = $path;
-        $this->domain = (empty($domain) ? "." . Url::getDomain() : $domain);
+        $this->domain = (empty($domain) ? "." /*. Url::getDomain()*/ : $domain);
         $this->secure = $secure;
     }
 
@@ -126,7 +127,7 @@ class CookieJar
     {
         // Check cookie
         if (empty($name)) {
-            throw new \InvalidArgumentException("Trying to create cookie with in empty name.");
+            throw new InvalidArgumentException("Trying to create cookie with in empty name.");
         }
 
         // Set cookie params

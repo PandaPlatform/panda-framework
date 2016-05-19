@@ -11,18 +11,20 @@
 
 declare(strict_types = 1);
 
-namespace Panda\Log;
-
-use Monolog\Logger as MonoLogger;
-use Psr\Log\LoggerInterface;
+namespace Panda\Contracts\Init;
+use Panda\Http\Request;
 
 /**
- * Panda Logger interface
+ * Initializer Interface
  *
+ * @version 0.1
  */
-class Logger extends MonoLogger implements LoggerInterface
+interface Initializer
 {
-
+    /**
+     * Run the initializer.
+     *
+     * @param Request $request
+     */
+    public function init(Request $request);
 }
-
-?>

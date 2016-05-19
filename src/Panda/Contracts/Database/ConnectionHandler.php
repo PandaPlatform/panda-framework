@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Panda framework component.
+ * This file is part of the Panda framework.
  *
  * (c) Ioannis Papikas <papikas.ioan@gmail.com>
  *

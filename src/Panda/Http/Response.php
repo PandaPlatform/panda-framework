@@ -11,18 +11,16 @@
 
 declare(strict_types = 1);
 
-namespace Panda\Log;
+namespace Panda\Http;
 
-use Monolog\Logger as MonoLogger;
-use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 /**
- * Panda Logger interface
+ * Http Response Handler.
  *
+ * @version 0.1
  */
-class Logger extends MonoLogger implements LoggerInterface
+class Response extends SymfonyResponse
 {
 
 }
-
-?>
