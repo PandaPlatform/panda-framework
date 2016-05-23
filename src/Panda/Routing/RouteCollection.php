@@ -13,6 +13,9 @@ declare(strict_types = 1);
 
 namespace Panda\Routing;
 
+use Panda\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 /**
  * Filesystem handler
  *
@@ -23,6 +26,16 @@ namespace Panda\Routing;
 class RouteCollection
 {
     /**
+     * @type Route[]
+     */
+    protected $routes;
+
+    /**
+     * @type Route[]
+     */
+    protected $allRoutes;
+
+    /**
      * Add a Route instance to the collection.
      *
      * @param Route $route
@@ -31,7 +44,9 @@ class RouteCollection
      */
     public function add(Route $route)
     {
-        //$this->addToCollections($route);
+        // Add route to collection
+        $this->addRoute($route);
+
         //$this->addLookups($route);
         return $route;
     }
@@ -39,14 +54,18 @@ class RouteCollection
     /**
      * Find the first route matching a given request.
      *
+     * @param Request $request
+     *
+     * @return mixed
+     * @throws NotFoundHttpException
      */
     public function match(Request $request)
     {
-        $routes = $this->get($request->getMethod());
-        // First, we will see if we can find a matching route for this current request
-        // method. If we can, great, we can just return it so that it can be called
-        // by the consumer. Otherwise we will check for routes with another verb.
-        $route = $this->check($routes, $request);
+        // Get all the routes
+        $routes = $this->getByMethod($request->getMethod());
+
+        // Get the matching route out of the collection.
+        $route = $this->getMatchingRoute($routes, $request);
         if (!is_null($route)) {
             return $route->bind($request);
         }
@@ -57,11 +76,31 @@ class RouteCollection
         if (count($others) > 0) {
             return $this->getRouteForMethods($request, $others);
         }
+
         throw new NotFoundHttpException;
     }
 
     /**
-     * Get all of the routes in the collection.
+     * Check which of the given routes matches the given request.
+     *
+     * @param Route[] $routes
+     * @param Request $request
+     *
+     * @return null|Route
+     */
+    public function getMatchingRoute($routes, Request $request)
+    {
+        foreach ($routes as $matchingRoute) {
+            if ($matchingRoute->matches($request)) {
+                return $matchingRoute;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Get all matched routes according to the given request method.
      *
      * @param  string|null $method
      *
@@ -73,6 +112,7 @@ class RouteCollection
             return $this->getRoutes();
         }
 
+        // Filter routes by the given method
         return Arr::get($this->routes, $method, []);
     }
 
@@ -84,6 +124,16 @@ class RouteCollection
     public function getRoutes()
     {
         return array_values($this->allRoutes);
+    }
+
+    /**
+     * Add the given route to the collection.
+     *
+     * @param Route $route
+     */
+    protected function addRoute($route)
+    {
+        $this->routes[] = $route;
     }
 }
 

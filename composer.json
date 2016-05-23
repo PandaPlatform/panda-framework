@@ -19,6 +19,7 @@
         "monolog/monolog": "~1.19",
         "symfony/http-foundation": "2.8.*|3.0.*",
         "symfony/http-kernel": "2.8.*|3.0.*",
+        "symfony/routing": "2.8.*|3.0.*",
         "php-di/php-di": "5.2.*"
     },
     "require-dev": {

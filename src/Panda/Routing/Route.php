@@ -14,14 +14,16 @@ declare(strict_types = 1);
 namespace Panda\Routing;
 
 use Closure;
+use HttpResponseException;
 use Panda\Http\Request;
+use Panda\Routing\Validators\MethodValidator;
+use Panda\Routing\Validators\UriValidator;
+use Symfony\Component\Routing\Route as SymfonyRoute;
 
 /**
- * Filesystem handler
+ * Class Route
  *
- * Creates, edits and deletes files.
- *
- * @version    0.1
+ * @package Panda\Routing
  */
 class Route
 {
@@ -39,6 +41,16 @@ class Route
      * @type Closure
      */
     private $callback;
+
+    /**
+     * @type SymfonyRoute
+     */
+    private $compiled;
+
+    /**
+     * @type array
+     */
+    private static $validators;
 
     /**
      * Create a new Route instance
@@ -65,51 +77,94 @@ class Route
      */
     public function matches(Request $request, $includingMethod = true)
     {
-        /*
+        // Create compiled route
         $this->compileRoute();
+
         foreach ($this->getValidators() as $validator) {
+            // Check for method validator explicitly
             if (!$includingMethod && $validator instanceof MethodValidator) {
                 continue;
             }
+
+            // Check if validator matches
             if (!$validator->matches($this, $request)) {
                 return false;
             }
-        }*/
+        }
 
+        // All match
         return true;
+    }
+
+    /**
+     * Compile the current route.
+     */
+    protected function compileRoute()
+    {
+        $uri = preg_replace('/\{(\w+?)\?\}/', '{$1}', $this->uri);
+
+        $this->compiled = (new SymfonyRoute($uri, $optionals = array(), $requirements = array(), [], $domain = ''))->compile();
+    }
+
+    /**
+     * Get the route validators for the instance.
+     *
+     * @return array
+     */
+    public static function getValidators()
+    {
+        if (isset(static::$validators)) {
+            return static::$validators;
+        }
+
+        // Set a series of validators to validate whether a route matches some criteria.
+        return static::$validators = [
+            new MethodValidator,
+            // new SchemeValidator,
+            // new HostValidator,
+            new UriValidator
+        ];
     }
 
     /**
      * Run the route action and return the response.
      *
-     * @return mixed
-     */
-    protected function runCallable(Request $request)
-    {
-        $parameters = $this->resolveMethodDependencies(
-            $this->parametersWithoutNulls(), new ReflectionFunction($this->action['uses'])
-        );
-
-        return call_user_func_array($this->action['uses'], $parameters);
-    }
-
-    /**
-     * Run the route action and return the response.
+     * @param Request $request
      *
      * @return mixed
      */
     public function run(Request $request)
     {
-        $this->container = $this->container ?: new Container;
         try {
-            if (!is_string($this->action['uses'])) {
-                return $this->runCallable($request);
-            }
-
-            return $this->runController($request);
+            // Run route's callable action
+            return $this->callback->call($this, $request);
         } catch (HttpResponseException $e) {
-            return $e->getResponse();
+            return $e->getMessage();
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function getMethods()
+    {
+        return $this->methods;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUri()
+    {
+        return $this->uri;
+    }
+
+    /**
+     * @return SymfonyRoute
+     */
+    public function getCompiled()
+    {
+        return $this->compiled;
     }
 }
 

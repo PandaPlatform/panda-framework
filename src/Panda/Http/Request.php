@@ -22,5 +22,14 @@ use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
  */
 class Request extends SymfonyRequest
 {
-
+    /**
+     * Capture the incoming request, including all the
+     * information we gan get.
+     *
+     * @return $this
+     */
+    public function capture()
+    {
+        return $this;
+    }
 }

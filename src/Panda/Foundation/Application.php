@@ -14,17 +14,13 @@ declare(strict_types = 1);
 namespace Panda\Foundation;
 
 use Panda\Container\Container;
-use Panda\Contracts\Init\Initializer;
-use Panda\Http\Request;
-use Panda\Session\Session;
-use Panda\Session\SessionHandler;
 
 /**
  * Panda application manager.
  *
  * @version 0.1
  */
-class Application extends Container implements Initializer
+class Application extends Container
 {
     /**
      * The application's base path.
@@ -32,11 +28,6 @@ class Application extends Container implements Initializer
      * @type string
      */
     protected $basePath;
-
-    /**
-     * @type bool
-     */
-    protected $initialized = false;
 
     /**
      * Create a new panda application instance.
@@ -58,25 +49,6 @@ class Application extends Container implements Initializer
     }
 
     /**
-     * Init the panda application and start all the interfaces that
-     * are needed for runtime.
-     *
-     * @param Request $request
-     */
-    public function init(Request $request)
-    {
-        // Check if application has already initialized
-        if ($this->initialized) {
-            return;
-        }
-
-        // Initialize all needed
-        $ssHandler = new SessionHandler($this);
-        $ss = new Session($ssHandler);
-        $ss->init($request);
-    }
-
-    /**
      * Register application bindings.
      */
     private function registerBindings()
@@ -85,7 +57,7 @@ class Application extends Container implements Initializer
         $config = array();
 
         // Add container definitions
-        $this->addDefinitions($config);
+        //$this->addDefinitions($config);
     }
 
     /**
