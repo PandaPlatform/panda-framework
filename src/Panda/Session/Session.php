@@ -51,7 +51,7 @@ class Session implements Initializer
      *
      * @param Request $request
      */
-    public function init(Request $request)
+    public function init($request)
     {
         $this->handler->startSession($request);
     }

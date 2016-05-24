@@ -13,7 +13,7 @@ declare(strict_types = 1);
 
 namespace Panda\Contracts\Init;
 
-use Panda\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Interface Initializer
@@ -28,5 +28,5 @@ interface Initializer
      *
      * @param Request $request
      */
-    public function init(Request $request);
+    public function init($request);
 }

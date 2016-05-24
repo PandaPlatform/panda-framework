@@ -14,6 +14,7 @@ declare(strict_types = 1);
 namespace Panda\Foundation\Http;
 
 use InvalidArgumentException;
+use Panda\Contracts\Http\Kernel as KernelInterface;
 use Panda\Contracts\Init\Initializer;
 use Panda\Foundation\Application;
 use Panda\Http\Request;
@@ -26,7 +27,7 @@ use Panda\Routing\Router;
  * @package Panda\Foundation\Http
  * @version 0.1
  */
-class Kernel
+class Kernel implements KernelInterface
 {
     /**
      * @type Application
@@ -58,13 +59,27 @@ class Kernel
     }
 
     /**
+     * Init the panda application and start all the interfaces that
+     * are needed for runtime.
+     *
+     * @param Request $request
+     */
+    public function init($request)
+    {
+        // Initialize all needed
+        foreach ($this->initializers as $initializer) {
+            $initializer->init($request);
+        }
+    }
+
+    /**
      * Handle the incoming request and return a response.
      *
      * @param Request $request
      *
      * @return Response
      */
-    public function handle(Request $request)
+    public function handle($request)
     {
         // Initialize application
         $this->init($request);
@@ -78,23 +93,9 @@ class Kernel
      * @param Request  $request
      * @param Response $response
      */
-    public function terminate(Request $request, Response $response)
+    public function terminate($request, $response)
     {
 
-    }
-
-    /**
-     * Init the panda application and start all the interfaces that
-     * are needed for runtime.
-     *
-     * @param Request $request
-     */
-    private function init(Request $request)
-    {
-        // Initialize all needed
-        foreach ($this->initializers as $initializer) {
-            $initializer->init($request);
-        }
     }
 
     /**
@@ -112,5 +113,13 @@ class Kernel
 
         // Add to the queue
         $this->initializers[] = $initializer;
+    }
+
+    /**
+     * @return Application
+     */
+    public function getApp()
+    {
+        return $this->app;
     }
 }
