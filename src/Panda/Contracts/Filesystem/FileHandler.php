@@ -16,6 +16,7 @@ namespace Panda\Contracts\Filesystem;
 /**
  * File Management Handler Interface
  *
+ * @package Panda\Contracts\Filesystem
  * @version 0.1
  */
 interface FileHandler

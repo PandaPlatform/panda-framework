@@ -20,6 +20,7 @@ use DI\Definition\Helper\DefinitionHelper;
 /**
  * Application foundation manager.
  *
+ * @package Panda\Container
  * @version 0.1
  */
 class Container extends ContainerBuilder

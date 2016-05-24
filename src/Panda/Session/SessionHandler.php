@@ -13,15 +13,12 @@ declare(strict_types = 1);
 
 namespace Panda\Session;
 
-use Panda\Cookie\CookieJar;
-use Panda\Foundation\Application;
 use Panda\Http\Request;
 
 /**
- * Session Handler
+ * File SessionHandler
  *
- * Handles all session storage processes.
- *
+ * @package Panda\Session
  * @version 0.1
  */
 class SessionHandler
@@ -35,21 +32,6 @@ class SessionHandler
      * @type string
      */
     private $sessionName;
-
-    /**
-     * @type Application
-     */
-    private $app;
-
-    /**
-     * SessionHandler constructor.
-     *
-     * @param Application $app
-     */
-    public function __construct(Application $app)
-    {
-        $this->app = $app;
-    }
 
     /**
      * Init session.

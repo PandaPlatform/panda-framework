@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 /**
  * Http Response Handler.
  *
+ * @package Panda\Http
  * @version 0.1
  */
 class Response extends SymfonyResponse

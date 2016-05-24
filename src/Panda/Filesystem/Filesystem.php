@@ -17,10 +17,9 @@ use Panda\Contracts\Filesystem\FileHandler;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 /**
- * Local filesystem handler
+ * Local filesystem handler. Creates, edits and deletes files.
  *
- * Creates, edits and deletes files.
- *
+ * @package Panda\Filesystem
  * @version 0.1
  */
 class Filesystem implements FileHandler

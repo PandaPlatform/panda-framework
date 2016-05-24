@@ -17,10 +17,9 @@ use Panda\Contracts\Init\Initializer;
 use Panda\Http\Request;
 
 /**
- * Session Manager
+ * Session Manager. Handles all session storage processes.
  *
- * Handles all session storage processes.
- *
+ * @package Panda\Session
  * @version 0.1
  */
 class Session implements Initializer

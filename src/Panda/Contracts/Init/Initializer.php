@@ -12,11 +12,13 @@
 declare(strict_types = 1);
 
 namespace Panda\Contracts\Init;
+
 use Panda\Http\Request;
 
 /**
- * Initializer Interface
+ * Interface Initializer
  *
+ * @package Panda\Contracts\Init
  * @version 0.1
  */
 interface Initializer

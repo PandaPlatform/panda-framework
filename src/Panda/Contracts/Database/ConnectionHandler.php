@@ -16,6 +16,7 @@ namespace Panda\Contracts\Database;
 /**
  * Database Connection Handler Interface
  *
+ * @package Panda\Contracts\Database
  * @version 0.1
  */
 interface ConnectionHandler

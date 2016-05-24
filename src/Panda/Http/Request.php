@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 /**
  * Http Request Handler.
  *
+ * @package Panda\Http
  * @version 0.1
  */
 class Request extends SymfonyRequest

@@ -24,6 +24,7 @@ use Symfony\Component\Routing\Route as SymfonyRoute;
  * Class Route
  *
  * @package Panda\Routing
+ * @version 0.1
  */
 class Route
 {

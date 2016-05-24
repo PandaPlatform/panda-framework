@@ -18,6 +18,7 @@ use Panda\Container\Container;
 /**
  * Panda application manager.
  *
+ * @package Panda\Foundation
  * @version 0.1
  */
 class Application extends Container

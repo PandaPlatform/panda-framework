@@ -19,8 +19,9 @@ use mysqli_result;
 use Panda\Contracts\Database\ConnectionHandler;
 
 /**
- * MySQL Connection Handler
+ * Class MySQLHandler
  *
+ * @package Panda\Database\Handlers
  * @version 0.1
  */
 class MySQLHandler extends mysqli implements ConnectionHandler

@@ -17,11 +17,10 @@ use Panda\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Filesystem handler
+ * Class RouteCollection
  *
- * Creates, edits and deletes files.
- *
- * @version    0.1
+ * @package Panda\Routing
+ * @version 0.1
  */
 class RouteCollection
 {

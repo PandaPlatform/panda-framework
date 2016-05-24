@@ -5,8 +5,8 @@
     "license": "MIT",
     "homepage": "http://pandaphp.org",
     "support": {
-        "issues": "https://github.com/PandaPlatform/panda-framework/issues",
-        "source": "https://github.com/PandaPlatform/panda-framework"
+        "issues": "https://github.com/PandaPlatform/framework/issues",
+        "source": "https://github.com/PandaPlatform/framework"
     },
     "authors": [
         {

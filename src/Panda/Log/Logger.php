@@ -19,6 +19,7 @@ use Psr\Log\LoggerInterface;
 /**
  * Panda Logger interface
  *
+ * @package Panda\Log
  */
 class Logger extends MonoLogger implements LoggerInterface
 {

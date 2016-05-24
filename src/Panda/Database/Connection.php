@@ -17,8 +17,9 @@ use Exception;
 use Panda\Contracts\Database\ConnectionHandler;
 
 /**
- * MySQL Connection Handler
+ * Database Connection Interface
  *
+ * @package Panda\Database
  * @version 0.1
  */
 class Connection
