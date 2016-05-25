@@ -23,5 +23,11 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
  */
 class Response extends SymfonyResponse
 {
+    /**
+     * Generate the response and send to the output buffer.
+     */
+    public function send()
+    {
 
+    }
 }

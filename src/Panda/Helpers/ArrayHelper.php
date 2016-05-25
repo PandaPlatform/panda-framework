@@ -1,0 +1,47 @@
+<?php
+
+/*
+ * This file is part of the Panda framework.
+ *
+ * (c) Ioannis Papikas <papikas.ioan@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types = 1);
+
+namespace Panda\Helpers;
+
+/**
+ * Class ArrayHelper
+ *
+ * @package Panda\Http
+ * @version 0.1
+ */
+class ArrayHelper
+{
+    /**
+     * Get an item from an array.
+     *
+     * @param array  $array
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @return mixed
+     */
+    public static function get($array, $key, $default = null)
+    {
+        if (is_null($key)) {
+            return $array;
+        }
+
+        if (!isset($array[$key])) {
+            return $default;
+        }
+
+        return $array[$key];
+    }
+}
+
+?>
