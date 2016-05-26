@@ -11,20 +11,17 @@
 
 declare(strict_types = 1);
 
-namespace Panda\Log;
+namespace Panda\Support\Exceptions;
 
-use Monolog\Logger as MonoLogger;
-use Psr\Log\LoggerInterface;
+use Exception;
 
 /**
- * Panda Logger interface
+ * Class NotImplementedException
  *
- * @package Panda\Log
+ * @package Panda\Support\Exceptions
  * @version 0.1
  */
-class Logger extends MonoLogger implements LoggerInterface
+class NotImplementedException extends Exception
 {
-
+    
 }
-
-?>

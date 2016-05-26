@@ -11,7 +11,7 @@
 
 declare(strict_types = 1);
 
-namespace Panda\Model;
+namespace Panda\Support\Facades;
 
 use Panda\Foundation\Application;
 use RuntimeException;
@@ -45,7 +45,7 @@ abstract class Facade
      */
     public static function getFacadeRoot()
     {
-        return static::resolveFacadeInstance(static::getFacadeAccessor());
+        return static::resolveFacadeInstance(static::getFacadeHandler());
     }
 
     /**
@@ -55,9 +55,9 @@ abstract class Facade
      *
      * @throws RuntimeException
      */
-    protected static function getFacadeAccessor()
+    protected static function getFacadeHandler()
     {
-        throw new RuntimeException('Facade does not implement getFacadeAccessor method.');
+        throw new RuntimeException('Facade does not implement getFacadeHandler method.');
     }
 
     /**

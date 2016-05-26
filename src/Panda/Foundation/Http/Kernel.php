@@ -19,8 +19,8 @@ use Panda\Contracts\Init\Initializer;
 use Panda\Foundation\Application;
 use Panda\Http\Request;
 use Panda\Http\Response;
-use Panda\Model\Facade;
 use Panda\Routing\Router;
+use Panda\Support\Facades\Facade;
 
 /**
  * Panda kernel
@@ -44,7 +44,9 @@ class Kernel implements KernelInterface
      * @type Initializer[]
      */
     protected $initializers = [
-        '\Panda\Session\Session'
+        '\Panda\Debug\Debugger',
+        '\Panda\Session\Session',
+        '\Panda\Localization\DateTimer',
     ];
 
     /**

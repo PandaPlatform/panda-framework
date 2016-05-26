@@ -11,12 +11,12 @@
 
 declare(strict_types = 1);
 
-namespace Panda\Helpers;
+namespace Panda\Support\Helpers;
 
 /**
  * Class ArrayHelper
  *
- * @package Panda\Http
+ * @package Panda\Support\Helpers
  * @version 0.1
  */
 class ArrayHelper

@@ -11,14 +11,14 @@
 
 declare(strict_types = 1);
 
-namespace Panda\Helpers;
+namespace Panda\Support\Helpers;
 
 use Closure;
 
 /**
  * Class EvalHelper
  *
- * @package Panda\Helpers
+ * @package Panda\Support\Helpers
  * @version 0.1
  */
 class EvalHelper

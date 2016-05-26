@@ -11,9 +11,7 @@
 
 declare(strict_types = 1);
 
-namespace Panda\Routing\Facades;
-
-use Panda\Model\Facade;
+namespace Panda\Support\Facades;
 
 /**
  * Router Facade
@@ -28,7 +26,7 @@ class Router extends Facade
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
+    protected static function getFacadeHandler()
     {
         return 'Panda\Routing\Router';
     }
