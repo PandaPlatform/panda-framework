@@ -124,6 +124,14 @@ class Application extends Container
     {
         return $this->basePath . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "routes" . DIRECTORY_SEPARATOR . "main.php";
     }
+
+    /**
+     * @return string
+     */
+    public function getViewsPath()
+    {
+        return $this->basePath . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "views";
+    }
 }
 
 ?>

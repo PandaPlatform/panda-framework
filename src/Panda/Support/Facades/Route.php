@@ -14,12 +14,12 @@ declare(strict_types = 1);
 namespace Panda\Support\Facades;
 
 /**
- * Router Facade
+ * Class Route
  *
- * @package Panda\Routing\Facades
+ * @package Panda\Support\Facades
  * @version 0.1
  */
-class Router extends Facade
+class Route extends Facade
 {
     /**
      * Get the registered name of the component.
