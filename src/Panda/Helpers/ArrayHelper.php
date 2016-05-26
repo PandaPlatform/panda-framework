@@ -42,6 +42,29 @@ class ArrayHelper
 
         return $array[$key];
     }
+
+    /**
+     * Filter array elements with a given callback function.
+     *
+     * @param  array         $array
+     * @param  callable|null $callback
+     * @param  mixed         $default
+     *
+     * @return mixed
+     */
+    public static function filter($array, callable $callback = null, $default = null)
+    {
+        if (is_null($callback)) {
+            return empty($array) ? EvalHelper::evaluate($default) : reset($array);
+        }
+        foreach ($array as $key => $value) {
+            if (call_user_func($callback, $key, $value)) {
+                return $value;
+            }
+        }
+
+        return EvalHelper::evaluate($default);
+    }
 }
 
 ?>

@@ -17,6 +17,8 @@ use Closure;
 use Panda\Container\Container;
 use Panda\Http\Request;
 use Panda\Http\Response;
+use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 /**
  * Application router.
@@ -38,6 +40,11 @@ class Router
     protected $routes;
 
     /**
+     * @type Route
+     */
+    protected $currentRoute;
+
+    /**
      * All of the verbs supported by the router.
      *
      * @var array
@@ -49,10 +56,10 @@ class Router
      *
      * @param Container $container
      */
-    public function __construct(Container $container = null)
+    public function __construct(Container $container)
     {
-        $this->container = $container;
         $this->routes = new RouteCollection();
+        $this->container = $container;
     }
 
     /**
@@ -187,25 +194,52 @@ class Router
      */
     protected function createRoute($methods, $uri, $action)
     {
-        // If the route is routing to a controller we will parse the route action into
-        // an acceptable array format before registering it and creating this route
-        // instance itself. We need to build the Closure that will call this out.
-        /*if ($this->validateAction($action)) {
+        // Transform an action controller to a Closure action
+        if ($this->isActionController($action)) {
             $action = $this->convertToControllerAction($action);
-        }*/
+        }
+
+        // Create new route
         $route = $this->newRoute(
             $methods, $uri, $action
         );
-        // If we have groups that need to be merged, we will merge them now after this
-        // route has already been created and is ready to go. After we're done with
-        // the merge we will be ready to return the route back out to the caller.
-        /*if ($this->hasGroupStack()) {
-            $this->mergeGroupAttributesIntoRoute($route);
-        }
-        $this->addWhereClausesToRoute($route);
-*/
 
         return $route;
+    }
+
+    /**
+     * Determine if the action is routing to a controller.
+     *
+     * @param  array $action
+     *
+     * @return bool
+     */
+    protected function isActionController($action)
+    {
+        if ($action instanceof Closure) {
+            return false;
+        }
+
+        return is_string($action) || is_string(isset($action['uses']) ? $action['uses'] : null);
+    }
+
+    /**
+     * Add a controller based route action to the action array.
+     *
+     * @param  array|string $action
+     *
+     * @return array
+     */
+    protected function convertToControllerAction($action)
+    {
+        if (is_string($action)) {
+            $action = ['uses' => $action];
+        }
+
+        // Save the controller for reference
+        $action['controller'] = $action['uses'];
+
+        return $action;
     }
 
     /**
@@ -249,10 +283,25 @@ class Router
         // Find the route that matches the given request
         $route = $this->getMatchingRoute($request);
 
-        // Get response from the route
+        // Get response from the routeΙ
         $response = $this->runRoute($route, $request);
 
         return $this->prepareResponse($request, $response);
+    }
+
+    /**
+     * Create a response instance from the given value.
+     *
+     * @param  SymfonyRequest $request
+     * @param  mixed          $response
+     *
+     * @return SymfonyResponse
+     */
+    public function prepareResponse($request, $response)
+    {
+        $response = new Response($response);
+
+        return $response->prepare($request);
     }
 
     /**
@@ -279,13 +328,9 @@ class Router
     protected function getMatchingRoute($request)
     {
         // Get matching route
-        $route = $this->routes->match($request);
-
-        // Create a new instance of the route
-        $this->container->getContainerHandler()->make('Panda\Routing\Route', $route);
+        $this->currentRoute = $route = $this->routes->match($request);
 
         return $route;
-        //return $this->substituteBindings($route);
     }
 
     /**

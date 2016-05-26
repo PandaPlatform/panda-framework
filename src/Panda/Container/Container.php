@@ -16,6 +16,7 @@ namespace Panda\Container;
 use DI\Container as DIContainer;
 use DI\ContainerBuilder;
 use DI\Definition\Helper\DefinitionHelper;
+use DI\NotFoundException;
 
 /**
  * Application foundation manager.
@@ -38,11 +39,6 @@ class Container extends ContainerBuilder
         // Create the Container Builder
         parent::__construct($containerClass = 'DI\Container');
 
-        // Make the container lightweight
-        $this->useAutowiring(false);
-        $this->useAnnotations(false);
-        $this->ignorePhpDocErrors(true);
-
         $this->containerHandler = $this->build();
     }
 
@@ -63,11 +59,50 @@ class Container extends ContainerBuilder
      * @param string $name Entry name or a class name.
      *
      * @return mixed
-     * @throws \DI\NotFoundException
+     * @throws NotFoundException
      */
     public function get($name)
     {
         return $this->containerHandler->get($name);
+    }
+
+    /**
+     * Build an entry of the container by its name.
+     *
+     * @param string $name
+     * @param array  $parameters
+     *
+     * @return mixed
+     * @throws NotFoundException
+     */
+    public function make($name, $parameters = array())
+    {
+        return $this->containerHandler->make($name, $parameters);
+    }
+
+    /**
+     * Test if the container can provide something for the given name.
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function has($name)
+    {
+        return $this->containerHandler->has($name);
+    }
+
+    /**
+     * Call the given function using the given parameters.
+     *
+     * @param callable $name
+     * @param array    $parameters
+     *
+     * @return bool
+     */
+    public function call($name, $parameters)
+    {
+        return $this->containerHandler->call($name, $parameters);
     }
 
     /**

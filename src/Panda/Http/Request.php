@@ -143,6 +143,28 @@ class Request extends SymfonyRequest
     }
 
     /**
+     * Get the current encoded path info for the request.
+     *
+     * @return string
+     */
+    public function getDecodedPath()
+    {
+        return rawurldecode($this->getPath());
+    }
+
+    /**
+     * Get the current path info for the request.
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        $pattern = trim($this->getPathInfo(), '/');
+
+        return $pattern == '' ? '/' : $pattern;
+    }
+
+    /**
      * Get the JSON payload for the request.
      *
      * @param  string $key

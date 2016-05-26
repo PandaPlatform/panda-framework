@@ -15,10 +15,17 @@ namespace Panda\Routing;
 
 use Closure;
 use HttpResponseException;
+use LogicException;
+use Panda\Helpers\ArrayHelper;
+use Panda\Helpers\StringHelper;
 use Panda\Http\Request;
+use Panda\Routing\Validators\HostValidator;
 use Panda\Routing\Validators\MethodValidator;
 use Panda\Routing\Validators\UriValidator;
+use ReflectionFunction;
+use Symfony\Component\Routing\CompiledRoute;
 use Symfony\Component\Routing\Route as SymfonyRoute;
+use UnexpectedValueException;
 
 /**
  * Class Route
@@ -41,10 +48,31 @@ class Route
     /**
      * @type Closure
      */
-    private $callback;
+    private $action;
 
     /**
-     * @type SymfonyRoute
+     * The default values for the route.
+     *
+     * @var array
+     */
+    protected $defaults = [];
+
+    /**
+     * The array of matched parameters.
+     *
+     * @var array
+     */
+    protected $parameters;
+
+    /**
+     * The parameter names for the route.
+     *
+     * @var array|null
+     */
+    protected $parameterNames;
+
+    /**
+     * @type CompiledRoute
      */
     private $compiled;
 
@@ -56,16 +84,16 @@ class Route
     /**
      * Create a new Route instance
      *
-     * @param array   $methods  An array of all the methods that this route should listen to.
-     * @param string  $uri      The uri to match for this route to execute the callback.
-     * @param Closure $callback A callback function to be executed when this route is matched by the request.
+     * @param array         $methods An array of all the methods that this route should listen to.
+     * @param string        $uri     The uri to match for this route to execute the callback.
+     * @param Closure|array $action  A callback function to be executed when this route is matched by the request.
      */
-    public function __construct($methods, $uri, Closure $callback)
+    public function __construct($methods, $uri, $action)
     {
         // Initialize Route properties
         $this->methods = (array)$methods;
         $this->uri = $uri;
-        $this->callback = $callback;
+        $this->action = $this->parseAction($action);
     }
 
     /**
@@ -98,6 +126,155 @@ class Route
     }
 
     /**
+     * Bind the route to a given request for execution.
+     *
+     * @param  Request $request
+     *
+     * @return $this
+     */
+    public function bind(Request $request)
+    {
+        $this->compileRoute();
+        $this->bindParameters($request);
+
+        return $this;
+    }
+
+    /**
+     * Extract the parameter list from the request.
+     *
+     * @param  Request $request
+     *
+     * @return array
+     */
+    public function bindParameters(Request $request)
+    {
+        // If the route has a regular expression for the host part of the URI, we will
+        // compile that and get the parameter matches for this domain. We will then
+        // merge them into this parameters array so that this array is completed.
+        $params = $this->matchToKeys(
+            array_slice($this->bindPathParameters($request), 1)
+        );
+        // If the route has a regular expression for the host part of the URI, we will
+        // compile that and get the parameter matches for this domain. We will then
+        // merge them into this parameters array so that this array is completed.
+        if (!is_null($this->compiled->getHostRegex())) {
+            $params = $this->bindHostParameters(
+                $request, $params
+            );
+        }
+
+        return $this->parameters = $this->replaceDefaults($params);
+    }
+
+    /**
+     * Get the parameter matches for the path portion of the URI.
+     *
+     * @param  Request $request
+     *
+     * @return array
+     */
+    protected function bindPathParameters(Request $request)
+    {
+        preg_match($this->compiled->getRegex(), '/' . $request->getDecodedPath(), $matches);
+
+        return $matches;
+    }
+
+    /**
+     * Extract the parameter list from the host part of the request.
+     *
+     * @param  Request $request
+     * @param  array   $parameters
+     *
+     * @return array
+     */
+    protected function bindHostParameters(Request $request, $parameters)
+    {
+        preg_match($this->compiled->getHostRegex(), $request->getHost(), $matches);
+
+        return array_merge($this->matchToKeys(array_slice($matches, 1)), $parameters);
+    }
+
+    /**
+     * Combine a set of parameter matches with the route's keys.
+     *
+     * @param  array $matches
+     *
+     * @return array
+     */
+    protected function matchToKeys(array $matches)
+    {
+        if (empty($parameterNames = $this->parameterNames())) {
+            return [];
+        }
+        $parameters = array_intersect_key($matches, array_flip($parameterNames));
+
+        return array_filter($parameters, function ($value) {
+            return is_string($value) && strlen($value) > 0;
+        });
+    }
+
+    /**
+     * Replace null parameters with their defaults.
+     *
+     * @param  array $parameters
+     *
+     * @return array
+     */
+    protected function replaceDefaults(array $parameters)
+    {
+        foreach ($parameters as $key => &$value) {
+            $value = isset($value) ? $value : ArrayHelper::get($this->defaults, $key);
+        }
+        foreach ($this->defaults as $key => $value) {
+            if (!isset($parameters[$key])) {
+                $parameters[$key] = $value;
+            }
+        }
+
+        return $parameters;
+    }
+
+    /**
+     * Get all of the parameter names for the route.
+     *
+     * @return array
+     */
+    public function parameterNames()
+    {
+        if (isset($this->parameterNames)) {
+            return $this->parameterNames;
+        }
+
+        return $this->parameterNames = $this->compileParameterNames();
+    }
+
+    /**
+     * Get the parameter names for the route.
+     *
+     * @return array
+     */
+    protected function compileParameterNames()
+    {
+        preg_match_all('/\{(.*?)\}/', $this->getDomain() . $this->uri, $matches);
+
+        return array_map(function ($m) {
+            return trim($m, '?');
+        }, $matches[1]);
+    }
+
+    /**
+     * Get the domain defined for the route.
+     *
+     * @return string|null
+     */
+    public function getDomain()
+    {
+        return isset($this->action['domain']) ? $this->action['domain'] : null;
+    }
+
+    /**
      * Compile the current route.
      */
     protected function compileRoute()
@@ -121,8 +298,7 @@ class Route
         // Set a series of validators to validate whether a route matches some criteria.
         return static::$validators = [
             new MethodValidator,
-            // new SchemeValidator,
-            // new HostValidator,
+            new HostValidator,
             new UriValidator
         ];
     }
@@ -137,11 +313,96 @@ class Route
     public function run(Request $request)
     {
         try {
-            // Run route's callable action
-            return $this->callback->call($this, $request);
+            // We have a direct Closure callback
+            if (!is_string($this->action['uses'])) {
+                return $this->runCallable($request);
+            }
+
+            // Run action controller
+            // todo implement runController
+            return $this->runController($request);
         } catch (HttpResponseException $e) {
             return $e->getMessage();
         }
+    }
+
+    /**
+     * Run the route action as callable and return the response.
+     *
+     * @param  Request $request
+     *
+     * @return mixed
+     */
+    protected function runCallable(Request $request)
+    {
+        $parameters = (new ReflectionFunction($this->action['uses']))->getParameters();
+
+        /*$parameters = $this->resolveMethodDependencies(
+            $this->parametersWithoutNulls(), new ReflectionFunction($this->action['uses'])
+        );*/
+
+        return call_user_func_array($this->action['uses'], $parameters);
+    }
+
+    /**
+     * Run the route action as controller and return the response.
+     *
+     * @param  Request $request
+     *
+     * @return mixed
+     */
+    protected function runController(Request $request)
+    {
+        list($class, $method) = explode('@', $this->action['uses']);
+    }
+
+    /**
+     * Parse the route action into a standard array.
+     *
+     * @param  callable|array|null $action
+     *
+     * @return array
+     * @throws UnexpectedValueException
+     */
+    protected function parseAction($action)
+    {
+        // No action has been set for this route
+        if (is_null($action)) {
+            return ['uses' => function () {
+                throw new LogicException("Route for [{$this->uri}] has no action.");
+            }];
+        }
+
+        // The action is a normal Closure instance (callable)
+        if (is_callable($action)) {
+            return ['uses' => $action];
+        }
+        // If no "uses" property has been set, we will dig through the array to find a
+        // Closure instance within this list. We will set the first Closure we come
+        // across into the "uses" property that will get fired off by this route.
+        elseif (!isset($action['uses'])) {
+            $action['uses'] = $this->findCallable($action);
+        }
+
+        if (is_string($action['uses']) && !StringHelper::contains($action['uses'], '@')) {
+            throw new UnexpectedValueException('Invalid route action: ' . $action['uses']);
+        }
+
+        return $action;
+    }
+
+    /**
+     * Find the callable in an action array.
+     *
+     * @param  array $action
+     *
+     * @return callable
+     */
+    protected function findCallable(array $action)
+    {
+        return ArrayHelper::filter($action, function ($key, $value) {
+            return is_callable($value) && is_numeric($key);
+        });
     }
 
     /**
@@ -161,7 +422,7 @@ class Route
     }
 
     /**
-     * @return SymfonyRoute
+     * @return CompiledRoute
      */
     public function getCompiled()
     {

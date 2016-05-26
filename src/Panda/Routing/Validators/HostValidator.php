@@ -6,26 +6,28 @@ use Panda\Http\Request;
 use Panda\Routing\Route;
 
 /**
- * Class UriValidator
+ * Class ΗοστValidator
  *
  * @package Panda\Routing\Validators
  * @version 0.1
  */
-class UriValidator implements ValidatorInterface
+class HostValidator implements ValidatorInterface
 {
     /**
      * Validate a given rule against a route and request.
      *
-     * @param Route   $route
-     * @param Request $request
+     * @param  Route   $route
+     * @param  Request $request
      *
      * @return bool
      */
     public function matches(Route $route, Request $request)
     {
-        $path = $request->getPath() == '/' ? '/' : '/' . $request->getPath();
+        if (is_null($route->getCompiled()->getHostRegex())) {
+            return true;
+        }
 
-        return preg_match($route->getCompiled()->getRegex(), rawurldecode($path));
+        return preg_match($route->getCompiled()->getHostRegex(), $request->getHost());
     }
 }
 

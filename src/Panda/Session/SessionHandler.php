@@ -13,8 +13,6 @@ declare(strict_types = 1);
 
 namespace Panda\Session;
 
-use Panda\Http\Request;
-
 /**
  * File SessionHandler
  *
@@ -24,25 +22,22 @@ use Panda\Http\Request;
 class SessionHandler
 {
     /**
+     * The session's expiration time (in seconds).
+     *
+     * @type integer
+     */
+    const EXPIRE = 18000;
+
+    /**
      * @type string
      */
     private $sessionId;
 
     /**
-     * @type string
-     */
-    private $sessionName;
-
-    /**
      * Init session.
-     *
-     * @param Request $request
      */
-    public function startSession(Request $request)
+    public function startSession()
     {
-        // Set session options
-        //$this->setOptions($options);
-
         // Start session
         $this->start();
 
@@ -51,25 +46,6 @@ class SessionHandler
 
         // Validate this session
         $this->validate();
-    }
-
-    /**
-     * Set Session options for set and get.
-     *
-     * @param array $options An array of options for the session (id, name).
-     */
-    public function setOptions(array $options)
-    {
-        // Set session id
-        if (isset($options['id']))
-            session_id(md5($options['id']));
-
-        // Set session name
-        if (isset($options['name']))
-            session_name($options['name']);
-
-        // Sync the session maxlifetime
-        ini_set('session.gc_maxlifetime', Session::EXPIRE);
     }
 
     /**
@@ -192,21 +168,12 @@ class SessionHandler
     }
 
     /**
-     * Destroy session.
-     *
-     * @return boolean True on success, false on failure.
+     * Destroy current session.
      */
     public function destroy()
     {
-        /*
-        $sessionCookie = CookieJar::getInstance()->get(session_name());
-        if (!empty($sessionCookie))
-            CookieBox::getInstance()->remove(session_name());
-*/
         session_unset();
         session_destroy();
-
-        return true;
     }
 
     /**
@@ -246,22 +213,22 @@ class SessionHandler
      */
     private function start()
     {
+        // Build environment
         register_shutdown_function('session_write_close');
         session_cache_limiter('none');
+        ini_set('session.gc_maxlifetime', (string)SessionHandler::EXPIRE);
 
         // Set Session cookie params
         $sessionCookieParams = session_get_cookie_params();
-        $rootDomain = Url::getInstance()->getDomain();
-
         session_set_cookie_params(
             $sessionCookieParams["lifetime"],
             $sessionCookieParams["path"],
-            $rootDomain,
+            $sessionCookieParams['domain'],
             $sessionCookieParams["secure"],
             $sessionCookieParams["httponly"]
         );
 
-        // Session start
+        // Start session
         session_start();
     }
 
@@ -272,13 +239,13 @@ class SessionHandler
     protected function validate()
     {
         // Regenerate session if gone too long and reset timers
-        if ((time() - $this->get('timer.start', null, "session") > Session::EXPIRE)) {
+        if ((time() - $this->get('timer.start', null, "session") > SessionHandler::EXPIRE)) {
             session_regenerate_id(true);
             $this->setTimers(true);
         }
 
         // Destroy session if expired
-        if ((time() - $this->get('timer.last', null, "session") > Session::EXPIRE))
+        if ((time() - $this->get('timer.last', null, "session") > SessionHandler::EXPIRE))
             $this->destroy();
     }
 

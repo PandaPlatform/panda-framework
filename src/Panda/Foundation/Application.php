@@ -14,6 +14,8 @@ declare(strict_types = 1);
 namespace Panda\Foundation;
 
 use Panda\Container\Container;
+use Panda\Contracts\Http\Kernel as KernelInterface;
+use Panda\Foundation\Http\Kernel;
 
 /**
  * Panda application manager.
@@ -45,21 +47,55 @@ class Application extends Container
             $this->setBasePath($basePath);
         }
 
-        // Register application
-        $this->registerBindings();
+        // Register all bindings
+        $this->registerAppBindings();
+        $this->registerServiceBindings();
     }
 
     /**
      * Register application bindings.
      */
-    private function registerBindings()
+    private function registerAppBindings()
     {
         // Load config from .json file
         $config = array();
 
         // Add container definitions
         //$this->addDefinitions($config);
+
+        // Set container
+        $this->set('app', $this);
+        $this->set('Panda\Foundation\Application', $this);
+        $this->set('Panda\Container\Container', $this);
     }
+
+    /**
+     * Register service bindings.
+     */
+    private function registerServiceBindings()
+    {
+        // Set container interfaces (manually, to be removed)
+        $this->set(KernelInterface::class, \DI\object(Kernel::class));
+    }
+
+    /**
+     * Resolve the given type from the container.
+     *
+     * (Overriding Container::make)
+     *
+     * @param  string $abstract
+     * @param  array  $parameters
+     *
+     * @return mixed
+     */
+    /*public function make($abstract, array $parameters = [])
+    {
+        $abstract = $this->getAlias($abstract);
+        if (isset($this->deferredServices[$abstract])) {
+            $this->loadDeferredProvider($abstract);
+        }
+        return parent::make($abstract, $parameters);
+    }*/
 
     /**
      * @return string
@@ -83,6 +119,14 @@ class Application extends Container
     public function getConfigPath()
     {
         return $this->basePath . DIRECTORY_SEPARATOR . "config";
+    }
+
+    /**
+     * @return string
+     */
+    public function getRoutesPath()
+    {
+        return $this->basePath . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "routes" . DIRECTORY_SEPARATOR . "main.php";
     }
 }
 

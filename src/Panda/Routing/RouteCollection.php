@@ -13,6 +13,7 @@ declare(strict_types = 1);
 
 namespace Panda\Routing;
 
+use Panda\Helpers\ArrayHelper;
 use Panda\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -68,13 +69,14 @@ class RouteCollection
         if (!is_null($route)) {
             return $route->bind($request);
         }
+
         // If no route was found we will now check if a matching route is specified by
         // another HTTP verb. If it is we will need to throw a MethodNotAllowed and
         // inform the user agent of which HTTP verb it should use for this route.
-        $others = $this->checkForAlternateVerbs($request);
+        /*$others = $this->checkForAlternateVerbs($request);
         if (count($others) > 0) {
             return $this->getRouteForMethods($request, $others);
-        }
+        }*/
 
         throw new NotFoundHttpException;
     }
@@ -112,7 +114,7 @@ class RouteCollection
         }
 
         // Filter routes by the given method
-        return Arr::get($this->routes, $method, []);
+        return ArrayHelper::get($this->routes, $method, []);
     }
 
     /**
@@ -126,13 +128,34 @@ class RouteCollection
     }
 
     /**
-     * Add the given route to the collection.
+     * Add a Route instance to the collection.
      *
-     * @param Route $route
+     * @param  Route $route
+     *
+     * @return Route
      */
-    protected function addRoute($route)
+    public function addRoute(Route $route)
     {
-        $this->routes[] = $route;
+        // Add route to all the collections needed
+        $this->addToCollections($route);
+
+        return $route;
+    }
+
+    /**
+     * Add the given route to the arrays of routes.
+     *
+     * @param  Route $route
+     */
+    protected function addToCollections($route)
+    {
+        $fullUri = $route->getDomain() . $route->getUri();
+
+        foreach ($route->getMethods() as $method) {
+            $this->routes[$method][$fullUri] = $route;
+        }
+
+        $this->allRoutes[$method . $fullUri] = $route;
     }
 }
 

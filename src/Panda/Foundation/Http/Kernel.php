@@ -19,6 +19,7 @@ use Panda\Contracts\Init\Initializer;
 use Panda\Foundation\Application;
 use Panda\Http\Request;
 use Panda\Http\Response;
+use Panda\Model\Facade;
 use Panda\Routing\Router;
 
 /**
@@ -43,7 +44,7 @@ class Kernel implements KernelInterface
      * @type Initializer[]
      */
     protected $initializers = [
-        'Panda\Foundation\Session'
+        '\Panda\Session\Session'
     ];
 
     /**
@@ -68,8 +69,11 @@ class Kernel implements KernelInterface
     {
         // Initialize all needed
         foreach ($this->initializers as $initializer) {
-            $initializer->init($request);
+            $this->app->get($initializer)->init($request);
         }
+
+        // Include routes
+        include_once $this->app->getRoutesPath();
     }
 
     /**
@@ -81,9 +85,13 @@ class Kernel implements KernelInterface
      */
     public function handle($request)
     {
+        // Set facade application container
+        Facade::setFacadeApp($this->app);
+
         // Initialize application
         $this->init($request);
 
+        // Dispatch the response
         return $this->router->dispatch($request);
     }
 

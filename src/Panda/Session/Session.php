@@ -30,13 +30,6 @@ class Session implements Initializer
     private $handler;
 
     /**
-     * The session's expiration time (in seconds).
-     *
-     * @type integer
-     */
-    const EXPIRE = 18000;
-
-    /**
      * Session constructor.
      *
      * @param SessionHandler $handler
@@ -53,7 +46,7 @@ class Session implements Initializer
      */
     public function init($request)
     {
-        $this->handler->startSession($request);
+        $this->handler->startSession();
     }
 
     /**

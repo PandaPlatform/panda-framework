@@ -31,6 +31,14 @@ class StringHelper
      */
     public static function contains($haystack, $needles)
     {
+        if (empty($haystack)) {
+            return false;
+        }
+
+        if (!is_array($needles)) {
+            return mb_strpos($haystack, $needles) !== false;
+        }
+
         foreach ((array)$needles as $needle) {
             if ($needle != '' && mb_strpos($haystack, $needle) !== false) {
                 return true;
