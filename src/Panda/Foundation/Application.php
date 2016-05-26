@@ -16,6 +16,7 @@ namespace Panda\Foundation;
 use Panda\Container\Container;
 use Panda\Contracts\Http\Kernel as KernelInterface;
 use Panda\Foundation\Http\Kernel;
+use Panda\Http\Request;
 
 /**
  * Panda application manager.
@@ -79,23 +80,18 @@ class Application extends Container
     }
 
     /**
-     * Resolve the given type from the container.
+     * Initialize the framework with the given initializers.
      *
-     * (Overriding Container::make)
-     *
-     * @param  string $abstract
-     * @param  array  $parameters
-     *
-     * @return mixed
+     * @param array   $initializers
+     * @param Request $request
      */
-    /*public function make($abstract, array $parameters = [])
+    public function init($initializers, Request $request)
     {
-        $abstract = $this->getAlias($abstract);
-        if (isset($this->deferredServices[$abstract])) {
-            $this->loadDeferredProvider($abstract);
+        // Initialize all needed
+        foreach ($initializers as $initializer) {
+            $this->make($initializer)->init($request);
         }
-        return parent::make($abstract, $parameters);
-    }*/
+    }
 
     /**
      * @return string

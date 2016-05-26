@@ -44,9 +44,8 @@ class Kernel implements KernelInterface
      * @type Initializer[]
      */
     protected $initializers = [
-        '\Panda\Debug\Debugger',
-        '\Panda\Session\Session',
-        '\Panda\Localization\DateTimer',
+        '\Panda\Foundation\Init\Environment',
+        '\Panda\Foundation\Init\FacadeRegistry',
     ];
 
     /**
@@ -69,10 +68,8 @@ class Kernel implements KernelInterface
      */
     public function init($request)
     {
-        // Initialize all needed
-        foreach ($this->initializers as $initializer) {
-            $this->app->get($initializer)->init($request);
-        }
+        // Initialize application
+        $this->app->init($this->initializers, $request);
 
         // Include routes
         include_once $this->app->getRoutesPath();
@@ -90,7 +87,7 @@ class Kernel implements KernelInterface
         // Set facade application container
         Facade::setFacadeApp($this->app);
 
-        // Initialize application
+        // Initialize kernel
         $this->init($request);
 
         // Dispatch the response
