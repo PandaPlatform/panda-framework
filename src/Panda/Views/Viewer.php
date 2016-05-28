@@ -37,6 +37,11 @@ class Viewer
     private $request;
 
     /**
+     * @type string
+     */
+    protected $html;
+
+    /**
      * Viewer constructor.
      *
      * @param Application $app
@@ -53,7 +58,7 @@ class Viewer
      *
      * @param string $name
      *
-     * @return string
+     * @return $this
      */
     public function load($name)
     {
@@ -72,7 +77,7 @@ class Viewer
      *
      * @param string $viewFile
      *
-     * @return string
+     * @return $this
      */
     public function render($viewFile)
     {
@@ -81,7 +86,28 @@ class Viewer
             throw new InvalidArgumentException("The view file given is a not valid view.");
         }
 
-        return @include($viewFile);
+        // Load the view file
+        $this->html = file_get_contents($viewFile);
+
+        return $this;
+    }
+
+    /**
+     * Outputs the view's html to the buffer using echo.
+     */
+    public function out()
+    {
+        echo $this->html;
+    }
+
+    /**
+     * Get the view html instead of sending it to buffer.
+     *
+     * @return string
+     */
+    public function getHtml()
+    {
+        return $this->html;
     }
 
     /**
