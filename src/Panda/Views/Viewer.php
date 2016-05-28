@@ -37,9 +37,14 @@ class Viewer
     private $request;
 
     /**
+     * @type bool
+     */
+    private $executable = false;
+
+    /**
      * @type string
      */
-    protected $html;
+    protected $output;
 
     /**
      * Viewer constructor.
@@ -87,7 +92,11 @@ class Viewer
         }
 
         // Load the view file
-        $this->html = file_get_contents($viewFile);
+        if ($this->executable) {
+            $this->output = @include($viewFile);
+        } else {
+            $this->output = file_get_contents($viewFile);
+        }
 
         return $this;
     }
@@ -97,17 +106,17 @@ class Viewer
      */
     public function out()
     {
-        echo $this->html;
+        echo $this->output;
     }
 
     /**
-     * Get the view html instead of sending it to buffer.
+     * Get the view output instead of sending it to buffer.
      *
      * @return string
      */
-    public function getHtml()
+    public function getOutput()
     {
-        return $this->html;
+        return $this->output;
     }
 
     /**
@@ -119,7 +128,7 @@ class Viewer
      */
     private function getViewFolder($name)
     {
-        return $this->app->getViewsPath() . DIRECTORY_SEPARATOR . $name . ".view" . DIRECTORY_SEPARATOR;
+        return $this->app->getViewsPath() . DIRECTORY_SEPARATOR . $name . ".view";
     }
 
     /**
@@ -134,8 +143,14 @@ class Viewer
         // Set base name
         $baseName = $viewFolder . DIRECTORY_SEPARATOR . "view";
 
+        // Select the view file
         $viewFile = (file_exists($baseName . ".php") ? $baseName . ".php" : $baseName . ".html");
         $viewFile = (file_exists($viewFile) ? $viewFile : null);
+
+        // Check if the file is executable (php)
+        if (preg_match('/\.php$/', $viewFile)) {
+            $this->executable = true;
+        }
 
         return $viewFile;
     }
