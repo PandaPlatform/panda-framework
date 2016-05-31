@@ -34,6 +34,11 @@ class Application extends Container
     protected $basePath;
 
     /**
+     * @type Application
+     */
+    protected static $app;
+
+    /**
      * Create a new panda application instance.
      *
      * @param string $basePath
@@ -42,6 +47,9 @@ class Application extends Container
     {
         // Construct container
         parent::__construct();
+
+        // Set application
+        static::setApp($this);
 
         // Set object properties
         if (!empty($basePath)) {
@@ -77,6 +85,22 @@ class Application extends Container
     {
         // Set container interfaces (manually, to be removed)
         $this->set(KernelInterface::class, \DI\object(Kernel::class));
+    }
+
+    /**
+     * @return Application
+     */
+    public static function getApp()
+    {
+        return static::$app;
+    }
+
+    /**
+     * @param Application $app
+     */
+    public static function setApp($app)
+    {
+        static::$app = $app;
     }
 
     /**

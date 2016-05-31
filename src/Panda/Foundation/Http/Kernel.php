@@ -20,7 +20,8 @@ use Panda\Foundation\Application;
 use Panda\Http\Request;
 use Panda\Http\Response;
 use Panda\Routing\Router;
-use Panda\Support\Facades\Facade;
+use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 /**
  * Panda kernel
@@ -39,6 +40,11 @@ class Kernel implements KernelInterface
      * @type Router
      */
     protected $router;
+
+    /**
+     * @type SymfonyRequest
+     */
+    protected $currentRequest;
 
     /**
      * @type Initializer[]
@@ -64,9 +70,9 @@ class Kernel implements KernelInterface
      * Init the panda application and start all the interfaces that
      * are needed for runtime.
      *
-     * @param Request $request
+     * @param Request|SymfonyRequest $request
      */
-    public function init($request)
+    public function init(SymfonyRequest $request)
     {
         // Initialize application
         $this->app->init($this->initializers, $request);
@@ -78,14 +84,14 @@ class Kernel implements KernelInterface
     /**
      * Handle the incoming request and return a response.
      *
-     * @param Request $request
+     * @param Request|SymfonyRequest $request
      *
      * @return Response
      */
-    public function handle($request)
+    public function handle(SymfonyRequest $request)
     {
-        // Set facade application container
-        Facade::setFacadeApp($this->app);
+        // Set current request
+        $this->setCurrentRequest($request);
 
         // Initialize kernel
         $this->init($request);
@@ -97,10 +103,10 @@ class Kernel implements KernelInterface
     /**
      * Terminate the kernel process finalizing response information.
      *
-     * @param Request  $request
-     * @param Response $response
+     * @param Request|SymfonyRequest   $request
+     * @param Response|SymfonyResponse $response
      */
-    public function terminate($request, $response)
+    public function terminate(SymfonyRequest $request, SymfonyResponse $response)
     {
 
     }
@@ -108,16 +114,12 @@ class Kernel implements KernelInterface
     /**
      * Add an initializer to the application flow.
      *
-     * @param Initializer $initializer
+     * @param string $initializer
      *
      * @throws InvalidArgumentException
      */
-    public function addExternalInitializer(Initializer $initializer)
+    public function addExternalInitializer($initializer)
     {
-        if (empty($initializer) || !($initializer instanceof Initializer)) {
-            throw new InvalidArgumentException("The given parameter is not a valid initializer.");
-        }
-
         // Add to the queue
         $this->initializers[] = $initializer;
     }
@@ -128,5 +130,21 @@ class Kernel implements KernelInterface
     public function getApp()
     {
         return $this->app;
+    }
+
+    /**
+     * @return SymfonyRequest
+     */
+    public function getCurrentRequest()
+    {
+        return $this->currentRequest;
+    }
+
+    /**
+     * @param SymfonyRequest $currentRequest
+     */
+    public function setCurrentRequest($currentRequest)
+    {
+        $this->currentRequest = $currentRequest;
     }
 }
