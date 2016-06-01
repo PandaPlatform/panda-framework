@@ -32,6 +32,11 @@ class Container extends ContainerBuilder
     private $containerHandler;
 
     /**
+     * @type Container
+     */
+    protected static $instance;
+
+    /**
      * Container constructor.
      */
     public function __construct()
@@ -40,6 +45,22 @@ class Container extends ContainerBuilder
         parent::__construct($containerClass = 'DI\Container');
 
         $this->containerHandler = $this->build();
+    }
+
+    /**
+     * @return Container
+     */
+    public static function getInstance()
+    {
+        return static::$instance;
+    }
+
+    /**
+     * @param Container $instance
+     */
+    public static function setInstance($instance)
+    {
+        static::$instance = $instance;
     }
 
     /**
