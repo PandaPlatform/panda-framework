@@ -305,7 +305,9 @@ class Router
      */
     public function prepareResponse($request, $response)
     {
-        $response = new Response($response);
+        if (is_string($response) && !($response instanceof SymfonyResponse)) {
+            $response = new Response($response);
+        }
 
         return $response->prepare($request);
     }

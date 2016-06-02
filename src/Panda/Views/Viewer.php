@@ -42,7 +42,7 @@ class Viewer
     private $executable = false;
 
     /**
-     * @type string
+     * @type mixed
      */
     protected $output;
 
@@ -102,17 +102,9 @@ class Viewer
     }
 
     /**
-     * Outputs the view's html to the buffer using echo.
-     */
-    public function out()
-    {
-        echo $this->output;
-    }
-
-    /**
      * Get the view output instead of sending it to buffer.
      *
-     * @return string
+     * @return mixed
      */
     public function getOutput()
     {
