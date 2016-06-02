@@ -45,6 +45,11 @@ class Router
     protected $currentRoute;
 
     /**
+     * @type Request
+     */
+    protected $currentRequest;
+
+    /**
      * All of the verbs supported by the router.
      *
      * @var array
@@ -265,7 +270,8 @@ class Router
      */
     public function dispatch(Request $request)
     {
-        //$this->currentRequest = $request;
+        // Set current request
+        $this->setCurrentRequest($request);
 
         // Get response from route and return to handler
         return $this->dispatchToRoute($request);
@@ -331,6 +337,22 @@ class Router
         $this->currentRoute = $route = $this->routes->match($request);
 
         return $route;
+    }
+
+    /**
+     * @return Request
+     */
+    public function getCurrentRequest()
+    {
+        return $this->currentRequest;
+    }
+
+    /**
+     * @param Request $currentRequest
+     */
+    public function setCurrentRequest($currentRequest)
+    {
+        $this->currentRequest = $currentRequest;
     }
 
     /**

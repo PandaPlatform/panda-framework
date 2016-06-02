@@ -42,11 +42,6 @@ class Kernel implements KernelInterface
     protected $router;
 
     /**
-     * @type SymfonyRequest
-     */
-    protected $currentRequest;
-
-    /**
      * @type Initializer[]
      */
     protected $initializers = [
@@ -77,6 +72,9 @@ class Kernel implements KernelInterface
         // Initialize application
         $this->app->init($this->initializers, $request);
 
+        // Set bindings
+        $this->app->set('kernel', $this);
+
         // Include routes
         include_once $this->app->getRoutesPath();
     }
@@ -90,9 +88,6 @@ class Kernel implements KernelInterface
      */
     public function handle(SymfonyRequest $request)
     {
-        // Set current request
-        $this->setCurrentRequest($request);
-
         // Initialize kernel
         $this->init($request);
 
@@ -137,14 +132,6 @@ class Kernel implements KernelInterface
      */
     public function getCurrentRequest()
     {
-        return $this->currentRequest;
-    }
-
-    /**
-     * @param SymfonyRequest $currentRequest
-     */
-    public function setCurrentRequest($currentRequest)
-    {
-        $this->currentRequest = $currentRequest;
+        return $this->router->getCurrentRequest();
     }
 }

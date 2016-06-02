@@ -16,6 +16,7 @@ namespace Panda\Container;
 use DI\Container as DIContainer;
 use DI\ContainerBuilder;
 use DI\Definition\Helper\DefinitionHelper;
+use DI\Definition\Helper\ObjectDefinitionHelper;
 use DI\NotFoundException;
 
 /**
@@ -124,6 +125,17 @@ class Container extends ContainerBuilder
     public function call($name, $parameters)
     {
         return $this->containerHandler->call($name, $parameters);
+    }
+
+    /**
+     * @param string|null $className Class name of the object.
+     *                               If null, the name of the entry (in the container) will be used as class name.
+     *
+     * @return ObjectDefinitionHelper
+     */
+    public function object($className = null)
+    {
+        return \DI\object($className);
     }
 
     /**

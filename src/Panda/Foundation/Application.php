@@ -34,6 +34,13 @@ class Application extends Container
     protected $basePath;
 
     /**
+     * The application's storage path.
+     *
+     * @type string
+     */
+    protected $storagePath;
+
+    /**
      * Create a new panda application instance.
      *
      * @param string $basePath
@@ -42,9 +49,6 @@ class Application extends Container
     {
         // Construct container
         parent::__construct();
-
-        // Set application
-        static::setApp($this);
 
         // Set object properties
         if (!empty($basePath)) {
@@ -93,6 +97,19 @@ class Application extends Container
     }
 
     /**
+     * Bind all of the application paths in the container.
+     */
+    protected function bindPathsInContainer()
+    {
+        $this->set('path', $this->getAppPath());
+        $this->set('path.base', $this->getBasePath());
+        $this->set('path.lang', $this->getLangPath());
+        $this->set('path.config', $this->getConfigPath());
+        $this->set('path.public', $this->getPublicPath());
+        $this->set('path.storage', $this->getStoragePath());
+    }
+
+    /**
      * @return string
      */
     public function getBasePath()
@@ -102,10 +119,16 @@ class Application extends Container
 
     /**
      * @param string $basePath
+     *
+     * @return Application
      */
     public function setBasePath($basePath)
     {
         $this->basePath = $basePath;
+
+        $this->bindPathsInContainer();
+
+        return $this;
     }
 
     /**
@@ -130,6 +153,56 @@ class Application extends Container
     public function getViewsPath()
     {
         return $this->basePath . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "views";
+    }
+
+    /**
+     * @return string
+     */
+    public function getAppPath()
+    {
+        return $this->basePath . DIRECTORY_SEPARATOR . 'app';
+    }
+
+    /**
+     * @return string
+     */
+    public function getLangPath()
+    {
+        return $this->basePath . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'lang';
+    }
+
+    /**
+     * Get the path to the public / web directory.
+     *
+     * @return string
+     */
+    public function getPublicPath()
+    {
+        return $this->basePath . DIRECTORY_SEPARATOR . 'public';
+    }
+
+    /**
+     * Get the path to the storage directory.
+     *
+     * @return string
+     */
+    public function getStoragePath()
+    {
+        return $this->storagePath ?: $this->basePath . DIRECTORY_SEPARATOR . 'storage';
+    }
+
+    /**
+     * @param string $storagePath
+     *
+     * @return Application
+     */
+    public function setStoragePath($storagePath)
+    {
+        $this->storagePath = $storagePath;
+
+        $this->bindPathsInContainer();
+
+        return $this;
     }
 }
 

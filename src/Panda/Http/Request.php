@@ -184,4 +184,14 @@ class Request extends SymfonyRequest
 
         return ArrayHelper::get($this->json->all(), $key, $default);
     }
+
+    /**
+     * Checks if the current request is with a POST method.
+     *
+     * @return bool
+     */
+    public function isPost()
+    {
+        return $this->isMethod('POST');
+    }
 }
