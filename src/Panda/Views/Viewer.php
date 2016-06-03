@@ -47,6 +47,16 @@ class Viewer
     protected $output;
 
     /**
+     * @type array
+     */
+    protected $parameters;
+
+    /**
+     * @type string
+     */
+    protected $view;
+
+    /**
      * Viewer constructor.
      *
      * @param Application $app
@@ -59,7 +69,7 @@ class Viewer
     }
 
     /**
-     * Load a view and return its content.
+     * Load a view.
      *
      * @param string $name
      *
@@ -71,32 +81,41 @@ class Viewer
         $viewFolder = $this->getViewFolder($name);
 
         // Check view file
-        $viewFile = $this->getViewFile($viewFolder);
+        $this->view = $this->getViewFile($viewFolder);
 
-        // Render the view file
-        return $this->render($viewFile);
+        return $this;
     }
 
     /**
      * Render the view output.
      *
-     * @param string $viewFile
-     *
      * @return $this
      */
-    public function render($viewFile)
+    public function render()
     {
         // Try to load the view file and return the output
-        if (empty($viewFile)) {
+        if (empty($this->view)) {
             throw new InvalidArgumentException("The view file given is a not valid view.");
         }
 
         // Load the view file
         if ($this->executable) {
-            $this->output = @include($viewFile);
+            $this->output = @include($this->view);
         } else {
-            $this->output = file_get_contents($viewFile);
+            $this->output = file_get_contents($this->view);
         }
+
+        return $this;
+    }
+
+    /**
+     * Register route parameters to this view.
+     *
+     * @return $this
+     */
+    public function withParameters()
+    {
+        $this->parameters = func_get_args();
 
         return $this;
     }
@@ -108,6 +127,9 @@ class Viewer
      */
     public function getOutput()
     {
+        // Render the view
+        $this->render();
+
         return $this->output;
     }
 

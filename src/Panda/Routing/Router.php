@@ -358,6 +358,27 @@ class Router
     }
 
     /**
+     * @return Route
+     */
+    public function getCurrentRoute()
+    {
+        return $this->currentRoute;
+    }
+
+    /**
+     * Get a route parameter for the current route.
+     *
+     * @param  string $key
+     * @param  string $default
+     *
+     * @return mixed
+     */
+    public function parameter($key, $default = null)
+    {
+        return $this->getCurrentRoute()->getParameter($key, $default);
+    }
+
+    /**
      * Get all the routes that match to the given request.
      */
     protected function gatherRoutes()

@@ -194,4 +194,25 @@ class Request extends SymfonyRequest
     {
         return $this->isMethod('POST');
     }
+
+    /**
+     * Gets a "parameter" value from any bag.
+     * You can include the cookies bag. It is included by default.
+     *
+     * @param string $key
+     * @param null   $default
+     * @param bool   $includeCookies
+     *
+     * @return mixed
+     */
+    public function get($key, $default = null, $includeCookies = true)
+    {
+        if ($includeCookies) {
+            if ($this !== $result = $this->cookies->get($key, $this)) {
+                return $result;
+            }
+        }
+
+        return parent::get($key, $default);
+    }
 }
