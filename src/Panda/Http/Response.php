@@ -13,7 +13,6 @@ declare(strict_types = 1);
 
 namespace Panda\Http;
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 /**
@@ -29,20 +28,14 @@ class Response extends SymfonyResponse
      *
      * @param string $url
      * @param int    $status
-     * @param array  $headers
      *
-     * @return RedirectResponse
+     * @return $this
      */
     public function redirect($url = '', $status = 302)
     {
         // Set headers
         $this->setStatusCode($status);
         $this->headers->set('Location', $url);
-
-        // Set special content to redirect
-        $this->setContent(
-            sprintf('<!DOCTYPE html>
-<html><head><meta charset="UTF-8" /><meta http-equiv="refresh" content="0;url=%1$s" /></head><body></body></html>', htmlspecialchars($url, ENT_QUOTES, 'UTF-8')));
 
         return $this;
     }
