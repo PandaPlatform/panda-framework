@@ -24,10 +24,31 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 class Response extends SymfonyResponse
 {
     /**
-     * Generate the response and send to the output buffer.
+     * Create a redirect response.
+     *
+     * @param string $url
+     * @param int    $status
+     *
+     * @return $this
      */
-    public function send()
+    public function redirect($url = '', $status = 302)
     {
+        // Set headers
+        $this->setStatusCode($status);
+        $this->headers->set('Location', $url);
 
+        return $this;
+    }
+
+    /**
+     * Set the response content.
+     *
+     * @param mixed $content
+     *
+     * @return $this
+     */
+    public function setContent($content)
+    {
+        return parent::setContent($content);
     }
 }

@@ -34,7 +34,7 @@ class GeoIp
      *
      * @param Request $request
      */
-    public function __construct(Request $request)
+    public function __construct($request = null)
     {
         $this->request = $request;
     }

@@ -45,6 +45,11 @@ class Router
     protected $currentRoute;
 
     /**
+     * @type Request
+     */
+    protected $currentRequest;
+
+    /**
      * All of the verbs supported by the router.
      *
      * @var array
@@ -265,7 +270,8 @@ class Router
      */
     public function dispatch(Request $request)
     {
-        //$this->currentRequest = $request;
+        // Set current request
+        $this->setCurrentRequest($request);
 
         // Get response from route and return to handler
         return $this->dispatchToRoute($request);
@@ -299,7 +305,9 @@ class Router
      */
     public function prepareResponse($request, $response)
     {
-        $response = new Response($response);
+        if (is_string($response) && !($response instanceof SymfonyResponse)) {
+            $response = new Response($response);
+        }
 
         return $response->prepare($request);
     }
@@ -331,6 +339,43 @@ class Router
         $this->currentRoute = $route = $this->routes->match($request);
 
         return $route;
+    }
+
+    /**
+     * @return Request
+     */
+    public function getCurrentRequest()
+    {
+        return $this->currentRequest;
+    }
+
+    /**
+     * @param Request $currentRequest
+     */
+    public function setCurrentRequest($currentRequest)
+    {
+        $this->currentRequest = $currentRequest;
+    }
+
+    /**
+     * @return Route
+     */
+    public function getCurrentRoute()
+    {
+        return $this->currentRoute;
+    }
+
+    /**
+     * Get a route parameter for the current route.
+     *
+     * @param  string $key
+     * @param  string $default
+     *
+     * @return mixed
+     */
+    public function parameter($key, $default = null)
+    {
+        return $this->getCurrentRoute()->getParameter($key, $default);
     }
 
     /**

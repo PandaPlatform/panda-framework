@@ -16,6 +16,7 @@ namespace Panda\Container;
 use DI\Container as DIContainer;
 use DI\ContainerBuilder;
 use DI\Definition\Helper\DefinitionHelper;
+use DI\Definition\Helper\ObjectDefinitionHelper;
 use DI\NotFoundException;
 
 /**
@@ -32,6 +33,11 @@ class Container extends ContainerBuilder
     private $containerHandler;
 
     /**
+     * @type Container
+     */
+    protected static $instance;
+
+    /**
      * Container constructor.
      */
     public function __construct()
@@ -40,6 +46,22 @@ class Container extends ContainerBuilder
         parent::__construct($containerClass = 'DI\Container');
 
         $this->containerHandler = $this->build();
+    }
+
+    /**
+     * @return Container
+     */
+    public static function getInstance()
+    {
+        return static::$instance;
+    }
+
+    /**
+     * @param Container $instance
+     */
+    public static function setInstance($instance)
+    {
+        static::$instance = $instance;
     }
 
     /**
@@ -103,6 +125,17 @@ class Container extends ContainerBuilder
     public function call($name, $parameters)
     {
         return $this->containerHandler->call($name, $parameters);
+    }
+
+    /**
+     * @param string|null $className Class name of the object.
+     *                               If null, the name of the entry (in the container) will be used as class name.
+     *
+     * @return ObjectDefinitionHelper
+     */
+    public function object($className = null)
+    {
+        return \DI\object($className);
     }
 
     /**

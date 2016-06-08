@@ -265,6 +265,50 @@ class Route
     }
 
     /**
+     * Get a given parameter from the route.
+     *
+     * @param  string $name
+     * @param  mixed  $default
+     *
+     * @return string|object
+     */
+    public function getParameter($name, $default = null)
+    {
+        return ArrayHelper::get($this->getParameters(), $name, $default);
+    }
+
+    /**
+     * Set a parameter to the given value.
+     *
+     * @param  string $name
+     * @param  mixed  $value
+     *
+     * @return void
+     */
+    public function setParameter($name, $value)
+    {
+        $this->getParameters();
+        $this->parameters[$name] = $value;
+    }
+
+    /**
+     * Get the key / value list of parameters for the route.
+     *
+     * @return array
+     *
+     * @throws LogicException
+     */
+    public function getParameters()
+    {
+        if (isset($this->parameters)) {
+            return array_map(function ($value) {
+                return is_string($value) ? rawurldecode($value) : $value;
+            }, $this->parameters);
+        }
+        throw new LogicException('Route is not bound.');
+    }
+
+    /**
      * Get the domain defined for the route.
      *
      * @return string|null
