@@ -48,6 +48,10 @@ class Environment implements Initializer
      */
     public function init($request)
     {
+        // Set environment
+        $this->app->set('env', getenv("APPLICATION_ENV") ?: 'production');
+
+        // Initialize environment
         $this->app->make('\Panda\Debug\Debugger')->init($request);
         $this->app->make('\Panda\Localization\DateTimer')->init($request);
         $this->app->make('\Panda\Session\Session')->init($request);
