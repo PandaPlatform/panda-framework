@@ -27,32 +27,32 @@ use Panda\Http\Request;
 class Viewer
 {
     /**
-     * @type Application
+     * @var Application
      */
     private $app;
 
     /**
-     * @type Request
+     * @var Request
      */
     private $request;
 
     /**
-     * @type bool
+     * @var bool
      */
     private $executable = false;
 
     /**
-     * @type mixed
+     * @var mixed
      */
     protected $output;
 
     /**
-     * @type array
+     * @var array
      */
     protected $parameters;
 
     /**
-     * @type string
+     * @var string
      */
     protected $view;
 
@@ -142,7 +142,7 @@ class Viewer
      */
     private function getViewFolder($name)
     {
-        return $this->app->getViewsPath() . DIRECTORY_SEPARATOR . $name . ".view";
+        return $this->app->getViewsPath().DIRECTORY_SEPARATOR.$name.".view";
     }
 
     /**
@@ -155,10 +155,10 @@ class Viewer
     private function getViewFile($viewFolder)
     {
         // Set base name
-        $baseName = $viewFolder . DIRECTORY_SEPARATOR . "view";
+        $baseName = $viewFolder.DIRECTORY_SEPARATOR."view";
 
         // Select the view file
-        $viewFile = (file_exists($baseName . ".php") ? $baseName . ".php" : $baseName . ".html");
+        $viewFile = (file_exists($baseName.".php") ? $baseName.".php" : $baseName.".html");
         $viewFile = (file_exists($viewFile) ? $viewFile : null);
 
         // Check if the file is executable (php)

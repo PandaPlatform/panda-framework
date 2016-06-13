@@ -11,15 +11,15 @@
 
 declare(strict_types = 1);
 
-namespace Panda\Contracts\Filesystem;
+namespace Panda\Contracts\Storage;
 
 /**
- * File Management Handler Interface
+ * Interface StorageInterface
  *
- * @package Panda\Contracts\Filesystem
+ * @package Panda\Contracts\Storage
  * @version 0.1
  */
-interface FileHandler
+interface StorageInterface
 {
     /**
      * Get a file's contents.

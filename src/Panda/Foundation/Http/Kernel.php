@@ -32,17 +32,17 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 class Kernel implements KernelInterface
 {
     /**
-     * @type Application
+     * @var Application
      */
     protected $app;
 
     /**
-     * @type Router
+     * @var Router
      */
     protected $router;
 
     /**
-     * @type Initializer[]
+     * @var Initializer[]
      */
     protected $initializers = [
         '\Panda\Foundation\Init\Environment',

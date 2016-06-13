@@ -36,17 +36,17 @@ use UnexpectedValueException;
 class Route
 {
     /**
-     * @type array
+     * @var array
      */
     private $methods;
 
     /**
-     * @type string
+     * @var string
      */
     private $uri;
 
     /**
-     * @type Closure
+     * @var Closure
      */
     private $action;
 
@@ -72,12 +72,12 @@ class Route
     protected $parameterNames;
 
     /**
-     * @type CompiledRoute
+     * @var CompiledRoute
      */
     private $compiled;
 
     /**
-     * @type array
+     * @var array
      */
     private static $validators;
 
@@ -176,7 +176,7 @@ class Route
      */
     protected function bindPathParameters(Request $request)
     {
-        preg_match($this->compiled->getRegex(), '/' . $request->getDecodedPath(), $matches);
+        preg_match($this->compiled->getRegex(), '/'.$request->getDecodedPath(), $matches);
 
         return $matches;
     }
@@ -257,7 +257,7 @@ class Route
      */
     protected function compileParameterNames()
     {
-        preg_match_all('/\{(.*?)\}/', $this->getDomain() . $this->uri, $matches);
+        preg_match_all('/\{(.*?)\}/', $this->getDomain().$this->uri, $matches);
 
         return array_map(function ($m) {
             return trim($m, '?');
@@ -294,9 +294,9 @@ class Route
     /**
      * Get the key / value list of parameters for the route.
      *
-     * @return array
-     *
      * @throws LogicException
+     *
+     * @return array
      */
     public function getParameters()
     {
@@ -405,8 +405,9 @@ class Route
      *
      * @param  callable|array|null $action
      *
-     * @return array
      * @throws UnexpectedValueException
+     *
+     * @return array
      */
     protected function parseAction($action)
     {
@@ -429,7 +430,7 @@ class Route
         }
 
         if (is_string($action['uses']) && !StringHelper::contains($action['uses'], '@')) {
-            throw new UnexpectedValueException('Invalid route action: ' . $action['uses']);
+            throw new UnexpectedValueException('Invalid route action: '.$action['uses']);
         }
 
         return $action;
@@ -473,5 +474,3 @@ class Route
         return $this->compiled;
     }
 }
-
-?>

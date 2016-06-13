@@ -66,5 +66,3 @@ class ArrayHelper
         return EvalHelper::evaluate($default);
     }
 }
-
-?>

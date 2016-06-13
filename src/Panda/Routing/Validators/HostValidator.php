@@ -6,7 +6,7 @@ use Panda\Http\Request;
 use Panda\Routing\Route;
 
 /**
- * Class ΗοστValidator
+ * Class HostValidator
  *
  * @package Panda\Routing\Validators
  * @version 0.1
@@ -30,5 +30,3 @@ class HostValidator implements ValidatorInterface
         return preg_match($route->getCompiled()->getHostRegex(), $request->getHost());
     }
 }
-
-?>

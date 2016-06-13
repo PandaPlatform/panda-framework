@@ -30,22 +30,22 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 class Router
 {
     /**
-     * @type Container
+     * @var Container
      */
     protected $container;
 
     /**
-     * @type RouteCollection
+     * @var RouteCollection
      */
     protected $routes;
 
     /**
-     * @type Route
+     * @var Route
      */
     protected $currentRoute;
 
     /**
-     * @type Request
+     * @var Request
      */
     protected $currentRequest;
 
@@ -388,8 +388,6 @@ class Router
         $routesPath = $this->container->get("app.routes_path");
 
         // Include the route file
-        include $basePath . DIRECTORY_SEPARATOR . $routesPath;
+        include $basePath.DIRECTORY_SEPARATOR.$routesPath;
     }
 }
-
-?>

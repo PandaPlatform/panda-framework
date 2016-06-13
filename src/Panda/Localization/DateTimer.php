@@ -28,7 +28,7 @@ class DateTimer implements Initializer
     /**
      * The default timezone for the framework.
      */
-    const DEFAULT_TIMEZONE = "GMT";
+    const DEFAULT_TIMEZONE = 'GMT';
 
     /**
      * Init session.
@@ -69,5 +69,3 @@ class DateTimer implements Initializer
         return date_default_timezone_get();
     }
 }
-
-?>

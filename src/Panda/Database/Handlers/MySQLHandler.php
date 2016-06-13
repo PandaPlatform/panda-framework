@@ -63,10 +63,10 @@ class MySQLHandler extends mysqli implements ConnectionHandler
      * @param string $query
      * @param bool   $commit
      *
+     * @throws Exception
+     *
      * @return mixed False on failure. For successful SELECT, SHOW, DESCRIBE or EXPLAIN queries mysqli_query() will
      *               return a mysqli_result object. For other successful queries mysqli_query() will return TRUE.
-     *
-     * @throws Exception
      */
     public function query($query, $commit = true)
     {
@@ -83,8 +83,9 @@ class MySQLHandler extends mysqli implements ConnectionHandler
         $result = $this->multi_query($query);
 
         // Commit Transaction
-        if ($commit)
+        if ($commit) {
             $this->commitTransaction();
+        }
 
         // Close connection
         $this->close();

@@ -32,13 +32,11 @@ class Debugger implements Initializer
     public function init($request)
     {
         // Set error reporting
-        error_reporting(E_ALL & ~(E_STRICT | E_NOTICE | E_WARNING));
+        error_reporting(E_ALL & ~(E_STRICT | E_NOTICE | E_WARNING | E_DEPRECATED));
 
         // Set Server to display errors
-        if ($request->cookies->get("pdebug")) {
+        if ($request->cookies->get('pdebug')) {
             ini_set('display_errors', 'On');
         }
     }
 }
-
-?>

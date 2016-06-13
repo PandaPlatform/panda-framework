@@ -24,12 +24,12 @@ class SessionHandler
     /**
      * The session's expiration time (in seconds).
      *
-     * @type integer
+     * @var integer
      */
     const EXPIRE = 18000;
 
     /**
-     * @type string
+     * @var string
      */
     private $sessionId;
 
@@ -259,7 +259,7 @@ class SessionHandler
     private function getNS($namespace)
     {
         // Add prefix to namespace to avoid collisions.
-        return "__" . strtoupper($namespace);
+        return "__".strtoupper($namespace);
     }
 
     /**
@@ -278,5 +278,3 @@ class SessionHandler
         $this->sessionId = $sessionId;
     }
 }
-
-?>

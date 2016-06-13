@@ -35,5 +35,3 @@ class EvalHelper
         return $value instanceof Closure ? $value() : $value;
     }
 }
-
-?>

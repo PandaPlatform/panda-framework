@@ -13,7 +13,7 @@ declare(strict_types = 1);
 
 namespace Panda\Filesystem;
 
-use Panda\Contracts\Filesystem\FileHandler;
+use Panda\Contracts\Storage\StorageInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 /**
@@ -22,15 +22,16 @@ use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
  * @package Panda\Filesystem
  * @version 0.1
  */
-class Filesystem implements FileHandler
+class Filesystem implements StorageInterface
 {
     /**
      * Get a file's contents.
      *
      * @param string $path
      *
-     * @return string
      * @throws FileNotFoundException
+     *
+     * @return string
      */
     public function get($path)
     {
@@ -40,7 +41,7 @@ class Filesystem implements FileHandler
         }
 
         // Throw exception if file not found
-        throw new FileNotFoundException("File does not exist at path " . $path);
+        throw new FileNotFoundException('File does not exist at path '.$path);
     }
 
     /**
@@ -122,8 +123,8 @@ class Filesystem implements FileHandler
     /**
      * Append to a file.
      *
-     * @param  string $path     The file path.
-     * @param  string $contents The contents to be appended.
+     * @param string $path     The file path.
+     * @param string $contents The contents to be appended.
      *
      * @return mixed The number of bytes that were written to the file, or False on failure.
      */
@@ -135,19 +136,17 @@ class Filesystem implements FileHandler
     /**
      * Prepend to a file.
      *
-     * @param  string $path     The file path.
-     * @param  string $contents The contents to be prepended.
+     * @param string $path     The file path.
+     * @param string $contents The contents to be prepended.
      *
      * @return mixed The number of bytes that were written to the file, or False on failure.
      */
     public function prepend($path, $contents)
     {
         if ($this->exists($path)) {
-            return $this->put($path, $contents . $this->get($path));
+            return $this->put($path, $contents.$this->get($path));
         }
 
         return $this->put($path, $contents);
     }
 }
-
-?>

@@ -28,7 +28,7 @@ use Panda\Support\Facades\Facade;
 class FacadeRegistry implements Initializer
 {
     /**
-     * @type Application
+     * @var Application
      */
     private $app;
 

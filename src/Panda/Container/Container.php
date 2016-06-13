@@ -28,12 +28,12 @@ use DI\NotFoundException;
 class Container extends ContainerBuilder
 {
     /**
-     * @type DIContainer
+     * @var DIContainer
      */
     private $containerHandler;
 
     /**
-     * @type Container
+     * @var Container
      */
     protected static $instance;
 
@@ -146,5 +146,3 @@ class Container extends ContainerBuilder
         return $this->containerHandler;
     }
 }
-
-?>

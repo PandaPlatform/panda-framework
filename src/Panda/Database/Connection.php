@@ -25,14 +25,14 @@ use Panda\Contracts\Database\ConnectionHandler;
 class Connection
 {
     /**
-     * @type ConnectionHandler
+     * @var ConnectionHandler
      */
     protected $handler;
 
     /**
      * The transaction error.
      *
-     * @type string
+     * @var string
      */
     protected $error;
 
@@ -58,13 +58,14 @@ class Connection
      * @param bool   $commit Whether to commit the transaction  after the last query or not.
      *                       It is True by default.
      *
-     * @return bool|False
      * @throws Exception
+     *
+     * @return bool|False
      */
     public function execute($query, $attr = array(), $commit = true)
     {
         // Clear error message
-        $this->error = "";
+        $this->error = '';
 
         // Set query attributes
         foreach ($attr as $key => $value) {
@@ -72,7 +73,7 @@ class Connection
             $value = $this->handler->escape($value);
 
             // Replace escaped value
-            $query = str_replace("{" . $key . "}", $value, $query);
+            $query = str_replace('{'.$key.'}', $value, $query);
         }
 
         try {
@@ -81,9 +82,6 @@ class Connection
         } catch (Exception $ex) {
             // Store error message
             $this->error = $ex->getMessage();
-
-            // Log Exception Message
-            // logger::getInstance()->log("Query Execution to [".$this->database."] at ".$this->host." failed: ".$this->error, logger::ERROR, $query);
 
             // Re-throw exception
             throw $ex;

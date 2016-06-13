@@ -48,5 +48,3 @@ class StringHelper
         return false;
     }
 }
-
-?>

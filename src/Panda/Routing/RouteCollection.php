@@ -26,12 +26,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class RouteCollection
 {
     /**
-     * @type Route[]
+     * @var Route[]
      */
     protected $routes;
 
     /**
-     * @type Route[]
+     * @var Route[]
      */
     protected $allRoutes;
 
@@ -149,14 +149,12 @@ class RouteCollection
      */
     protected function addToCollections($route)
     {
-        $fullUri = $route->getDomain() . $route->getUri();
+        $fullUri = $route->getDomain().$route->getUri();
 
         foreach ($route->getMethods() as $method) {
             $this->routes[$method][$fullUri] = $route;
         }
 
-        $this->allRoutes[$method . $fullUri] = $route;
+        $this->allRoutes[$method.$fullUri] = $route;
     }
 }
-
-?>
