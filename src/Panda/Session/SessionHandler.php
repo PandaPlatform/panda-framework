@@ -261,7 +261,7 @@ class SessionHandler
     private function getNS($namespace)
     {
         // Add prefix to namespace to avoid collisions.
-        return '__'.strtoupper($namespace);
+        return '__' . strtoupper($namespace);
     }
 
     /**

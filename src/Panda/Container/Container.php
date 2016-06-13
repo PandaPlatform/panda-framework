@@ -94,8 +94,9 @@ class Container extends ContainerBuilder
      * @param string $name
      * @param array  $parameters
      *
-     * @return mixed
      * @throws NotFoundException
+     *
+     * @return mixed
      */
     public function make($name, $parameters = [])
     {

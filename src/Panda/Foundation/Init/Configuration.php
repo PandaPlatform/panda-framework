@@ -49,7 +49,7 @@ class Configuration implements Initializer
     public function init($request)
     {
         // Load configuration file
-        $configFile = $this->app->getConfigPath().DIRECTORY_SEPARATOR."config.json";
+        $configFile = $this->app->getConfigPath() . DIRECTORY_SEPARATOR . "config.json";
         if (file_exists($configFile)) {
             // Load and decode json config
             $config = file_get_contents($configFile);

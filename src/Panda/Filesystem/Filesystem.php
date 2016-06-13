@@ -41,7 +41,7 @@ class Filesystem implements StorageInterface
         }
 
         // Throw exception if file not found
-        throw new FileNotFoundException('File does not exist at path '.$path);
+        throw new FileNotFoundException('File does not exist at path ' . $path);
     }
 
     /**
@@ -144,7 +144,7 @@ class Filesystem implements StorageInterface
     public function prepend($path, $contents)
     {
         if ($this->exists($path)) {
-            return $this->put($path, $contents.$this->get($path));
+            return $this->put($path, $contents . $this->get($path));
         }
 
         return $this->put($path, $contents);

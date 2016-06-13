@@ -60,7 +60,7 @@ class Connection
      *
      * @throws Exception
      *
-     * @return bool|False
+     * @return bool
      */
     public function execute($query, $attr = [], $commit = true)
     {
@@ -73,7 +73,7 @@ class Connection
             $value = $this->handler->escape($value);
 
             // Replace escaped value
-            $query = str_replace('{'.$key.'}', $value, $query);
+            $query = str_replace('{' . $key . '}', $value, $query);
         }
 
         try {

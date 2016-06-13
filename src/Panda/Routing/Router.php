@@ -388,6 +388,6 @@ class Router
         $routesPath = $this->container->get("app.routes_path");
 
         // Include the route file
-        include $basePath.DIRECTORY_SEPARATOR.$routesPath;
+        include $basePath . DIRECTORY_SEPARATOR . $routesPath;
     }
 }

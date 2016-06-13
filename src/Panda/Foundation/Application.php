@@ -136,7 +136,7 @@ class Application extends Container
      */
     public function getConfigPath()
     {
-        return $this->basePath.DIRECTORY_SEPARATOR.'config';
+        return $this->basePath . DIRECTORY_SEPARATOR . 'config';
     }
 
     /**
@@ -144,7 +144,7 @@ class Application extends Container
      */
     public function getRoutesPath()
     {
-        return $this->basePath.DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'routes'.DIRECTORY_SEPARATOR.'main.php';
+        return $this->basePath . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'routes' . DIRECTORY_SEPARATOR . 'main.php';
     }
 
     /**
@@ -152,7 +152,7 @@ class Application extends Container
      */
     public function getViewsPath()
     {
-        return $this->basePath.DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'views';
+        return $this->basePath . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'views';
     }
 
     /**
@@ -160,7 +160,7 @@ class Application extends Container
      */
     public function getAppPath()
     {
-        return $this->basePath.DIRECTORY_SEPARATOR.'app';
+        return $this->basePath . DIRECTORY_SEPARATOR . 'app';
     }
 
     /**
@@ -168,7 +168,7 @@ class Application extends Container
      */
     public function getLangPath()
     {
-        return $this->basePath.DIRECTORY_SEPARATOR.'resources'.DIRECTORY_SEPARATOR.'lang';
+        return $this->basePath . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'lang';
     }
 
     /**
@@ -178,7 +178,7 @@ class Application extends Container
      */
     public function getPublicPath()
     {
-        return $this->basePath.DIRECTORY_SEPARATOR.'public';
+        return $this->basePath . DIRECTORY_SEPARATOR . 'public';
     }
 
     /**
@@ -188,7 +188,7 @@ class Application extends Container
      */
     public function getStoragePath()
     {
-        return $this->storagePath ?: $this->basePath.DIRECTORY_SEPARATOR.'storage';
+        return $this->storagePath ?: $this->basePath . DIRECTORY_SEPARATOR . 'storage';
     }
 
     /**

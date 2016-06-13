@@ -176,7 +176,7 @@ class Route
      */
     protected function bindPathParameters(Request $request)
     {
-        preg_match($this->compiled->getRegex(), '/'.$request->getDecodedPath(), $matches);
+        preg_match($this->compiled->getRegex(), '/' . $request->getDecodedPath(), $matches);
 
         return $matches;
     }
@@ -257,7 +257,7 @@ class Route
      */
     protected function compileParameterNames()
     {
-        preg_match_all('/\{(.*?)\}/', $this->getDomain().$this->uri, $matches);
+        preg_match_all('/\{(.*?)\}/', $this->getDomain() . $this->uri, $matches);
 
         return array_map(function ($m) {
             return trim($m, '?');
@@ -341,9 +341,9 @@ class Route
 
         // Set a series of validators to validate whether a route matches some criteria.
         return static::$validators = [
-            new MethodValidator,
-            new HostValidator,
-            new UriValidator
+            new MethodValidator(),
+            new HostValidator(),
+            new UriValidator(),
         ];
     }
 
@@ -430,7 +430,7 @@ class Route
         }
 
         if (is_string($action['uses']) && !StringHelper::contains($action['uses'], '@')) {
-            throw new UnexpectedValueException('Invalid route action: '.$action['uses']);
+            throw new UnexpectedValueException('Invalid route action: ' . $action['uses']);
         }
 
         return $action;
