@@ -24,12 +24,12 @@ class SessionHandler
     /**
      * The session's expiration time (in seconds).
      *
-     * @type integer
+     * @var int
      */
     const EXPIRE = 18000;
 
     /**
-     * @type string
+     * @var string
      */
     private $sessionId;
 
@@ -62,8 +62,9 @@ class SessionHandler
         // Get SESSION Namespace
         $namespace = $this->getNS($namespace);
 
-        if (isset($_SESSION[$namespace][$name]))
+        if (isset($_SESSION[$namespace][$name])) {
             return $_SESSION[$namespace][$name];
+        }
 
         return $default;
     }
@@ -84,10 +85,11 @@ class SessionHandler
 
         $old = (isset($_SESSION[$namespace][$name]) ? $_SESSION[$namespace][$name] : null);
 
-        if (is_null($value))
+        if (is_null($value)) {
             unset($_SESSION[$namespace][$name]);
-        else
+        } else {
             $_SESSION[$namespace][$name] = $value;
+        }
 
         return $old;
     }
@@ -98,7 +100,7 @@ class SessionHandler
      * @param string $name      The variable name.
      * @param string $namespace The namespace of the session variable.
      *
-     * @return boolean True if the variable is set, false otherwise.
+     * @return bool True if the variable is set, false otherwise.
      */
     public function has($name, $namespace = 'default')
     {
@@ -135,7 +137,7 @@ class SessionHandler
      *
      * @param string $namespace The namespace to be cleared.
      *
-     * @return boolean True on success, false on failure.
+     * @return bool True on success, false on failure.
      */
     public function clearSet($namespace)
     {
@@ -160,7 +162,7 @@ class SessionHandler
     /**
      * Get session id
      *
-     * @return integer The session unique id.
+     * @return int The session unique id.
      */
     public function getId()
     {
@@ -179,7 +181,7 @@ class SessionHandler
     /**
      * Return the in-memory size of the session ($_SESSION) array.
      *
-     * @return integer The memory size in length.
+     * @return int The memory size in length.
      */
     public function getSize()
     {
@@ -189,22 +191,22 @@ class SessionHandler
     /**
      * Set the validation timers.
      *
-     * @param boolean $forceRegenerate Forces the timers to regenerate (in case of an expiration or something).
+     * @param bool $forceRegenerate Forces the timers to regenerate (in case of an expiration or something).
      */
     private function setTimers($forceRegenerate = false)
     {
         $start = time();
 
         // If there is no starting point, restart all over again
-        if (!$this->has('timer.start', "session") || $forceRegenerate) {
-            $this->set('timer.start', $start, "session");
-            $this->set('timer.last', $start, "session");
-            $this->set('timer.now', $start, "session");
+        if (!$this->has('timer.start', 'session') || $forceRegenerate) {
+            $this->set('timer.start', $start, 'session');
+            $this->set('timer.last', $start, 'session');
+            $this->set('timer.now', $start, 'session');
         }
 
         // Set current timers
-        $this->set('timer.last', $this->get('timer.now', null, "session"), "session");
-        $this->set('timer.now', time(), "session");
+        $this->set('timer.last', $this->get('timer.now', null, 'session'), 'session');
+        $this->set('timer.now', time(), 'session');
     }
 
     /**
@@ -221,11 +223,11 @@ class SessionHandler
         // Set Session cookie params
         $sessionCookieParams = session_get_cookie_params();
         session_set_cookie_params(
-            $sessionCookieParams["lifetime"],
-            $sessionCookieParams["path"],
+            $sessionCookieParams['lifetime'],
+            $sessionCookieParams['path'],
             $sessionCookieParams['domain'],
-            $sessionCookieParams["secure"],
-            $sessionCookieParams["httponly"]
+            $sessionCookieParams['secure'],
+            $sessionCookieParams['httponly']
         );
 
         // Start session
@@ -239,13 +241,13 @@ class SessionHandler
     protected function validate()
     {
         // Regenerate session if gone too long and reset timers
-        if ((time() - $this->get('timer.start', null, "session") > SessionHandler::EXPIRE)) {
+        if ((time() - $this->get('timer.start', null, 'session') > SessionHandler::EXPIRE)) {
             session_regenerate_id(true);
             $this->setTimers(true);
         }
 
         // Destroy session if expired
-        if ((time() - $this->get('timer.last', null, "session") > SessionHandler::EXPIRE))
+        if ((time() - $this->get('timer.last', null, 'session') > SessionHandler::EXPIRE))
             $this->destroy();
     }
 
@@ -259,7 +261,7 @@ class SessionHandler
     private function getNS($namespace)
     {
         // Add prefix to namespace to avoid collisions.
-        return "__" . strtoupper($namespace);
+        return '__' . strtoupper($namespace);
     }
 
     /**
@@ -278,5 +280,3 @@ class SessionHandler
         $this->sessionId = $sessionId;
     }
 }
-
-?>

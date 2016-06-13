@@ -24,8 +24,8 @@ class StringHelper
     /**
      * Check if a given string contains a given substring.
      *
-     * @param  string       $haystack
-     * @param  string|array $needles
+     * @param string       $haystack
+     * @param string|array $needles
      *
      * @return bool
      */
@@ -48,5 +48,3 @@ class StringHelper
         return false;
     }
 }
-
-?>

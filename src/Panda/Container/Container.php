@@ -28,12 +28,12 @@ use DI\NotFoundException;
 class Container extends ContainerBuilder
 {
     /**
-     * @type DIContainer
+     * @var DIContainer
      */
     private $containerHandler;
 
     /**
-     * @type Container
+     * @var Container
      */
     protected static $instance;
 
@@ -94,10 +94,11 @@ class Container extends ContainerBuilder
      * @param string $name
      * @param array  $parameters
      *
-     * @return mixed
      * @throws NotFoundException
+     *
+     * @return mixed
      */
-    public function make($name, $parameters = array())
+    public function make($name, $parameters = [])
     {
         return $this->containerHandler->make($name, $parameters);
     }
@@ -146,5 +147,3 @@ class Container extends ContainerBuilder
         return $this->containerHandler;
     }
 }
-
-?>

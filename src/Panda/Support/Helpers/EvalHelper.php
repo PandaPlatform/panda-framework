@@ -26,7 +26,7 @@ class EvalHelper
     /**
      * Evaluate the given value and see if it's a Closure or a simple value.
      *
-     * @param  mixed $value
+     * @param mixed $value
      *
      * @return mixed
      */
@@ -35,5 +35,3 @@ class EvalHelper
         return $value instanceof Closure ? $value() : $value;
     }
 }
-
-?>

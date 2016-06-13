@@ -29,14 +29,14 @@ class Application extends Container
     /**
      * The application's base path.
      *
-     * @type string
+     * @var string
      */
     protected $basePath;
 
     /**
      * The application's storage path.
      *
-     * @type string
+     * @var string
      */
     protected $storagePath;
 
@@ -136,7 +136,7 @@ class Application extends Container
      */
     public function getConfigPath()
     {
-        return $this->basePath . DIRECTORY_SEPARATOR . "config";
+        return $this->basePath . DIRECTORY_SEPARATOR . 'config';
     }
 
     /**
@@ -144,7 +144,7 @@ class Application extends Container
      */
     public function getRoutesPath()
     {
-        return $this->basePath . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "routes" . DIRECTORY_SEPARATOR . "main.php";
+        return $this->basePath . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'routes' . DIRECTORY_SEPARATOR . 'main.php';
     }
 
     /**
@@ -152,7 +152,7 @@ class Application extends Container
      */
     public function getViewsPath()
     {
-        return $this->basePath . DIRECTORY_SEPARATOR . "resources" . DIRECTORY_SEPARATOR . "views";
+        return $this->basePath . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'views';
     }
 
     /**
@@ -205,5 +205,3 @@ class Application extends Container
         return $this;
     }
 }
-
-?>

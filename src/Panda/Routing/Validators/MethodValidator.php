@@ -13,7 +13,6 @@ use Panda\Routing\Route;
  */
 class MethodValidator implements ValidatorInterface
 {
-
     /**
      * Validate a given rule against a route and request.
      *
@@ -27,5 +26,3 @@ class MethodValidator implements ValidatorInterface
         return in_array($request->getMethod(), $route->getMethods());
     }
 }
-
-?>

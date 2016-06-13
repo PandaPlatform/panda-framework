@@ -25,7 +25,7 @@ use Panda\Support\Exceptions\NotImplementedException;
 class GeoIp
 {
     /**
-     * @type Request
+     * @var Request
      */
     private $request;
 
@@ -46,10 +46,11 @@ class GeoIp
      *                          Leave empty to get the current remote address.
      *                          It is empty by default.
      *
-     * @return string The ip timezone.
      * @throws NotImplementedException
+     *
+     * @return string The ip timezone.
      */
-    public function getTimezoneByIP($ipAddress = "")
+    public function getTimezoneByIP($ipAddress = '')
     {
         // Get remote ip address if empty
         $ipAddress = (empty($ipAddress) ? $this->request->server->get('REMOTE_ADDR') : $ipAddress);
@@ -75,10 +76,11 @@ class GeoIp
      *                          Leave empty to get the current remote address.
      *                          It is empty by default.
      *
-     * @return string The country code.
      * @throws NotImplementedException
+     *
+     * @return string The country code.
      */
-    public function getCountryCode2ByIP($ipAddress = "")
+    public function getCountryCode2ByIP($ipAddress = '')
     {
         // Get remote ip address if empty
         $ipAddress = (empty($ipAddress) ? $this->request->server->get('REMOTE_ADDR') : $ipAddress);
@@ -99,10 +101,11 @@ class GeoIp
      *                          Leave empty to get the current remote address.
      *                          It is empty by default.
      *
-     * @return string The country code.
      * @throws NotImplementedException
+     *
+     * @return string The country code.
      */
-    public function getCountryCode3ByIP($ipAddress = "")
+    public function getCountryCode3ByIP($ipAddress = '')
     {
         // Get remote ip address if empty
         $ipAddress = (empty($ipAddress) ? $this->request->server->get('REMOTE_ADDR') : $ipAddress);

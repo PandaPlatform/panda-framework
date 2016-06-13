@@ -51,9 +51,9 @@ abstract class Facade
     /**
      * Get the registered name of the component.
      *
-     * @return string
-     *
      * @throws RuntimeException
+     *
+     * @return string
      */
     protected static function getFacadeHandler()
     {
@@ -63,7 +63,7 @@ abstract class Facade
     /**
      * Resolve the facade root instance from the container.
      *
-     * @param  string|object $name
+     * @param string|object $name
      *
      * @return mixed
      */
@@ -98,12 +98,12 @@ abstract class Facade
     /**
      * Handle dynamic, static calls to the object.
      *
-     * @param  string $method
-     * @param  array  $args
-     *
-     * @return mixed
+     * @param string $method
+     * @param array  $args
      *
      * @throws RuntimeException
+     *
+     * @return mixed
      */
     public static function __callStatic($method, $args)
     {

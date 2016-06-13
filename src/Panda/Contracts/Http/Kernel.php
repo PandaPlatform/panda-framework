@@ -27,14 +27,14 @@ interface Kernel
     /**
      * Init the application for HTTP requests.
      *
-     * @param  Request $request
+     * @param Request $request
      */
     public function init(Request $request);
 
     /**
      * Handle an incoming HTTP request.
      *
-     * @param  Request $request
+     * @param Request $request
      *
      * @return Response
      */
@@ -43,8 +43,8 @@ interface Kernel
     /**
      * Perform any final actions for the request lifecycle.
      *
-     * @param  Request  $request
-     * @param  Response $response
+     * @param Request  $request
+     * @param Response $response
      */
     public function terminate(Request $request, Response $response);
 }

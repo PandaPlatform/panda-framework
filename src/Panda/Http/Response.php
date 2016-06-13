@@ -39,16 +39,4 @@ class Response extends SymfonyResponse
 
         return $this;
     }
-
-    /**
-     * Set the response content.
-     *
-     * @param mixed $content
-     *
-     * @return $this
-     */
-    public function setContent($content)
-    {
-        return parent::setContent($content);
-    }
 }

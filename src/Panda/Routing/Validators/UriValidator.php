@@ -28,5 +28,3 @@ class UriValidator implements ValidatorInterface
         return preg_match($route->getCompiled()->getRegex(), rawurldecode($path));
     }
 }
-
-?>

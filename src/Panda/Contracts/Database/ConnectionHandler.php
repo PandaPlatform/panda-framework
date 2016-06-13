@@ -14,7 +14,7 @@ declare(strict_types = 1);
 namespace Panda\Contracts\Database;
 
 /**
- * Database Connection Handler Interface
+ * Database Connection Handler Interface.
  *
  * @package Panda\Contracts\Database
  * @version 0.1

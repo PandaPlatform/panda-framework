@@ -6,7 +6,7 @@ use Panda\Http\Request;
 use Panda\Routing\Route;
 
 /**
- * Class ΗοστValidator
+ * Class HostValidator
  *
  * @package Panda\Routing\Validators
  * @version 0.1
@@ -16,8 +16,8 @@ class HostValidator implements ValidatorInterface
     /**
      * Validate a given rule against a route and request.
      *
-     * @param  Route   $route
-     * @param  Request $request
+     * @param Route   $route
+     * @param Request $request
      *
      * @return bool
      */
@@ -30,5 +30,3 @@ class HostValidator implements ValidatorInterface
         return preg_match($route->getCompiled()->getHostRegex(), $request->getHost());
     }
 }
-
-?>

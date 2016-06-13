@@ -24,7 +24,4 @@ use Psr\Log\LoggerInterface;
  */
 class Logger extends MonoLogger implements LoggerInterface
 {
-
 }
-
-?>

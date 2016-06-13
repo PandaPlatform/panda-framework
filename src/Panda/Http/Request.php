@@ -49,7 +49,7 @@ class Request extends SymfonyRequest
     /**
      * Create a Panda request from a captured Symfony instance.
      *
-     * @param  SymfonyRequest $request
+     * @param SymfonyRequest $request
      *
      * @return Request
      */
@@ -89,8 +89,8 @@ class Request extends SymfonyRequest
     /**
      * Get an input item from the request.
      *
-     * @param  string            $key
-     * @param  string|array|null $default
+     * @param string            $key
+     * @param string|array|null $default
      *
      * @return string|array
      */
@@ -114,8 +114,8 @@ class Request extends SymfonyRequest
     /**
      * Retrieve a header from the request.
      *
-     * @param  string            $key
-     * @param  string|array|null $default
+     * @param string            $key
+     * @param string|array|null $default
      *
      * @return string|array
      */
@@ -127,9 +127,9 @@ class Request extends SymfonyRequest
     /**
      * Retrieve a parameter item from a given source.
      *
-     * @param  string            $source
-     * @param  string            $key
-     * @param  string|array|null $default
+     * @param string            $source
+     * @param string            $key
+     * @param string|array|null $default
      *
      * @return string|array
      */
@@ -167,8 +167,8 @@ class Request extends SymfonyRequest
     /**
      * Get the JSON payload for the request.
      *
-     * @param  string $key
-     * @param  mixed  $default
+     * @param string $key
+     * @param mixed  $default
      *
      * @return mixed
      */

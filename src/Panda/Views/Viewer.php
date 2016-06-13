@@ -27,32 +27,32 @@ use Panda\Http\Request;
 class Viewer
 {
     /**
-     * @type Application
+     * @var Application
      */
     private $app;
 
     /**
-     * @type Request
+     * @var Request
      */
     private $request;
 
     /**
-     * @type bool
+     * @var bool
      */
     private $executable = false;
 
     /**
-     * @type mixed
+     * @var mixed
      */
     protected $output;
 
     /**
-     * @type array
+     * @var array
      */
     protected $parameters;
 
     /**
-     * @type string
+     * @var string
      */
     protected $view;
 

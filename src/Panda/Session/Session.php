@@ -25,7 +25,7 @@ use Panda\Http\Request;
 class Session implements Initializer
 {
     /**
-     * @type SessionHandler
+     * @var SessionHandler
      */
     private $handler;
 
@@ -65,5 +65,3 @@ class Session implements Initializer
         $this->handler = $handler;
     }
 }
-
-?>

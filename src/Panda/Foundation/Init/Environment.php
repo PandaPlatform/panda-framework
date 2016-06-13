@@ -18,16 +18,16 @@ use Panda\Foundation\Application;
 use Panda\Http\Request;
 
 /**
- * Environment Initializer
+ * Class Environment
  * Initialize session, datetimer and debugger.
  *
- * @package Panda\Session
+ * @package Panda\Foundation\Init
  * @version 0.1
  */
 class Environment implements Initializer
 {
     /**
-     * @type Application
+     * @var Application
      */
     private $app;
 
@@ -48,6 +48,10 @@ class Environment implements Initializer
      */
     public function init($request)
     {
+        // Set environment
+        $this->app->set('env', getenv('APPLICATION_ENV') ?: 'production');
+
+        // Initialize environment
         $this->app->make('\Panda\Debug\Debugger')->init($request);
         $this->app->make('\Panda\Localization\DateTimer')->init($request);
         $this->app->make('\Panda\Session\Session')->init($request);

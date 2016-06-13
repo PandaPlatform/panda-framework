@@ -23,5 +23,5 @@ use Exception;
  */
 class NotImplementedException extends Exception
 {
-    
+
 }

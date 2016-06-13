@@ -16,16 +16,15 @@ namespace Panda\Foundation\Init;
 use Panda\Contracts\Init\Initializer;
 use Panda\Foundation\Application;
 use Panda\Http\Request;
-use Panda\Support\Facades\Facade;
 
 /**
- * Environment Initializer
- * Initialize session, datetimers and debuggers
+ * Class Configuration
+ * Initializes configuration variables.
  *
- * @package Panda\Session
+ * @package Panda\Foundation\Init
  * @version 0.1
  */
-class FacadeRegistry implements Initializer
+class Configuration implements Initializer
 {
     /**
      * @var Application
@@ -49,7 +48,17 @@ class FacadeRegistry implements Initializer
      */
     public function init($request)
     {
-        // Set facade application container
-        Facade::setFacadeApp($this->app);
+        // Load configuration file
+        $configFile = $this->app->getConfigPath() . DIRECTORY_SEPARATOR . "config.json";
+        if (file_exists($configFile)) {
+            // Load and decode json config
+            $config = file_get_contents($configFile);
+            $configArray = json_decode($config, true);
+
+            // If valid, set application config
+            if (!empty($configArray)) {
+                $this->app->set('config', $configArray);
+            }
+        }
     }
 }
