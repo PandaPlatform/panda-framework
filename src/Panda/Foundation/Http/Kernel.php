@@ -45,6 +45,7 @@ class Kernel implements KernelInterface
      * @var Initializer[]
      */
     protected $initializers = [
+        '\Panda\Foundation\Init\Configuration',
         '\Panda\Foundation\Init\Environment',
         '\Panda\Foundation\Init\FacadeRegistry',
     ];
