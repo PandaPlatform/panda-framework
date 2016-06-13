@@ -56,8 +56,9 @@ class RouteCollection
      *
      * @param Request $request
      *
-     * @return mixed
      * @throws NotFoundHttpException
+     *
+     * @return mixed
      */
     public function match(Request $request)
     {
@@ -78,7 +79,7 @@ class RouteCollection
             return $this->getRouteForMethods($request, $others);
         }*/
 
-        throw new NotFoundHttpException;
+        throw new NotFoundHttpException();
     }
 
     /**
@@ -103,7 +104,7 @@ class RouteCollection
     /**
      * Get all matched routes according to the given request method.
      *
-     * @param  string|null $method
+     * @param string|null $method
      *
      * @return array
      */
@@ -130,7 +131,7 @@ class RouteCollection
     /**
      * Add a Route instance to the collection.
      *
-     * @param  Route $route
+     * @param Route $route
      *
      * @return Route
      */
@@ -145,7 +146,7 @@ class RouteCollection
     /**
      * Add the given route to the arrays of routes.
      *
-     * @param  Route $route
+     * @param Route $route
      */
     protected function addToCollections($route)
     {

@@ -62,7 +62,7 @@ class Connection
      *
      * @return bool|False
      */
-    public function execute($query, $attr = array(), $commit = true)
+    public function execute($query, $attr = [], $commit = true)
     {
         // Clear error message
         $this->error = '';

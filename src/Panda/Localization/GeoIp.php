@@ -50,7 +50,7 @@ class GeoIp
      *
      * @return string The ip timezone.
      */
-    public function getTimezoneByIP($ipAddress = "")
+    public function getTimezoneByIP($ipAddress = '')
     {
         // Get remote ip address if empty
         $ipAddress = (empty($ipAddress) ? $this->request->server->get('REMOTE_ADDR') : $ipAddress);
@@ -80,7 +80,7 @@ class GeoIp
      *
      * @return string The country code.
      */
-    public function getCountryCode2ByIP($ipAddress = "")
+    public function getCountryCode2ByIP($ipAddress = '')
     {
         // Get remote ip address if empty
         $ipAddress = (empty($ipAddress) ? $this->request->server->get('REMOTE_ADDR') : $ipAddress);
@@ -105,7 +105,7 @@ class GeoIp
      *
      * @return string The country code.
      */
-    public function getCountryCode3ByIP($ipAddress = "")
+    public function getCountryCode3ByIP($ipAddress = '')
     {
         // Get remote ip address if empty
         $ipAddress = (empty($ipAddress) ? $this->request->server->get('REMOTE_ADDR') : $ipAddress);

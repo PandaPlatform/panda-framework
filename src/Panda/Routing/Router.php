@@ -70,8 +70,8 @@ class Router
     /**
      * Register a new GET route with the router.
      *
-     * @param  string                    $uri
-     * @param  Closure|array|string|null $action
+     * @param string                    $uri
+     * @param Closure|array|string|null $action
      *
      * @return Route
      */
@@ -83,8 +83,8 @@ class Router
     /**
      * Register a new POST route with the router.
      *
-     * @param  string                    $uri
-     * @param  Closure|array|string|null $action
+     * @param string                    $uri
+     * @param Closure|array|string|null $action
      *
      * @return Route
      */
@@ -96,8 +96,8 @@ class Router
     /**
      * Register a new PUT route with the router.
      *
-     * @param  string                    $uri
-     * @param  Closure|array|string|null $action
+     * @param string                    $uri
+     * @param Closure|array|string|null $action
      *
      * @return Route
      */
@@ -109,8 +109,8 @@ class Router
     /**
      * Register a new PATCH route with the router.
      *
-     * @param  string                    $uri
-     * @param  Closure|array|string|null $action
+     * @param string                    $uri
+     * @param Closure|array|string|null $action
      *
      * @return Route
      */
@@ -122,8 +122,8 @@ class Router
     /**
      * Register a new DELETE route with the router.
      *
-     * @param  string                    $uri
-     * @param  Closure|array|string|null $action
+     * @param string                    $uri
+     * @param Closure|array|string|null $action
      *
      * @return Route
      */
@@ -135,8 +135,8 @@ class Router
     /**
      * Register a new OPTIONS route with the router.
      *
-     * @param  string                    $uri
-     * @param  Closure|array|string|null $action
+     * @param string                    $uri
+     * @param Closure|array|string|null $action
      *
      * @return Route
      */
@@ -148,8 +148,8 @@ class Router
     /**
      * Register a new route responding to all verbs.
      *
-     * @param  string                    $uri
-     * @param  Closure|array|string|null $action
+     * @param string                    $uri
+     * @param Closure|array|string|null $action
      *
      * @return Route
      */
@@ -163,9 +163,9 @@ class Router
     /**
      * Register a new route with the given verbs.
      *
-     * @param  array                     $methods
-     * @param  string                    $uri
-     * @param  Closure|array|string|null $action
+     * @param array                     $methods
+     * @param string                    $uri
+     * @param Closure|array|string|null $action
      *
      * @return Route
      */
@@ -177,9 +177,9 @@ class Router
     /**
      * Add a route to the underlying route collection.
      *
-     * @param  array|string              $methods
-     * @param  string                    $uri
-     * @param  Closure|array|string|null $action
+     * @param array|string              $methods
+     * @param string                    $uri
+     * @param Closure|array|string|null $action
      *
      * @return Route
      */
@@ -191,9 +191,9 @@ class Router
     /**
      * Create a new route instance.
      *
-     * @param  array|string $methods
-     * @param  string       $uri
-     * @param  mixed        $action
+     * @param array|string $methods
+     * @param string       $uri
+     * @param mixed        $action
      *
      * @return Route
      */
@@ -215,7 +215,7 @@ class Router
     /**
      * Determine if the action is routing to a controller.
      *
-     * @param  array $action
+     * @param array $action
      *
      * @return bool
      */
@@ -231,7 +231,7 @@ class Router
     /**
      * Add a controller based route action to the action array.
      *
-     * @param  array|string $action
+     * @param array|string $action
      *
      * @return array
      */
@@ -250,9 +250,9 @@ class Router
     /**
      * Create a new Route object.
      *
-     * @param  array|string $methods
-     * @param  string       $uri
-     * @param  mixed        $action
+     * @param array|string $methods
+     * @param string       $uri
+     * @param mixed        $action
      *
      * @return Route
      */
@@ -264,7 +264,7 @@ class Router
     /**
      * Dispatch the request to the application.
      *
-     * @param  Request $request
+     * @param Request $request
      *
      * @return Response
      */
@@ -280,7 +280,7 @@ class Router
     /**
      * Dispatch the request to a route and return the response.
      *
-     * @param  Request $request
+     * @param Request $request
      *
      * @return mixed
      */
@@ -298,8 +298,8 @@ class Router
     /**
      * Create a response instance from the given value.
      *
-     * @param  SymfonyRequest $request
-     * @param  mixed          $response
+     * @param SymfonyRequest $request
+     * @param mixed          $response
      *
      * @return SymfonyResponse
      */
@@ -315,8 +315,8 @@ class Router
     /**
      * Run the given route within a Stack "onion" instance.
      *
-     * @param  Route   $route
-     * @param  Request $request
+     * @param Route   $route
+     * @param Request $request
      *
      * @return mixed
      */
@@ -329,7 +329,7 @@ class Router
     /**
      * Find the route matching a given request.
      *
-     * @param  Request $request
+     * @param Request $request
      *
      * @return Route
      */
@@ -368,8 +368,8 @@ class Router
     /**
      * Get a route parameter for the current route.
      *
-     * @param  string $key
-     * @param  string $default
+     * @param string $key
+     * @param string $default
      *
      * @return mixed
      */

@@ -16,12 +16,12 @@ namespace Panda\Routing;
 use Closure;
 use HttpResponseException;
 use LogicException;
-use Panda\Support\Helpers\ArrayHelper;
-use Panda\Support\Helpers\StringHelper;
 use Panda\Http\Request;
 use Panda\Routing\Validators\HostValidator;
 use Panda\Routing\Validators\MethodValidator;
 use Panda\Routing\Validators\UriValidator;
+use Panda\Support\Helpers\ArrayHelper;
+use Panda\Support\Helpers\StringHelper;
 use ReflectionFunction;
 use Symfony\Component\Routing\CompiledRoute;
 use Symfony\Component\Routing\Route as SymfonyRoute;
@@ -128,7 +128,7 @@ class Route
     /**
      * Bind the route to a given request for execution.
      *
-     * @param  Request $request
+     * @param Request $request
      *
      * @return $this
      */
@@ -143,7 +143,7 @@ class Route
     /**
      * Extract the parameter list from the request.
      *
-     * @param  Request $request
+     * @param Request $request
      *
      * @return array
      */
@@ -170,7 +170,7 @@ class Route
     /**
      * Get the parameter matches for the path portion of the URI.
      *
-     * @param  Request $request
+     * @param Request $request
      *
      * @return array
      */
@@ -184,8 +184,8 @@ class Route
     /**
      * Extract the parameter list from the host part of the request.
      *
-     * @param  Request $request
-     * @param  array   $parameters
+     * @param Request $request
+     * @param array   $parameters
      *
      * @return array
      */
@@ -199,7 +199,7 @@ class Route
     /**
      * Combine a set of parameter matches with the route's keys.
      *
-     * @param  array $matches
+     * @param array $matches
      *
      * @return array
      */
@@ -218,7 +218,7 @@ class Route
     /**
      * Replace null parameters with their defaults.
      *
-     * @param  array $parameters
+     * @param array $parameters
      *
      * @return array
      */
@@ -267,8 +267,8 @@ class Route
     /**
      * Get a given parameter from the route.
      *
-     * @param  string $name
-     * @param  mixed  $default
+     * @param string $name
+     * @param mixed  $default
      *
      * @return string|object
      */
@@ -280,8 +280,8 @@ class Route
     /**
      * Set a parameter to the given value.
      *
-     * @param  string $name
-     * @param  mixed  $value
+     * @param string $name
+     * @param mixed  $value
      *
      * @return void
      */
@@ -325,7 +325,7 @@ class Route
     {
         $uri = preg_replace('/\{(\w+?)\?\}/', '{$1}', $this->uri);
 
-        $this->compiled = (new SymfonyRoute($uri, $optionals = array(), $requirements = array(), [], $domain = ''))->compile();
+        $this->compiled = (new SymfonyRoute($uri, $optionals = [], $requirements = [], [], $domain = ''))->compile();
     }
 
     /**
@@ -373,7 +373,7 @@ class Route
     /**
      * Run the route action as callable and return the response.
      *
-     * @param  Request $request
+     * @param Request $request
      *
      * @return mixed
      */
@@ -391,7 +391,7 @@ class Route
     /**
      * Run the route action as controller and return the response.
      *
-     * @param  Request $request
+     * @param Request $request
      *
      * @return mixed
      */
@@ -403,7 +403,7 @@ class Route
     /**
      * Parse the route action into a standard array.
      *
-     * @param  callable|array|null $action
+     * @param callable|array|null $action
      *
      * @throws UnexpectedValueException
      *
@@ -439,7 +439,7 @@ class Route
     /**
      * Find the callable in an action array.
      *
-     * @param  array $action
+     * @param array $action
      *
      * @return callable
      */

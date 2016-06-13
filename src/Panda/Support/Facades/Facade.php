@@ -63,7 +63,7 @@ abstract class Facade
     /**
      * Resolve the facade root instance from the container.
      *
-     * @param  string|object $name
+     * @param string|object $name
      *
      * @return mixed
      */
@@ -98,8 +98,8 @@ abstract class Facade
     /**
      * Handle dynamic, static calls to the object.
      *
-     * @param  string $method
-     * @param  array  $args
+     * @param string $method
+     * @param array  $args
      *
      * @throws RuntimeException
      *

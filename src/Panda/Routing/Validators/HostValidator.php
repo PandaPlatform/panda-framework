@@ -16,8 +16,8 @@ class HostValidator implements ValidatorInterface
     /**
      * Validate a given rule against a route and request.
      *
-     * @param  Route   $route
-     * @param  Request $request
+     * @param Route   $route
+     * @param Request $request
      *
      * @return bool
      */

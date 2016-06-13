@@ -97,7 +97,7 @@ class Container extends ContainerBuilder
      * @return mixed
      * @throws NotFoundException
      */
-    public function make($name, $parameters = array())
+    public function make($name, $parameters = [])
     {
         return $this->containerHandler->make($name, $parameters);
     }

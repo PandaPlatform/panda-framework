@@ -46,9 +46,9 @@ class ArrayHelper
     /**
      * Filter array elements with a given callback function.
      *
-     * @param  array         $array
-     * @param  callable|null $callback
-     * @param  mixed         $default
+     * @param array         $array
+     * @param callable|null $callback
+     * @param mixed         $default
      *
      * @return mixed
      */
