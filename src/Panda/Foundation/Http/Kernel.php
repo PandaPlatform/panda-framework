@@ -74,7 +74,7 @@ class Kernel implements KernelInterface
         $this->app->init($this->initializers, $request);
 
         // Set bindings
-        $this->app->set('kernel', $this);
+        $this->app->set('Kernel', $this);
 
         // Include routes
         include_once $this->app->getRoutesPath();
