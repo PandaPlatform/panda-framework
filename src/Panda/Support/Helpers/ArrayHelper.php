@@ -17,6 +17,7 @@ namespace Panda\Support\Helpers;
  * Class ArrayHelper
  *
  * @package Panda\Support\Helpers
+ *
  * @version 0.1
  */
 class ArrayHelper
@@ -30,7 +31,7 @@ class ArrayHelper
      *
      * @return mixed
      */
-    public static function get($array, $key, $default = null)
+    public static function get(array $array, $key, $default = null)
     {
         if (is_null($key)) {
             return $array;
@@ -52,7 +53,7 @@ class ArrayHelper
      *
      * @return mixed
      */
-    public static function filter($array, callable $callback = null, $default = null)
+    public static function filter(array $array, callable $callback = null, $default = null)
     {
         if (is_null($callback)) {
             return empty($array) ? EvalHelper::evaluate($default) : reset($array);
@@ -64,5 +65,30 @@ class ArrayHelper
         }
 
         return EvalHelper::evaluate($default);
+    }
+
+    /**
+     * Perform a deep merge on the given two arrays.
+     *
+     * @param array $array1
+     * @param array $array2
+     *
+     * @return array
+     */
+    public static function array_merge_recursive_ex(array &$array1, array &$array2)
+    {
+        $merged = $array1;
+
+        foreach ($array2 as $key => & $value) {
+            if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
+                $merged[$key] = static::array_merge_recursive_ex($merged[$key], $value);
+            } else if (is_numeric($key)) {
+                if (!in_array($value, $merged))
+                    $merged[] = $value;
+            } else
+                $merged[$key] = $value;
+        }
+
+        return $merged;
     }
 }

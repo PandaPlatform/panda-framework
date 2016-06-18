@@ -16,6 +16,7 @@ namespace Panda\Foundation\Bootstrap;
 use Panda\Contracts\Bootstrapper;
 use Panda\Foundation\Application;
 use Panda\Http\Request;
+use Panda\Support\Helpers\ArrayHelper;
 
 /**
  * Class Configuration
@@ -50,14 +51,16 @@ class Configuration implements Bootstrapper
      */
     public function boot($request, $environment = 'default')
     {
-        // Get configuration file path
-        $configFile = $this->getConfigFile($environment);
-        if (empty($configFile)) {
-            return;
-        }
+        // Load default configuration
+        $defaultConfigFile = $this->getConfigFile('default');
+        $defaultConfigArray = ($defaultConfigFile ? json_decode(file_get_contents($defaultConfigFile), true) : []);
 
-        // Load configuration and set to application
-        $configArray = json_decode(file_get_contents($configFile), true);
+        // Load environment configuration
+        $envConfigFile = $this->getConfigFile($environment);
+        $envConfigArray = ($envConfigFile ? json_decode(file_get_contents($envConfigFile), true) : []);
+
+        // Merge environment config to default and set to application
+        $configArray = ArrayHelper::array_merge_recursive_ex($defaultConfigArray, $envConfigArray);
         if (!empty($configArray)) {
             $this->app->set('config', $configArray);
         }
