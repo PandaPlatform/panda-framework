@@ -192,7 +192,14 @@ class Application extends Container implements Bootstrapper
      */
     public function getAppPath()
     {
-        return $this->basePath . DIRECTORY_SEPARATOR . 'app';
+        $paths = $this->config('paths');
+        $source = $paths['source'];
+        if (empty($source)) {
+            // Fallback to default
+            return $this->basePath . DIRECTORY_SEPARATOR . 'app';
+        }
+
+        return $this->basePath . DIRECTORY_SEPARATOR . $source['base_dir'];
     }
 
     /**
