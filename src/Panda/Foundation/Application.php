@@ -113,23 +113,12 @@ class Application extends Container implements Bootstrapper
     }
 
     /**
-     * Bind base application paths in the container.
-     */
-    protected function bindBasePathsInContainer()
-    {
-        $this->set('path', $this->getAppPath());
-        $this->set('path.base', $this->getBasePath());
-    }
-
-    /**
      * Bind all of the application paths in the container.
      */
     protected function bindPathsInContainer()
     {
-        // Base paths
-        $this->bindBasePathsInContainer();
-
-        // All paths
+        $this->set('path', $this->getAppPath());
+        $this->set('path.base', $this->getBasePath());
         $this->set('path.lang', $this->getLangPath());
         $this->set('path.config', $this->getConfigPath());
         $this->set('path.public', $this->getPublicPath());
@@ -152,11 +141,7 @@ class Application extends Container implements Bootstrapper
     public function setBasePath($basePath)
     {
         $this->basePath = $basePath;
-        $this->bindBasePathsInContainer();
-
-        if (!empty($this->config('paths'))) {
-            $this->bindPathsInContainer();
-        }
+        $this->bindPathsInContainer();
 
         return $this;
     }
