@@ -13,30 +13,49 @@ declare(strict_types = 1);
 
 namespace Panda\Debug;
 
-use Panda\Contracts\Init\Initializer;
+use Panda\Contracts\Bootstrapper;
+use Panda\Foundation\Application;
 use Panda\Http\Request;
 
 /**
  * Class Debugger
  *
  * @package Panda\Debug
+ *
  * @version 0.1
  */
-class Debugger implements Initializer
+class Debugger implements Bootstrapper
 {
+    /**
+     * @var Application
+     */
+    private $app;
+
+    /**
+     * Environment constructor.
+     *
+     * @param Application $app
+     */
+    public function __construct(Application $app)
+    {
+        $this->app = $app;
+    }
+
     /**
      * Init session.
      *
      * @param Request $request
      */
-    public function init($request)
+    public function boot($request)
     {
         // Set error reporting
         error_reporting(E_ALL & ~(E_STRICT | E_NOTICE | E_WARNING | E_DEPRECATED));
 
         // Set Server to display errors
-        if ($request->cookies->get('pdebug')) {
+        if ($request->cookies->get('pdebug') || $this->app->get('env') == 'development') {
             ini_set('display_errors', 'On');
+        } else {
+            ini_set('display_errors', 'Off');
         }
     }
 }

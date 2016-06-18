@@ -13,16 +13,17 @@ declare(strict_types = 1);
 
 namespace Panda\Session;
 
-use Panda\Contracts\Init\Initializer;
+use Panda\Contracts\Bootstrapper;
 use Panda\Http\Request;
 
 /**
  * Session Manager. Handles all session storage processes.
  *
  * @package Panda\Session
+ *
  * @version 0.1
  */
-class Session implements Initializer
+class Session implements Bootstrapper
 {
     /**
      * @var SessionHandler
@@ -44,7 +45,7 @@ class Session implements Initializer
      *
      * @param Request $request
      */
-    public function init($request)
+    public function boot($request)
     {
         $this->handler->startSession();
     }

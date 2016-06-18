@@ -11,21 +11,21 @@
 
 declare(strict_types = 1);
 
-namespace Panda\Foundation\Init;
+namespace Panda\Foundation\Bootstrap;
 
-use Panda\Contracts\Init\Initializer;
+use Panda\Contracts\Bootstrapper;
 use Panda\Foundation\Application;
 use Panda\Http\Request;
 use Panda\Support\Facades\Facade;
 
 /**
- * Environment Initializer
- * Initialize session, datetimers and debuggers
+ * Class FacadeRegistry
  *
- * @package Panda\Session
+ * @package Panda\Foundation\Bootstrap
+ *
  * @version 0.1
  */
-class FacadeRegistry implements Initializer
+class FacadeRegistry implements Bootstrapper
 {
     /**
      * @var Application
@@ -47,7 +47,7 @@ class FacadeRegistry implements Initializer
      *
      * @param Request $request
      */
-    public function init($request)
+    public function boot($request)
     {
         // Set facade application container
         Facade::setFacadeApp($this->app);
