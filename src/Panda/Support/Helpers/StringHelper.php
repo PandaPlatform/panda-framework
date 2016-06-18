@@ -17,6 +17,7 @@ namespace Panda\Support\Helpers;
  * Class StringHelper
  *
  * @package Panda\Support\Helpers
+ *
  * @version 0.1
  */
 class StringHelper

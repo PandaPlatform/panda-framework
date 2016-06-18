@@ -19,6 +19,7 @@ use Closure;
  * Class EvalHelper
  *
  * @package Panda\Support\Helpers
+ *
  * @version 0.1
  */
 class EvalHelper
