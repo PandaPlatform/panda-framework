@@ -11,20 +11,21 @@
 
 declare(strict_types = 1);
 
-namespace Panda\Foundation\Init;
+namespace Panda\Foundation\Bootstrap;
 
-use Panda\Contracts\Init\Initializer;
+use Panda\Contracts\Bootstrapper;
 use Panda\Foundation\Application;
 use Panda\Http\Request;
 
 /**
  * Class Environment
- * Initialize session, datetimer and debugger.
+ * Bootstrap the application environment including session, datetimer, debugger etc.
  *
- * @package Panda\Foundation\Init
+ * @package Panda\Foundation\Bootstrap
+ *
  * @version 0.1
  */
-class Environment implements Initializer
+class Environment implements Bootstrapper
 {
     /**
      * @var Application
@@ -46,14 +47,11 @@ class Environment implements Initializer
      *
      * @param Request $request
      */
-    public function init($request)
+    public function boot($request)
     {
-        // Set environment
-        $this->app->set('env', getenv('APPLICATION_ENV') ?: 'production');
-
         // Initialize environment
-        $this->app->make('\Panda\Debug\Debugger')->init($request);
-        $this->app->make('\Panda\Localization\DateTimer')->init($request);
-        $this->app->make('\Panda\Session\Session')->init($request);
+        $this->app->make('\Panda\Debug\Debugger')->boot($request);
+        $this->app->make('\Panda\Localization\DateTimer')->boot($request);
+        $this->app->make('\Panda\Session\Session')->boot($request);
     }
 }

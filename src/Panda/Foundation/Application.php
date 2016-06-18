@@ -13,7 +13,9 @@ declare(strict_types = 1);
 
 namespace Panda\Foundation;
 
+use Exception;
 use Panda\Container\Container;
+use Panda\Contracts\Bootstrapper;
 use Panda\Contracts\Http\Kernel as KernelInterface;
 use Panda\Foundation\Http\Kernel;
 use Panda\Http\Request;
@@ -22,9 +24,10 @@ use Panda\Http\Request;
  * Panda application manager.
  *
  * @package Panda\Foundation
+ *
  * @version 0.1
  */
-class Application extends Container
+class Application extends Container implements Bootstrapper
 {
     /**
      * The application's base path.
@@ -44,8 +47,9 @@ class Application extends Container
      * Create a new panda application instance.
      *
      * @param string $basePath
+     * @param string $environment
      */
-    public function __construct($basePath = null)
+    public function __construct($basePath = null, $environment = '')
     {
         // Construct container
         parent::__construct();
@@ -55,15 +59,21 @@ class Application extends Container
             $this->setBasePath($basePath);
         }
 
+        // Set the application environment
+        $environment = ($environment ?: getenv('APPLICATION_ENV'));
+        $environment = ($environment ?: 'default');
+
         // Register all bindings
-        $this->registerAppBindings();
+        $this->registerAppBindings($environment);
         $this->registerServiceBindings();
     }
 
     /**
      * Register application bindings.
+     *
+     * @param string $environment
      */
-    private function registerAppBindings()
+    private function registerAppBindings($environment)
     {
         static::setInstance($this);
 
@@ -71,6 +81,9 @@ class Application extends Container
         $this->set('app', $this);
         $this->set('Panda\Foundation\Application', $this);
         $this->set('Panda\Container\Container', $this);
+
+        // Set the application environment
+        $this->set('env', $environment);
     }
 
     /**
@@ -83,17 +96,20 @@ class Application extends Container
     }
 
     /**
-     * Initialize the framework with the given initializers.
+     * Initialize the framework with the given bootstrappers.
      *
-     * @param array   $initializers
      * @param Request $request
+     * @param array   $bootstrappers
      */
-    public function init($initializers, Request $request)
+    public function boot($request, $bootstrappers = [])
     {
-        // Initialize all needed
-        foreach ($initializers as $initializer) {
-            $this->make($initializer)->init($request);
+        // Boot all the bootstrappers
+        foreach ($bootstrappers as $bootstrapper) {
+            $this->make($bootstrapper)->boot($request, $this->get('env'));
         }
+
+        // Bind paths, after setting up configuration
+        $this->bindPathsInContainer();
     }
 
     /**
@@ -126,7 +142,9 @@ class Application extends Container
     {
         $this->basePath = $basePath;
 
-        $this->bindPathsInContainer();
+        if (!empty($this->config('paths'))) {
+            $this->bindPathsInContainer();
+        }
 
         return $this;
     }
@@ -144,7 +162,14 @@ class Application extends Container
      */
     public function getRoutesPath()
     {
-        return $this->basePath . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'routes' . DIRECTORY_SEPARATOR . 'main.php';
+        $paths = $this->config('paths');
+        $routes = $paths['routes'];
+        if (empty($routes)) {
+            // Fallback to default
+            return $this->basePath . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'routes' . DIRECTORY_SEPARATOR . 'main.php';
+        }
+
+        return $this->basePath . DIRECTORY_SEPARATOR . $routes['base_dir'] . DIRECTORY_SEPARATOR . $routes['base_file'];
     }
 
     /**
@@ -152,7 +177,14 @@ class Application extends Container
      */
     public function getViewsPath()
     {
-        return $this->basePath . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'views';
+        $paths = $this->config('paths');
+        $views = $paths['views'];
+        if (empty($views)) {
+            // Fallback to default
+            return $this->basePath . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'views';
+        }
+
+        return $this->basePath . DIRECTORY_SEPARATOR . $views['base_dir'];
     }
 
     /**
@@ -168,7 +200,14 @@ class Application extends Container
      */
     public function getLangPath()
     {
-        return $this->basePath . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'lang';
+        $paths = $this->config('paths');
+        $lang = $paths['lang'];
+        if (empty($lang)) {
+            // Fallback to default
+            return $this->basePath . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'lang';
+        }
+
+        return $this->basePath . DIRECTORY_SEPARATOR . $lang['base_dir'];
     }
 
     /**
@@ -203,5 +242,25 @@ class Application extends Container
         $this->bindPathsInContainer();
 
         return $this;
+    }
+
+    /**
+     * Get a configuration value.
+     *
+     * @param string $name
+     *
+     * @return mixed
+     */
+    public function config($name)
+    {
+        // Get configuration
+        try {
+            $config = $this->get('config');
+        } catch (Exception $ex) {
+            return null;
+        }
+
+        // Get value
+        return $config[$name];
     }
 }

@@ -14,16 +14,17 @@ declare(strict_types = 1);
 namespace Panda\Localization;
 
 use Exception;
-use Panda\Contracts\Init\Initializer;
+use Panda\Contracts\Bootstrapper;
 use Panda\Http\Request;
 
 /**
  * Class DateTimer
  *
  * @package Panda\Localization
+ *
  * @version 0.1
  */
-class DateTimer implements Initializer
+class DateTimer implements Bootstrapper
 {
     /**
      * The default timezone for the framework.
@@ -35,7 +36,7 @@ class DateTimer implements Initializer
      *
      * @param Request $request
      */
-    public function init($request)
+    public function boot($request)
     {
         try {
             // Try to get timezone by ip

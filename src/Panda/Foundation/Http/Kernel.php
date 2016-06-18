@@ -15,7 +15,6 @@ namespace Panda\Foundation\Http;
 
 use InvalidArgumentException;
 use Panda\Contracts\Http\Kernel as KernelInterface;
-use Panda\Contracts\Init\Initializer;
 use Panda\Foundation\Application;
 use Panda\Http\Request;
 use Panda\Http\Response;
@@ -27,6 +26,7 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
  * Panda kernel
  *
  * @package Panda\Foundation\Http
+ *
  * @version 0.1
  */
 class Kernel implements KernelInterface
@@ -42,12 +42,12 @@ class Kernel implements KernelInterface
     protected $router;
 
     /**
-     * @var Initializer[]
+     * @var string[]
      */
-    protected $initializers = [
-        '\Panda\Foundation\Init\Configuration',
-        '\Panda\Foundation\Init\Environment',
-        '\Panda\Foundation\Init\FacadeRegistry',
+    protected $bootstrappers = [
+        '\Panda\Foundation\Bootstrap\Environment',
+        '\Panda\Foundation\Bootstrap\Configuration',
+        '\Panda\Foundation\Bootstrap\FacadeRegistry',
     ];
 
     /**
@@ -68,10 +68,10 @@ class Kernel implements KernelInterface
      *
      * @param Request|SymfonyRequest $request
      */
-    public function init(SymfonyRequest $request)
+    public function boot($request)
     {
         // Initialize application
-        $this->app->init($this->initializers, $request);
+        $this->app->boot($request, $this->bootstrappers);
 
         // Set bindings
         $this->app->set('Kernel', $this);
@@ -89,8 +89,8 @@ class Kernel implements KernelInterface
      */
     public function handle(SymfonyRequest $request)
     {
-        // Initialize kernel
-        $this->init($request);
+        // Boot kernel
+        $this->boot($request);
 
         // Dispatch the response
         return $this->router->dispatch($request);
@@ -108,16 +108,16 @@ class Kernel implements KernelInterface
     }
 
     /**
-     * Add an initializer to the application flow.
+     * Add a bootstrapper to the application flow.
      *
-     * @param string $initializer
+     * @param string $bootstrapper
      *
      * @throws InvalidArgumentException
      */
-    public function addExternalInitializer($initializer)
+    public function addExternalBootstrapper($bootstrapper)
     {
         // Add to the queue
-        $this->initializers[] = $initializer;
+        $this->bootstrappers[] = $bootstrapper;
     }
 
     /**

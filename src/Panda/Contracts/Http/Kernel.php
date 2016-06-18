@@ -13,6 +13,7 @@ declare(strict_types = 1);
 
 namespace Panda\Contracts\Http;
 
+use Panda\Contracts\Bootstrapper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,17 +21,11 @@ use Symfony\Component\HttpFoundation\Response;
  * Interface Kernel
  *
  * @package Panda\Contracts\Http
+ *
  * @version 0.1
  */
-interface Kernel
+interface Kernel extends Bootstrapper
 {
-    /**
-     * Init the application for HTTP requests.
-     *
-     * @param Request $request
-     */
-    public function init(Request $request);
-
     /**
      * Handle an incoming HTTP request.
      *

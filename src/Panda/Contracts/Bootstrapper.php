@@ -11,22 +11,23 @@
 
 declare(strict_types = 1);
 
-namespace Panda\Contracts\Init;
+namespace Panda\Contracts;
 
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Interface Initializer
+ * Interface Bootstrapper
  *
- * @package Panda\Contracts\Init
+ * @package Panda\Contracts
+ *
  * @version 0.1
  */
-interface Initializer
+interface Bootstrapper
 {
     /**
-     * Run the initializer.
+     * Boot the bootstrapper.
      *
      * @param Request $request
      */
-    public function init($request);
+    public function boot($request);
 }
