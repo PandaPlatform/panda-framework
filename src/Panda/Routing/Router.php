@@ -384,8 +384,8 @@ class Router
     protected function gatherRoutes()
     {
         // Get the base route path
-        $basePath = $this->container->get("app.base_path");
-        $routesPath = $this->container->get("app.routes_path");
+        $basePath = $this->container->get('app.base_path');
+        $routesPath = $this->container->get('app.routes_path');
 
         // Include the route file
         include $basePath . DIRECTORY_SEPARATOR . $routesPath;

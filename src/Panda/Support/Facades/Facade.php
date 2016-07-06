@@ -20,6 +20,7 @@ use RuntimeException;
  * Class Facade
  *
  * @package Panda\Model
+ *
  * @version 0.1
  */
 abstract class Facade

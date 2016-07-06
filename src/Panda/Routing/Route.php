@@ -31,6 +31,7 @@ use UnexpectedValueException;
  * Class Route
  *
  * @package Panda\Routing
+ *
  * @version 0.1
  */
 class Route

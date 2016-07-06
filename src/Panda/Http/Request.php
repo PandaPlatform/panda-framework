@@ -62,7 +62,7 @@ class Request extends SymfonyRequest
 
         // Get request content
         $content = $request->content;
-        $request = (new static)->duplicate(
+        $request = (new static())->duplicate(
             $request->query->all(), $request->request->all(), $request->attributes->all(),
             $request->cookies->all(), $request->files->all(), $request->server->all()
         );

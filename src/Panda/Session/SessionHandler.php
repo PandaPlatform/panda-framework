@@ -218,7 +218,7 @@ class SessionHandler
         // Build environment
         register_shutdown_function('session_write_close');
         session_cache_limiter('none');
-        ini_set('session.gc_maxlifetime', (string)SessionHandler::EXPIRE);
+        ini_set('session.gc_maxlifetime', (string)self::EXPIRE);
 
         // Set Session cookie params
         $sessionCookieParams = session_get_cookie_params();
@@ -241,14 +241,15 @@ class SessionHandler
     protected function validate()
     {
         // Regenerate session if gone too long and reset timers
-        if ((time() - $this->get('timer.start', null, 'session') > SessionHandler::EXPIRE)) {
+        if ((time() - $this->get('timer.start', null, 'session') > self::EXPIRE)) {
             session_regenerate_id(true);
             $this->setTimers(true);
         }
 
         // Destroy session if expired
-        if ((time() - $this->get('timer.last', null, 'session') > SessionHandler::EXPIRE))
+        if ((time() - $this->get('timer.last', null, 'session') > self::EXPIRE)) {
             $this->destroy();
+        }
     }
 
     /**
