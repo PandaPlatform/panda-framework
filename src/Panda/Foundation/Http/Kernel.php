@@ -129,7 +129,7 @@ class Kernel implements KernelInterface
     }
 
     /**
-     * @return SymfonyRequest
+     * @return Request
      */
     public function getCurrentRequest()
     {
