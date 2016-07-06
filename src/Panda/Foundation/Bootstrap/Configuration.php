@@ -60,7 +60,7 @@ class Configuration implements Bootstrapper
         $envConfigArray = ($envConfigFile ? json_decode(file_get_contents($envConfigFile), true) : []);
 
         // Merge environment config to default and set to application
-        $configArray = ArrayHelper::array_merge_recursive_ex($defaultConfigArray, $envConfigArray);
+        $configArray = ArrayHelper::merge($defaultConfigArray, $envConfigArray, $deep = true);
         if (!empty($configArray)) {
             $this->app->set('config', $configArray);
         }

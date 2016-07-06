@@ -28,20 +28,39 @@ class ArrayHelper
      * @param array  $array
      * @param string $key
      * @param mixed  $default
+     * @param bool   $useDotSyntax
      *
      * @return mixed
      */
-    public static function get(array $array, $key, $default = null)
+    public static function get(array $array, $key, $default = null, $useDotSyntax = false)
     {
+        // Check if key is empty
         if (is_null($key)) {
             return $array;
         }
 
-        if (!isset($array[$key])) {
-            return $default;
+        // Check if using dot syntax
+        if (!$useDotSyntax) {
+            if (!isset($array[$key])) {
+                return $default;
+            }
+
+            return $array[$key];
         }
 
-        return $array[$key];
+        // Split name using dots
+        $keyParts = explode('.', $key);
+        if (count($keyParts) == 1) {
+            return $array[$key];
+        }
+
+        // Recursive call
+        $base = $keyParts[0];
+        unset($keyParts[0]);
+        $key = implode('.', $keyParts);
+        $array = $array[$base];
+
+        return static::get($array, $key, $default, $useDotSyntax);
     }
 
     /**
@@ -72,16 +91,23 @@ class ArrayHelper
      *
      * @param array $array1
      * @param array $array2
+     * @param bool  $deep
      *
      * @return array
      */
-    public static function array_merge_recursive_ex(array &$array1, array &$array2)
+    public static function merge(array &$array1, array &$array2, $deep = false)
     {
+        // Normal array merge
+        if (!$deep) {
+            return array_merge($array1, $array2);
+        }
+
+        // Perform a deep merge
         $merged = $array1;
 
         foreach ($array2 as $key => & $value) {
             if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
-                $merged[$key] = static::array_merge_recursive_ex($merged[$key], $value);
+                $merged[$key] = static::merge($merged[$key], $value, $deep);
             } else if (is_numeric($key)) {
                 if (!in_array($value, $merged))
                     $merged[] = $value;
