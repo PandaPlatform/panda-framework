@@ -14,8 +14,11 @@ declare(strict_types = 1);
 namespace Panda\Foundation\Bootstrap;
 
 use Panda\Contracts\Bootstrapper;
+use Panda\Debug\Debugger;
 use Panda\Foundation\Application;
 use Panda\Http\Request;
+use Panda\Localization\DateTimer;
+use Panda\Session\Session;
 
 /**
  * Class Environment
@@ -50,8 +53,8 @@ class Environment implements Bootstrapper
     public function boot($request)
     {
         // Initialize environment
-        $this->app->make('\Panda\Debug\Debugger')->boot($request);
-        $this->app->make('\Panda\Localization\DateTimer')->boot($request);
-        $this->app->make('\Panda\Session\Session')->boot($request);
+        $this->app->make(Debugger::class)->boot($request);
+        $this->app->make(DateTimer::class)->boot($request);
+        $this->app->make(Session::class)->boot($request);
     }
 }

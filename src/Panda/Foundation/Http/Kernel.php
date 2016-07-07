@@ -47,6 +47,7 @@ class Kernel implements KernelInterface
     protected $bootstrappers = [
         '\Panda\Foundation\Bootstrap\Environment',
         '\Panda\Foundation\Bootstrap\Configuration',
+        '\Panda\Foundation\Bootstrap\Logging',
         '\Panda\Foundation\Bootstrap\FacadeRegistry',
     ];
 

@@ -13,7 +13,7 @@ declare(strict_types = 1);
 
 namespace Panda\Contracts;
 
-use Symfony\Component\HttpFoundation\Request;
+use Panda\Http\Request;
 
 /**
  * Interface Bootstrapper
