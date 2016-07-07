@@ -97,7 +97,7 @@ class Application extends Container implements Bootstrapper
     public function setEnvironment($environment = '')
     {
         // Set the application environment
-        $environment = ($environment ?: strtolower(getenv("APPLICATION_ENV")));
+        $environment = ($environment ?: strtolower(getenv('APPLICATION_ENV')));
         $environment = ($environment ?: 'default');
 
         // Set the application environment

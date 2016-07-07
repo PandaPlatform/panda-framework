@@ -211,7 +211,6 @@ class SessionHandler
 
     /**
      * Start the session.
-     *
      */
     private function start()
     {
@@ -236,7 +235,6 @@ class SessionHandler
 
     /**
      * Validate the session and reset if necessary.
-     *
      */
     protected function validate()
     {
