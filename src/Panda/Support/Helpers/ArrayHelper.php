@@ -10,6 +10,7 @@
  */
 
 namespace Panda\Support\Helpers;
+
 use InvalidArgumentException;
 
 /**

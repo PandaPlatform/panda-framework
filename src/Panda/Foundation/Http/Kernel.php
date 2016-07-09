@@ -103,7 +103,6 @@ class Kernel implements KernelInterface
      */
     public function terminate(SymfonyRequest $request, SymfonyResponse $response)
     {
-
     }
 
     /**
