@@ -9,8 +9,6 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
-
 namespace Panda\Foundation\Http;
 
 use InvalidArgumentException;
@@ -47,6 +45,7 @@ class Kernel implements KernelInterface
     protected $bootstrappers = [
         '\Panda\Foundation\Bootstrap\Environment',
         '\Panda\Foundation\Bootstrap\Configuration',
+        '\Panda\Foundation\Bootstrap\Logging',
         '\Panda\Foundation\Bootstrap\FacadeRegistry',
     ];
 
@@ -104,7 +103,6 @@ class Kernel implements KernelInterface
      */
     public function terminate(SymfonyRequest $request, SymfonyResponse $response)
     {
-
     }
 
     /**
@@ -129,7 +127,7 @@ class Kernel implements KernelInterface
     }
 
     /**
-     * @return SymfonyRequest
+     * @return Request
      */
     public function getCurrentRequest()
     {

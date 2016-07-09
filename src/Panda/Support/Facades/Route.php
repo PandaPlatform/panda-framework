@@ -9,14 +9,13 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
-
 namespace Panda\Support\Facades;
 
 /**
  * Class Route
  *
  * @package Panda\Support\Facades
+ *
  * @version 0.1
  */
 class Route extends Facade

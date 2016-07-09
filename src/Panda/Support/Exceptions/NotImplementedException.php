@@ -9,8 +9,6 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
-
 namespace Panda\Support\Exceptions;
 
 use Exception;
@@ -23,5 +21,4 @@ use Exception;
  */
 class NotImplementedException extends Exception
 {
-
 }

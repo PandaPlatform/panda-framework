@@ -9,23 +9,24 @@
  * file that was distributed with this source code.
  */
 
-namespace Panda\Contracts;
-
-use Panda\Http\Request;
+namespace Panda\Contracts\Configuration;
 
 /**
- * Interface Bootstrapper
+ * Interface ConfigurationHandler
  *
  * @package Panda\Contracts
  *
  * @version 0.1
  */
-interface Bootstrapper
+interface ConfigurationHandler
 {
     /**
-     * Boot the bootstrapper.
+     * Get a configuration value.
      *
-     * @param Request $request
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @return mixed
      */
-    public function boot($request);
+    public function get($key, $default = null);
 }

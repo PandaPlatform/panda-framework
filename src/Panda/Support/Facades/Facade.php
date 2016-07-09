@@ -9,8 +9,6 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
-
 namespace Panda\Support\Facades;
 
 use Panda\Foundation\Application;
@@ -20,6 +18,7 @@ use RuntimeException;
  * Class Facade
  *
  * @package Panda\Model
+ *
  * @version 0.1
  */
 abstract class Facade

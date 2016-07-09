@@ -9,8 +9,6 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
-
 namespace Panda\Log;
 
 use Monolog\Logger as MonoLogger;
@@ -20,6 +18,7 @@ use Psr\Log\LoggerInterface;
  * Panda Logger interface
  *
  * @package Panda\Log
+ *
  * @version 0.1
  */
 class Logger extends MonoLogger implements LoggerInterface

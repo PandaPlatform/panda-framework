@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
-
 namespace Panda\Support\Helpers;
+
+use InvalidArgumentException;
 
 /**
  * Class ArrayHelper
@@ -28,20 +28,47 @@ class ArrayHelper
      * @param array  $array
      * @param string $key
      * @param mixed  $default
+     * @param bool   $useDotSyntax
      *
      * @return mixed
+     *
+     * @throws InvalidArgumentException
      */
-    public static function get(array $array, $key, $default = null)
+    public static function get(array $array, $key, $default = null, $useDotSyntax = false)
     {
+        // Check arguments
+        if (empty($array)) {
+            throw new InvalidArgumentException('The given array is empty.');
+        }
+
+        // Check if key is empty
         if (is_null($key)) {
             return $array;
         }
 
-        if (!isset($array[$key])) {
+        // Check if value exists as is
+        if (isset($array[$key])) {
+            return $array[$key];
+        }
+
+        // Return default value, without dot syntax
+        if (!$useDotSyntax) {
             return $default;
         }
 
-        return $array[$key];
+        // Split name using dots
+        $keyParts = explode('.', $key);
+        if (count($keyParts) == 1) {
+            return $array[$key];
+        }
+
+        // Recursive call
+        $base = $keyParts[0];
+        unset($keyParts[0]);
+        $key = implode('.', $keyParts);
+        $array = $array[$base];
+
+        return static::get($array, $key, $default, $useDotSyntax);
     }
 
     /**
@@ -68,25 +95,35 @@ class ArrayHelper
     }
 
     /**
-     * Perform a deep merge on the given two arrays.
+     * Perform a merge on the given two arrays.
+     * Deep merge will merge the two arrays in full depth.
      *
      * @param array $array1
      * @param array $array2
+     * @param bool  $deep
      *
      * @return array
      */
-    public static function array_merge_recursive_ex(array &$array1, array &$array2)
+    public static function merge(array &$array1, array &$array2, $deep = false)
     {
+        // Normal array merge
+        if (!$deep) {
+            return array_merge($array1, $array2);
+        }
+
+        // Perform a deep merge
         $merged = $array1;
 
-        foreach ($array2 as $key => & $value) {
+        foreach ($array2 as $key => &$value) {
             if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
-                $merged[$key] = static::array_merge_recursive_ex($merged[$key], $value);
-            } else if (is_numeric($key)) {
-                if (!in_array($value, $merged))
+                $merged[$key] = static::merge($merged[$key], $value, $deep);
+            } elseif (is_numeric($key)) {
+                if (!in_array($value, $merged)) {
                     $merged[] = $value;
-            } else
+                }
+            } else {
                 $merged[$key] = $value;
+            }
         }
 
         return $merged;
