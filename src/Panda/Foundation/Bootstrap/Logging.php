@@ -18,6 +18,7 @@ use Monolog\Processor\IntrospectionProcessor;
 use Monolog\Processor\PsrLogMessageProcessor;
 use Monolog\Processor\WebProcessor;
 use Panda\Contracts\Bootstrapper;
+use Panda\Contracts\Configuration\ConfigurationHandler;
 use Panda\Foundation\Application;
 use Panda\Http\Request;
 use Panda\Log\Logger;
@@ -39,13 +40,20 @@ class Logging implements Bootstrapper
     private $app;
 
     /**
+     * @var ConfigurationHandler
+     */
+    private $config;
+
+    /**
      * Environment constructor.
      *
-     * @param Application $app
+     * @param Application          $app
+     * @param ConfigurationHandler $config
      */
-    public function __construct(Application $app)
+    public function __construct(Application $app, ConfigurationHandler $config)
     {
         $this->app = $app;
+        $this->config = $config;
     }
 
     /**
@@ -58,14 +66,20 @@ class Logging implements Bootstrapper
         // Create the logger
         $logger = new Logger('application_logger');
 
+        // Check if there are paths for the logger
+        $loggerConfig = $this->config->get('paths.logger');
+        if (empty($loggerConfig)) {
+            return;
+        }
+
         // Add error handler
-        $path = $this->app->config('logger.base_dir') . '/' . $this->app->config('logger.error');
-        $maxFilesCount = $this->app->config('logger.max_files_count');
+        $path = $this->config->get('paths.logger.base_dir') . '/' . $this->config->get('paths.logger.error');
+        $maxFilesCount = $this->config->get('paths.logger.max_files_count');
         $logger->pushHandler(new RotatingFileHandler($path, $maxFilesCount, Logger::ERROR));
 
         // Add debug handler
-        $path = $this->app->config('logger.base_dir') . '/' . $this->app->config('logger.debug');
-        $maxFilesCount = $this->app->config('logger.max_files_count');
+        $path = $this->config->get('paths.logger.base_dir') . '/' . $this->config->get('paths.logger.debug');
+        $maxFilesCount = $this->config->get('paths.logger.max_files_count');
         $logger->pushHandler(new RotatingFileHandler($path, $maxFilesCount, Logger::DEBUG));
 
         // Push other processors

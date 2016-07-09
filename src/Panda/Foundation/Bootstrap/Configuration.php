@@ -14,8 +14,10 @@ declare(strict_types = 1);
 namespace Panda\Foundation\Bootstrap;
 
 use Panda\Contracts\Bootstrapper;
+use Panda\Contracts\Configuration\ConfigurationHandler;
 use Panda\Foundation\Application;
 use Panda\Http\Request;
+use Panda\Support\Configuration\Config;
 use Panda\Support\Helpers\ArrayHelper;
 
 /**
@@ -62,7 +64,9 @@ class Configuration implements Bootstrapper
         // Merge environment config to default and set to application
         $configArray = ArrayHelper::merge($defaultConfigArray, $envConfigArray, $deep = true);
         if (!empty($configArray)) {
-            $this->app->set('config', $configArray);
+            // Create a new configuration
+            $config = new Config($configArray);
+            $this->app->set(ConfigurationHandler::class, $config);
         }
     }
 

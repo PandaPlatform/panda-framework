@@ -16,10 +16,10 @@ namespace Panda\Foundation;
 use Exception;
 use Panda\Container\Container;
 use Panda\Contracts\Bootstrapper;
+use Panda\Contracts\Configuration\ConfigurationHandler;
 use Panda\Contracts\Http\Kernel as KernelInterface;
 use Panda\Foundation\Http\Kernel;
 use Panda\Http\Request;
-use Panda\Support\Helpers\ArrayHelper;
 
 /**
  * Panda application manager.
@@ -270,17 +270,19 @@ class Application extends Container implements Bootstrapper
      * @param string $name
      *
      * @return mixed
+     *
+     * @deprecated Use ConfigurationHandler directly.
      */
     public function config($name)
     {
         // Get configuration
         try {
-            $config = $this->get('config');
+            $config = $this->get(ConfigurationHandler::class);
         } catch (Exception $ex) {
             return null;
         }
 
         // Get value
-        return ArrayHelper::get($config, $name, $default = null, $useDotSyntax = true);
+        return $config->get($name);
     }
 }
