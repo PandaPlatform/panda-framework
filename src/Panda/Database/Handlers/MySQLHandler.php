@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Panda\Database\Handlers;
 
@@ -22,6 +22,7 @@ use Panda\Contracts\Database\ConnectionHandler;
  * Class MySQLHandler
  *
  * @package Panda\Database\Handlers
+ *
  * @version 0.1
  */
 class MySQLHandler extends mysqli implements ConnectionHandler

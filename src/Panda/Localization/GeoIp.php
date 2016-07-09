@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Panda\Localization;
 
@@ -20,6 +20,7 @@ use Panda\Support\Exceptions\NotImplementedException;
  * Class GeoIp
  *
  * @package Panda\Localization
+ *
  * @version 0.1
  */
 class GeoIp

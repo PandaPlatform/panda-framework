@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Panda\Contracts\Database;
 
@@ -17,6 +17,7 @@ namespace Panda\Contracts\Database;
  * Database Connection Handler Interface.
  *
  * @package Panda\Contracts\Database
+ *
  * @version 0.1
  */
 interface ConnectionHandler

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Panda\Support\Helpers;
 
@@ -79,14 +79,16 @@ class ArrayHelper
     {
         $merged = $array1;
 
-        foreach ($array2 as $key => & $value) {
+        foreach ($array2 as $key => &$value) {
             if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
                 $merged[$key] = static::array_merge_recursive_ex($merged[$key], $value);
-            } else if (is_numeric($key)) {
-                if (!in_array($value, $merged))
+            } elseif (is_numeric($key)) {
+                if (!in_array($value, $merged)) {
                     $merged[] = $value;
-            } else
+                }
+            } else {
                 $merged[$key] = $value;
+            }
         }
 
         return $merged;

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Panda\Routing;
 
@@ -31,6 +31,7 @@ use UnexpectedValueException;
  * Class Route
  *
  * @package Panda\Routing
+ *
  * @version 0.1
  */
 class Route

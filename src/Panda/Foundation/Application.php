@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Panda\Foundation;
 
@@ -276,7 +276,7 @@ class Application extends Container implements Bootstrapper
         try {
             $config = $this->get('config');
         } catch (Exception $ex) {
-            return null;
+            return;
         }
 
         // Get value

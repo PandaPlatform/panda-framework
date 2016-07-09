@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Panda\Filesystem;
 
@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
  * Local filesystem handler. Creates, edits and deletes files.
  *
  * @package Panda\Filesystem
+ *
  * @version 0.1
  */
 class Filesystem implements StorageInterface

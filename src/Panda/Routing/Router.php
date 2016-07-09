@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Panda\Routing;
 
@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
  * Initiates all routers from the route folder.
  *
  * @package Panda\Routing
+ *
  * @version 0.1
  */
 class Router
@@ -384,8 +385,8 @@ class Router
     protected function gatherRoutes()
     {
         // Get the base route path
-        $basePath = $this->container->get("app.base_path");
-        $routesPath = $this->container->get("app.routes_path");
+        $basePath = $this->container->get('app.base_path');
+        $routesPath = $this->container->get('app.routes_path');
 
         // Include the route file
         include $basePath . DIRECTORY_SEPARATOR . $routesPath;

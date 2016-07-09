@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Panda\Support\Facades;
 
@@ -17,6 +17,7 @@ namespace Panda\Support\Facades;
  * Class Storage
  *
  * @package Panda\Support\Facades
+ *
  * @version 0.1
  */
 class Storage extends Facade

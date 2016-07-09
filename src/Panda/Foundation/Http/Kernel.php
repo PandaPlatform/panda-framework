@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Panda\Foundation\Http;
 
@@ -104,7 +104,6 @@ class Kernel implements KernelInterface
      */
     public function terminate(SymfonyRequest $request, SymfonyResponse $response)
     {
-
     }
 
     /**
