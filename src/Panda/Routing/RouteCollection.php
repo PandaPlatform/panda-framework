@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Panda\Routing;
 
@@ -21,6 +21,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * Class RouteCollection
  *
  * @package Panda\Routing
+ *
  * @version 0.1
  */
 class RouteCollection
@@ -97,8 +98,6 @@ class RouteCollection
                 return $matchingRoute;
             }
         }
-
-        return null;
     }
 
     /**

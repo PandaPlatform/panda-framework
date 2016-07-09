@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Panda\Cookie;
 
@@ -18,6 +18,7 @@ namespace Panda\Cookie;
  * Creates, edits and deletes cookies.
  *
  * @package Panda\Cookie
+ *
  * @version 0.1
  */
 class CookieJar

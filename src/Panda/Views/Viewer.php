@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Panda\Views;
 
@@ -22,6 +22,7 @@ use Panda\Http\Request;
  * Manages application views and renders their content
  *
  * @package Panda\Views
+ *
  * @version 0.1
  */
 class Viewer
@@ -95,12 +96,12 @@ class Viewer
     {
         // Try to load the view file and return the output
         if (empty($this->view)) {
-            throw new InvalidArgumentException("The view file given is a not valid view.");
+            throw new InvalidArgumentException('The view file given is a not valid view.');
         }
 
         // Load the view file
         if ($this->executable) {
-            $this->output = @include($this->view);
+            $this->output = @include $this->view;
         } else {
             $this->output = file_get_contents($this->view);
         }
@@ -142,7 +143,7 @@ class Viewer
      */
     private function getViewFolder($name)
     {
-        return $this->app->getViewsPath() . DIRECTORY_SEPARATOR . $name . ".view";
+        return $this->app->getViewsPath() . DIRECTORY_SEPARATOR . $name . '.view';
     }
 
     /**
@@ -155,10 +156,10 @@ class Viewer
     private function getViewFile($viewFolder)
     {
         // Set base name
-        $baseName = $viewFolder . DIRECTORY_SEPARATOR . "view";
+        $baseName = $viewFolder . DIRECTORY_SEPARATOR . 'view';
 
         // Select the view file
-        $viewFile = (file_exists($baseName . ".php") ? $baseName . ".php" : $baseName . ".html");
+        $viewFile = (file_exists($baseName . '.php') ? $baseName . '.php' : $baseName . '.html');
         $viewFile = (file_exists($viewFile) ? $viewFile : null);
 
         // Check if the file is executable (php)

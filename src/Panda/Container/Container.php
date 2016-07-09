@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Panda\Container;
 
@@ -23,6 +23,7 @@ use DI\NotFoundException;
  * Application foundation manager.
  *
  * @package Panda\Container
+ *
  * @version 0.1
  */
 class Container extends ContainerBuilder
@@ -81,6 +82,7 @@ class Container extends ContainerBuilder
      * @param string $name Entry name or a class name.
      *
      * @return mixed
+     *
      * @throws NotFoundException
      */
     public function get($name)
