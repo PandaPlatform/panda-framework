@@ -12,6 +12,7 @@
 namespace Panda\Routing;
 
 use Closure;
+use Exception;
 use HttpResponseException;
 use LogicException;
 use Panda\Http\Request;
@@ -273,7 +274,11 @@ class Route
      */
     public function getParameter($name, $default = null)
     {
-        return ArrayHelper::get($this->getParameters(), $name, $default);
+        try {
+            return ArrayHelper::get($this->getParameters(), $name, $default);
+        } catch (Exception $ex) {
+            return $default;
+        }
     }
 
     /**
