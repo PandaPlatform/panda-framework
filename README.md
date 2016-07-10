@@ -1,6 +1,8 @@
 # Panda Framework (Kernel)
 This is the panda platform core system.
 
+[![StyleCI](https://styleci.io/repos/55496356/shield)](https://styleci.io/repos/55496356)
+
 ## Panda PHP Framework
 Panda is a web application framework build with simplicity and wisdom. We are building Panda to be a light yet powerfull framework that will be part of the web php community. Panda includes a lot of common libraries but also includes functionality for common tasks and needs for many web projects like sessions, routing, authentication and more.
 
