@@ -99,7 +99,7 @@ class Viewer
 
         // Load the view file
         if ($this->executable) {
-            $this->output = @include $this->view;
+            $this->output = include $this->view;
         } else {
             $this->output = file_get_contents($this->view);
         }

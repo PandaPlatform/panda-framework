@@ -47,13 +47,13 @@ class Debugger implements Bootstrapper
     public function boot($request)
     {
         // Set error reporting
-        error_reporting(E_ALL & ~(E_STRICT | E_NOTICE | E_WARNING | E_DEPRECATED));
+        error_reporting(E_ALL & ~(E_NOTICE | E_WARNING | E_DEPRECATED));
 
         // Set framework to display errors
         if ($request->get($key = 'pdebug', $default = null, $includeCookies = true) || $this->app->get('env') == 'development') {
-            ini_set('display_errors', 'On');
+            ini_set('display_errors', true);
         } else {
-            ini_set('display_errors', 'Off');
+            ini_set('display_errors', false);
         }
     }
 }
