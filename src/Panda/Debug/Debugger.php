@@ -49,8 +49,8 @@ class Debugger implements Bootstrapper
         // Set error reporting
         error_reporting(E_ALL & ~(E_STRICT | E_NOTICE | E_WARNING | E_DEPRECATED));
 
-        // Set Server to display errors
-        if ($request->cookies->get('pdebug') || $this->app->get('env') == 'development') {
+        // Set framework to display errors
+        if ($request->get($key = 'pdebug', $default = null, $includeCookies = true) || $this->app->get('env') == 'development') {
             ini_set('display_errors', 'On');
         } else {
             ini_set('display_errors', 'Off');
