@@ -51,9 +51,9 @@ class Debugger implements Bootstrapper
 
         // Set framework to display errors
         if ($request->get($key = 'pdebug', $default = null, $includeCookies = true) || $this->app->get('env') == 'development') {
-            ini_set('display_errors', 'On');
+            ini_set('display_errors', true);
         } else {
-            ini_set('display_errors', 'Off');
+            ini_set('display_errors', false);
         }
     }
 }
