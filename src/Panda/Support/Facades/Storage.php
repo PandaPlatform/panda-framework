@@ -27,6 +27,6 @@ class Storage extends Facade
      */
     protected static function getFacadeHandler()
     {
-        return 'Panda\Filesystem\Filesystem';
+        return 'Panda\Storage\StorageHandler';
     }
 }

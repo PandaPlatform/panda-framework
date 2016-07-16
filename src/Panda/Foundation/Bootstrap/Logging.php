@@ -20,6 +20,7 @@ use Panda\Contracts\Configuration\ConfigurationHandler;
 use Panda\Foundation\Application;
 use Panda\Http\Request;
 use Panda\Log\Logger;
+use Panda\Storage\StorageHandler;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -43,14 +44,21 @@ class Logging implements Bootstrapper
     private $config;
 
     /**
+     * @var StorageHandler
+     */
+    private $storage;
+
+    /**
      * Environment constructor.
      *
      * @param Application          $app
+     * @param StorageHandler       $storage
      * @param ConfigurationHandler $config
      */
-    public function __construct(Application $app, ConfigurationHandler $config)
+    public function __construct(Application $app, StorageHandler $storage, ConfigurationHandler $config)
     {
         $this->app = $app;
+        $this->storage = $storage;
         $this->config = $config;
     }
 
@@ -70,13 +78,16 @@ class Logging implements Bootstrapper
             return;
         }
 
+        // Get base path storage
+        $basePath = $this->storage->getFilesystemBaseDirectory();
+
         // Add error handler
-        $path = $this->config->get('paths.logger.base_dir') . '/' . $this->config->get('paths.logger.error');
+        $path = $basePath . DIRECTORY_SEPARATOR . $this->config->get('paths.logger.base_dir') . DIRECTORY_SEPARATOR . $this->config->get('paths.logger.error');
         $maxFilesCount = $this->config->get('paths.logger.max_files_count');
         $logger->pushHandler(new RotatingFileHandler($path, $maxFilesCount, Logger::ERROR));
 
         // Add debug handler
-        $path = $this->config->get('paths.logger.base_dir') . '/' . $this->config->get('paths.logger.debug');
+        $path = $basePath . DIRECTORY_SEPARATOR . $this->config->get('paths.logger.base_dir') . DIRECTORY_SEPARATOR . $this->config->get('paths.logger.debug');
         $maxFilesCount = $this->config->get('paths.logger.max_files_count');
         $logger->pushHandler(new RotatingFileHandler($path, $maxFilesCount, Logger::DEBUG));
 
