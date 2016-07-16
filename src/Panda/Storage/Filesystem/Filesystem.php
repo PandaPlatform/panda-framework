@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Panda\Filesystem;
+namespace Panda\Storage\Filesystem;
 
 use Panda\Contracts\Storage\StorageInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
@@ -17,11 +17,17 @@ use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 /**
  * Local filesystem handler. Creates, edits and deletes files.
  *
- * @package Panda\Filesystem
+ * @package Panda\Storage\Filesystem
+ *
  * @version 0.1
  */
 class Filesystem implements StorageInterface
 {
+    /**
+     * @var string
+     */
+    protected $storageDirectory;
+
     /**
      * Get a file's contents.
      *
@@ -35,11 +41,14 @@ class Filesystem implements StorageInterface
     {
         // Check if it's file
         if ($this->isFile($path)) {
+            // Get storage path
+            $path = $this->storagePath($path);
+
             return file_get_contents($path);
         }
 
         // Throw exception if file not found
-        throw new FileNotFoundException('File does not exist at path ' . $path);
+        throw new FileNotFoundException($path);
     }
 
     /**
@@ -53,6 +62,14 @@ class Filesystem implements StorageInterface
      */
     public function put($path, $contents, $lock = false)
     {
+        // Get storage path
+        $path = $this->storagePath($path);
+
+        // Check if folder exists
+        if (!$this->exists(dirname($path))) {
+            mkdir(dirname($path), 0775, true);
+        }
+
         return file_put_contents($path, $contents, $lock ? LOCK_EX : 0);
     }
 
@@ -65,6 +82,9 @@ class Filesystem implements StorageInterface
      */
     public function exists($path)
     {
+        // Get storage path
+        $path = $this->storagePath($path);
+
         return file_exists($path);
     }
 
@@ -77,7 +97,10 @@ class Filesystem implements StorageInterface
      */
     public function delete($path)
     {
-        return @unlink($path);
+        // Get storage path
+        $path = $this->storagePath($path);
+
+        return unlink($path);
     }
 
     /**
@@ -90,6 +113,10 @@ class Filesystem implements StorageInterface
      */
     public function move($path, $target)
     {
+        // Get storage path
+        $path = $this->storagePath($path);
+        $target = $this->storagePath($target);
+
         return rename($path, $target);
     }
 
@@ -103,6 +130,10 @@ class Filesystem implements StorageInterface
      */
     public function copy($path, $target)
     {
+        // Get storage path
+        $path = $this->storagePath($path);
+        $target = $this->storagePath($target);
+
         return copy($path, $target);
     }
 
@@ -115,6 +146,9 @@ class Filesystem implements StorageInterface
      */
     public function isFile($path)
     {
+        // Get storage path
+        $path = $this->storagePath($path);
+
         return is_file($path);
     }
 
@@ -128,6 +162,9 @@ class Filesystem implements StorageInterface
      */
     public function append($path, $contents)
     {
+        // Get storage path
+        $path = $this->storagePath($path);
+
         return file_put_contents($path, $contents, FILE_APPEND);
     }
 
@@ -141,10 +178,45 @@ class Filesystem implements StorageInterface
      */
     public function prepend($path, $contents)
     {
+        // Get storage path
+        $path = $this->storagePath($path);
+
         if ($this->exists($path)) {
             return $this->put($path, $contents . $this->get($path));
         }
 
         return $this->put($path, $contents);
+    }
+
+    /**
+     * Get the storage full file path.
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    public function storagePath($path)
+    {
+        return $this->getStorageDirectory() . DIRECTORY_SEPARATOR . $path;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStorageDirectory()
+    {
+        return $this->storageDirectory;
+    }
+
+    /**
+     * Set the storage base directory.
+     *
+     * @param string $directory
+     *
+     * @return $this
+     */
+    public function setStorageDirectory($directory)
+    {
+        $this->storageDirectory = $directory;
     }
 }

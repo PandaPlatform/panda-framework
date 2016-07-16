@@ -64,6 +64,14 @@ class Application extends Container implements Bootstrapper
     }
 
     /**
+     * @return Application
+     */
+    public static function getInstance()
+    {
+        return static::$instance;
+    }
+
+    /**
      * Register application bindings.
      *
      * @param string $environment

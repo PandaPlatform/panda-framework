@@ -77,4 +77,13 @@ interface StorageInterface
      * @return bool
      */
     public function copy($path, $target);
+
+    /**
+     * Set the storage base directory.
+     *
+     * @param string $directory
+     *
+     * @return $this
+     */
+    public function setStorageDirectory($directory);
 }
