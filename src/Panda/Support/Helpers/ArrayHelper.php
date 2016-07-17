@@ -11,8 +11,6 @@
 
 namespace Panda\Support\Helpers;
 
-use InvalidArgumentException;
-
 /**
  * Class ArrayHelper
  *
@@ -31,14 +29,12 @@ class ArrayHelper
      * @param bool   $useDotSyntax
      *
      * @return mixed
-     *
-     * @throws InvalidArgumentException
      */
     public static function get(array $array, $key, $default = null, $useDotSyntax = false)
     {
         // Check arguments
         if (empty($array)) {
-            throw new InvalidArgumentException('The given array is empty.');
+            return $default;
         }
 
         // Check if key is empty
