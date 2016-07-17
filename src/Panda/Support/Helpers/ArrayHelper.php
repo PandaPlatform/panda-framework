@@ -11,8 +11,6 @@
 
 namespace Panda\Support\Helpers;
 
-use InvalidArgumentException;
-
 /**
  * Class ArrayHelper
  *

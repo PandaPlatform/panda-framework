@@ -11,10 +11,6 @@
 
 namespace Panda\Localization;
 
-use Exception;
-use Panda\Contracts\Bootstrapper;
-use Panda\Http\Request;
-
 /**
  * Class Locale
  *
