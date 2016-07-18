@@ -30,6 +30,11 @@ class DateTimer implements Bootstrapper
     const DEFAULT_TIMEZONE = 'GMT';
 
     /**
+     * @var string
+     */
+    protected $defaultTimeZone = null;
+
+    /**
      * Init session.
      *
      * @param Request $request
@@ -41,10 +46,10 @@ class DateTimer implements Bootstrapper
             $geoIp = new GeoIp($request);
             $timezone = $geoIp->getTimezoneByIP();
         } catch (Exception $ex) {
-            $timezone = static::DEFAULT_TIMEZONE;
-        } finally {
-            $this->set($timezone);
+            $timezone = $this->getDefaultTimeZone();
         }
+
+        $this->set($timezone);
     }
 
     /**
@@ -66,5 +71,21 @@ class DateTimer implements Bootstrapper
     public function get()
     {
         return date_default_timezone_get();
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultTimeZone()
+    {
+        return $this->defaultTimeZone ?: static::DEFAULT_TIMEZONE;
+    }
+
+    /**
+     * @param string $defaultTimeZone
+     */
+    public function setDefaultTimeZone($defaultTimeZone)
+    {
+        $this->defaultTimeZone = $defaultTimeZone;
     }
 }

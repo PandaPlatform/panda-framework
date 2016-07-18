@@ -11,8 +11,10 @@
 
 namespace Panda\Localization\Translation;
 
+use Exception;
 use Panda\Contracts\Localization\FileProcessor;
 use Panda\Support\Helpers\ArrayHelper;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 /**
  * Class JsonProcessor
@@ -35,27 +37,42 @@ class JsonProcessor implements FileProcessor
 
     /**
      * Get a translation value.
+     * If the default value is null and no translation is found, it throws Exception.
      *
      * @param string $key
-     * @param mixed  $default
      * @param string $locale
+     * @param string $package
+     * @param mixed  $default
      *
      * @return mixed
+     *
+     * @throws Exception
      */
-    public function get($key, $locale, $default = null)
+    public function get($key, $locale, $package = 'default', $default = null)
     {
         // Check key
         if (empty($key)) {
             return $default;
         }
 
-        // Load translations
-        $this->loadTranslations($locale);
+        // Normalize group and load translations
+        $package = ($package ?: 'default');
+        try {
+            $this->loadTranslations($locale, $package);
 
-        // Return translation
-        $array = (static::$translations[$locale] ?: []);
+            // Return translation
+            $array = (static::$translations[$locale] ?: []);
 
-        return ArrayHelper::get($array, $key, $default, true);
+            $value = ArrayHelper::get($array, $key, $default, true);
+        } catch (Exception $ex) {
+            $value = $default;
+        } finally {
+            if (is_null($default) && $value === $default) {
+                throw new Exception('The [' . $locale . '] translation for [' . $package . ']->[' . $key . '] is not found.');
+            }
+        }
+
+        return $value;
     }
 
     /**
@@ -76,15 +93,26 @@ class JsonProcessor implements FileProcessor
      * Load translations from file.
      *
      * @param string $locale
+     * @param string $package
      *
      * @return $this
+     *
+     * @throws FileNotFoundException
      */
-    private function loadTranslations($locale)
+    private function loadTranslations($locale, $package)
     {
         if (empty(static::$translations[$locale])) {
-            $filePath = $this->baseDirectory . DIRECTORY_SEPARATOR . $locale . '.json';
-            $fileContents = file_get_contents($filePath);
-            static::$translations[$locale] = json_decode($fileContents, true);
+            // Get full file path
+            $fileName = $locale . DIRECTORY_SEPARATOR . $package . '.json';
+            $filePath = $this->baseDirectory . DIRECTORY_SEPARATOR . $fileName;
+
+            // Check if is valid and load translations
+            if (is_file($filePath)) {
+                $fileContents = file_get_contents($filePath);
+                static::$translations[$locale] = json_decode($fileContents, true);
+            } else {
+                throw new FileNotFoundException($fileName);
+            }
         }
 
         return $this;

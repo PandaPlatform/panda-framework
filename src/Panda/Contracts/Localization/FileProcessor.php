@@ -11,6 +11,8 @@
 
 namespace Panda\Contracts\Localization;
 
+use Exception;
+
 /**
  * Interface FileProcessor
  *
@@ -25,11 +27,14 @@ interface FileProcessor
      *
      * @param string $key
      * @param string $locale
+     * @param string $package
      * @param mixed  $default
      *
      * @return mixed
+     *
+     * @throws Exception
      */
-    public function get($key, $locale, $default = null);
+    public function get($key, $locale, $package = 'default', $default = null);
 
     /**
      * Set the base literals directory.

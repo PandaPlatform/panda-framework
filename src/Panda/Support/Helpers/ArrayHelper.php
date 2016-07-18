@@ -30,7 +30,7 @@ class ArrayHelper
      *
      * @return mixed
      */
-    public static function get(array $array, $key, $default = null, $useDotSyntax = false)
+    public static function get($array, $key, $default = null, $useDotSyntax = false)
     {
         // Check arguments
         if (empty($array)) {

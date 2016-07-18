@@ -47,6 +47,7 @@ class Kernel implements KernelInterface
         '\Panda\Foundation\Bootstrap\Configuration',
         '\Panda\Foundation\Bootstrap\Logging',
         '\Panda\Foundation\Bootstrap\FacadeRegistry',
+        '\Panda\Foundation\Bootstrap\Localization',
     ];
 
     /**
@@ -71,9 +72,6 @@ class Kernel implements KernelInterface
     {
         // Initialize application
         $this->app->boot($request, $this->bootstrappers);
-
-        // Set bindings
-        $this->app->set('Kernel', $this);
 
         // Include routes
         include_once $this->app->getRoutesPath();

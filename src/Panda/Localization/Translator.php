@@ -11,6 +11,7 @@
 
 namespace Panda\Localization;
 
+use Exception;
 use Panda\Contracts\Configuration\ConfigurationHandler;
 use Panda\Contracts\Localization\FileProcessor;
 use Panda\Foundation\Application;
@@ -59,21 +60,39 @@ class Translator
 
     /**
      * Get a translation value.
+     * If there is no value for the given locale, it tries to fallback to default locale.
+     * If the default value is null and no translation is found, it throws Exception.
      *
      * @param string $key
+     * @param string $package
      * @param string $locale
+     * @param mixed  $default
      *
      * @return string
+     *
+     * @throws Exception
      */
-    public function translate($key, $locale = '')
+    public function translate($key, $package = 'default', $locale = '', $default = null)
     {
         // Try to get normal translation
         $locale = ($locale ?: Locale::get());
-        $translation = $this->processor->get($key, $locale, null);
-
-        // Fallback to default, if empty
         $defaultLocale = Locale::getDefault();
-        $translation = ($translation ?: $this->processor->get($key, $defaultLocale, null));
+        try {
+            // Get translation with null as default to allow fallback to default locale
+            $translation = $this->processor->get($key, $locale, $package, null);
+        } catch (Exception $ex) {
+            // Fallback to default, if empty
+            try {
+                $translation = $this->processor->get($key, $defaultLocale, $package, $default);
+            } catch (Exception $ex2) {
+                $translation = $default;
+            }
+        } finally {
+            if (is_null($default) && $translation === $default) {
+                throw new Exception('The translation for [' . $package . ']->[' . $key . '] is not found in any locale [' . $locale . ', ' . $defaultLocale . '].');
+            }
+        }
+
 
         return $translation;
     }
