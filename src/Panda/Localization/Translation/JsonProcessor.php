@@ -66,10 +66,6 @@ class JsonProcessor implements FileProcessor
             $value = ArrayHelper::get($array, $key, $default, true);
         } catch (Exception $ex) {
             $value = $default;
-        } finally {
-            if (is_null($default) && $value === $default) {
-                throw new Exception('The [' . $locale . '] translation for [' . $package . ']->[' . $key . '] is not found.');
-            }
         }
 
         return $value;
