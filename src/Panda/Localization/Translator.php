@@ -15,6 +15,7 @@ use Exception;
 use Panda\Contracts\Configuration\ConfigurationHandler;
 use Panda\Contracts\Localization\FileProcessor;
 use Panda\Foundation\Application;
+use Panda\Localization\Helpers\LocaleHelper;
 
 /**
  * Class Locale
@@ -74,27 +75,26 @@ class Translator
      */
     public function translate($key, $package = 'default', $locale = '', $default = null)
     {
-        // Try to get normal translation
+        // Normalize locale to current if the given is empty
         $locale = ($locale ?: Locale::get());
         $defaultLocale = Locale::getDefault();
-        try {
-            // Get translation with null as default to allow fallback to default locale
-            $translation = $this->processor->get($key, $locale, $package, null);
-        } catch (Exception $ex) {
-            // Fallback to default, if empty
-            try {
-                $translation = $this->processor->get($key, $defaultLocale, $package, $default);
-            } catch (Exception $ex2) {
-                $translation = $default;
-            }
-        } finally {
-            if (is_null($default) && $translation === $default) {
-                throw new Exception('The translation for [' . $package . ']->[' . $key . '] is not found in any locale [' . $locale . ', ' . $defaultLocale . '].');
+
+        // Get locale fallback
+        $translation = null;
+        $fallbackList = LocaleHelper::getLocaleFallbackList($locale, $defaultLocale);
+        foreach ($fallbackList as $locale) {
+            $translation = ($translation ?: $this->processor->get($key, $locale, $package, null));
+            if (!is_null($translation)) {
+                break;
             }
         }
 
+        // Check final translation
+        if (is_null($default) && $translation === $default) {
+            throw new Exception('The translation for [' . $package . ']->[' . $key . '] is not found in any locale [' . implode(', ', $fallbackList) . '].');
+        }
 
-        return $translation;
+        return ($translation ?: $default);
     }
 
     /**

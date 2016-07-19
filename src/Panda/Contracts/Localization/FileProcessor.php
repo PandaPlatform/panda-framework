@@ -31,8 +31,6 @@ interface FileProcessor
      * @param mixed  $default
      *
      * @return mixed
-     *
-     * @throws Exception
      */
     public function get($key, $locale, $package = 'default', $default = null);
 
