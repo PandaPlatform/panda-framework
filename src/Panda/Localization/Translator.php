@@ -94,7 +94,7 @@ class Translator
             throw new Exception('The translation for [' . $package . ']->[' . $key . '] is not found in any locale [' . implode(', ', $fallbackList) . '].');
         }
 
-        return ($translation ?: $default);
+        return $translation ?: $default;
     }
 
     /**

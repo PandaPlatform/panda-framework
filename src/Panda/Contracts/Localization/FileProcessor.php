@@ -11,8 +11,6 @@
 
 namespace Panda\Contracts\Localization;
 
-use Exception;
-
 /**
  * Interface FileProcessor
  *
