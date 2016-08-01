@@ -11,9 +11,11 @@
 
 namespace Panda\Debug;
 
+use InvalidArgumentException;
 use Panda\Contracts\Bootstrapper;
 use Panda\Foundation\Application;
 use Panda\Http\Request;
+use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 /**
  * Class Debugger
@@ -43,9 +45,16 @@ class Debugger implements Bootstrapper
      * Init session.
      *
      * @param Request $request
+     *
+     * @throws InvalidArgumentException
      */
     public function boot($request)
     {
+        // Check arguments
+        if (empty($request) || !($request instanceof SymfonyRequest)) {
+            throw new InvalidArgumentException('Request is empty or not valid.');
+        }
+
         // Set error reporting
         error_reporting(E_ALL & ~(E_NOTICE | E_WARNING | E_DEPRECATED));
 

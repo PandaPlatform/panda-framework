@@ -11,6 +11,7 @@
 
 namespace Panda\Contracts;
 
+use InvalidArgumentException;
 use Panda\Http\Request;
 
 /**
@@ -26,6 +27,8 @@ interface Bootstrapper
      * Boot the bootstrapper.
      *
      * @param Request $request
+     *
+     * @throws InvalidArgumentException
      */
     public function boot($request);
 }

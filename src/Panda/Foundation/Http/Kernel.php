@@ -67,9 +67,16 @@ class Kernel implements KernelInterface
      * are needed for runtime.
      *
      * @param Request|SymfonyRequest $request
+     *
+     * @throws InvalidArgumentException
      */
     public function boot($request)
     {
+        // Check arguments
+        if (empty($request) || !($request instanceof SymfonyRequest)) {
+            throw new InvalidArgumentException('Request is empty or not valid.');
+        }
+
         // Initialize application
         $this->app->boot($request, $this->bootstrappers);
 
