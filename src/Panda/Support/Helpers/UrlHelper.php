@@ -30,7 +30,7 @@ class UrlHelper
      *
      * @return string A well formed url.
      */
-    public static function get($url, $parameters = array(), $host = null, $protocol = null)
+    public static function get($url, $parameters = [], $host = null, $protocol = null)
     {
         // Get current url info
         $urlInfo = self::info();
@@ -91,19 +91,19 @@ class UrlHelper
      * @param string $domain The url domain. This is given to distinguish the subdomains on the front.
      *
      * @return array The url info as follows:
-     *        ['url'] = The full url page.
-     *        ['protocol'] = The server protocol.
-     *        ['sub'] = The navigation subdomain.
-     *        ['domain'] = The host domain.
-     *        ['host'] = The full host.
-     *        ['params'] = An array of all url parameters by name and value.
-     *        ['referer'] = The referer value, if exists.
-     *        ['origin'] = The host origin value, if exists.
+     *               ['url'] = The full url page.
+     *               ['protocol'] = The server protocol.
+     *               ['sub'] = The navigation subdomain.
+     *               ['domain'] = The host domain.
+     *               ['host'] = The full host.
+     *               ['params'] = An array of all url parameters by name and value.
+     *               ['referer'] = The referer value, if exists.
+     *               ['origin'] = The host origin value, if exists.
      */
     public static function info($url = '', $domain = '')
     {
         // Initialize url info array
-        $info = array();
+        $info = [];
 
         // Get protocol from given url
         $protocol = (strpos($url, 'https') === 0 ? 'https' : 'http');
@@ -123,7 +123,7 @@ class UrlHelper
         $info['protocol'] = $protocol;
 
         // Split for domain and subdomain
-        list ($path, $params) = explode('?', $url);
+        list($path, $params) = explode('?', $url);
 
         // Get all host parts
         $pathParts = explode('/', $path);
