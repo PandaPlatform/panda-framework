@@ -150,6 +150,7 @@ class RouteCollection
     {
         $fullUri = $route->getDomain() . $route->getUri();
 
+        $method = null;
         foreach ($route->getMethods() as $method) {
             $this->routes[$method][$fullUri] = $route;
         }

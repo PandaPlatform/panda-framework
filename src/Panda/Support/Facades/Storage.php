@@ -11,6 +11,8 @@
 
 namespace Panda\Support\Facades;
 
+use Panda\Storage\StorageHandler;
+
 /**
  * Class Storage
  *
@@ -27,6 +29,6 @@ class Storage extends Facade
      */
     protected static function getFacadeHandler()
     {
-        return 'Panda\Storage\StorageHandler';
+        return StorageHandler::class;
     }
 }

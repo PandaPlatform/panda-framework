@@ -14,8 +14,14 @@ namespace Panda\Foundation\Http;
 use InvalidArgumentException;
 use Panda\Contracts\Http\Kernel as KernelInterface;
 use Panda\Foundation\Application;
+use Panda\Foundation\Bootstrap\Configuration;
+use Panda\Foundation\Bootstrap\Environment;
+use Panda\Foundation\Bootstrap\FacadeRegistry;
+use Panda\Foundation\Bootstrap\Localization;
+use Panda\Foundation\Bootstrap\Logging;
 use Panda\Http\Request;
 use Panda\Http\Response;
+use Panda\Routing\Controller;
 use Panda\Routing\Router;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
@@ -43,11 +49,11 @@ class Kernel implements KernelInterface
      * @var string[]
      */
     protected $bootstrappers = [
-        '\Panda\Foundation\Bootstrap\Environment',
-        '\Panda\Foundation\Bootstrap\Configuration',
-        '\Panda\Foundation\Bootstrap\Logging',
-        '\Panda\Foundation\Bootstrap\FacadeRegistry',
-        '\Panda\Foundation\Bootstrap\Localization',
+        Environment::class,
+        Configuration::class,
+        Logging::class,
+        FacadeRegistry::class,
+        Localization::class,
     ];
 
     /**
@@ -79,6 +85,9 @@ class Kernel implements KernelInterface
 
         // Initialize application
         $this->app->boot($request, $this->bootstrappers);
+
+        // Set base controller router
+        Controller::setRouter($this->router);
 
         // Include routes
         include_once $this->app->getRoutesPath();
