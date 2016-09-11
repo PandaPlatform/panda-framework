@@ -43,9 +43,9 @@ class ControllerDispatcher
     /**
      * Dispatch a request to a given controller and method.
      *
-     * @param  Route  $route
-     * @param  mixed  $controller
-     * @param  string $method
+     * @param Route  $route
+     * @param mixed  $controller
+     * @param string $method
      *
      * @return mixed
      */
@@ -65,8 +65,8 @@ class ControllerDispatcher
     /**
      * Determine if the given options exclude a particular method.
      *
-     * @param  string $method
-     * @param  array  $options
+     * @param string $method
+     * @param array  $options
      *
      * @return bool
      */

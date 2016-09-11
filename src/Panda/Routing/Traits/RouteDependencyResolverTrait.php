@@ -12,9 +12,9 @@
 namespace Panda\Routing\Traits;
 
 use Panda\Support\Helpers\ArrayHelper;
+use ReflectionFunctionAbstract;
 use ReflectionMethod;
 use ReflectionParameter;
-use ReflectionFunctionAbstract;
 
 /**
  * Class RouteDependencyResolverTrait
@@ -28,8 +28,8 @@ trait RouteDependencyResolverTrait
     /**
      * Call a class method with the resolved dependencies.
      *
-     * @param  object $instance
-     * @param  string $method
+     * @param object $instance
+     * @param string $method
      *
      * @return mixed
      */
@@ -43,9 +43,9 @@ trait RouteDependencyResolverTrait
     /**
      * Resolve the object method's type-hinted dependencies.
      *
-     * @param  array  $parameters
-     * @param  object $instance
-     * @param  string $method
+     * @param array  $parameters
+     * @param object $instance
+     * @param string $method
      *
      * @return array
      */
@@ -63,8 +63,8 @@ trait RouteDependencyResolverTrait
     /**
      * Resolve the given method's type-hinted dependencies.
      *
-     * @param  array                      $parameters
-     * @param  ReflectionFunctionAbstract $reflector
+     * @param array                      $parameters
+     * @param ReflectionFunctionAbstract $reflector
      *
      * @return array
      */
@@ -84,8 +84,8 @@ trait RouteDependencyResolverTrait
     /**
      * Transform the given parameter into a class instance.
      *
-     * @param  ReflectionParameter $parameter
-     * @param  array               $parameters
+     * @param ReflectionParameter $parameter
+     * @param array               $parameters
      *
      * @return mixed
      */
@@ -105,8 +105,8 @@ trait RouteDependencyResolverTrait
     /**
      * Check if an object of the given class is in a list of parameters.
      *
-     * @param  string $class
-     * @param  array  $parameters
+     * @param string $class
+     * @param array  $parameters
      *
      * @return bool
      */
@@ -120,9 +120,9 @@ trait RouteDependencyResolverTrait
     /**
      * Splice the given value into the parameter list.
      *
-     * @param  array  $parameters
-     * @param  string $key
-     * @param  mixed  $instance
+     * @param array  $parameters
+     * @param string $key
+     * @param mixed  $instance
      *
      * @return void
      */

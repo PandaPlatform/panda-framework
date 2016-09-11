@@ -128,9 +128,9 @@ class ArrayHelper
     /**
      * Return the first element in an array that matches the given filter.
      *
-     * @param  array         $array
-     * @param  callable|null $filter
-     * @param  mixed         $default
+     * @param array         $array
+     * @param callable|null $filter
+     * @param mixed         $default
      *
      * @return mixed
      */
