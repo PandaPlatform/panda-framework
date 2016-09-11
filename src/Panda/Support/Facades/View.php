@@ -11,6 +11,8 @@
 
 namespace Panda\Support\Facades;
 
+use Panda\Views\Viewer;
+
 /**
  * Class View
  *
@@ -27,6 +29,6 @@ class View extends Facade
      */
     protected static function getFacadeHandler()
     {
-        return 'Panda\Views\Viewer';
+        return Viewer::class;
     }
 }

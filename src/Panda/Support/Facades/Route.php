@@ -11,6 +11,8 @@
 
 namespace Panda\Support\Facades;
 
+use Panda\Routing\Router;
+
 /**
  * Class Route
  *
@@ -27,6 +29,6 @@ class Route extends Facade
      */
     protected static function getFacadeHandler()
     {
-        return 'Panda\Routing\Router';
+        return Router::class;
     }
 }

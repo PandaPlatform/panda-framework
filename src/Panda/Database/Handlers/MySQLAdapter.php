@@ -14,7 +14,7 @@ namespace Panda\Database\Handlers;
 use Exception;
 use mysqli;
 use mysqli_result;
-use Panda\Contracts\Database\ConnectionHandler;
+use Panda\Contracts\Database\DatabaseAdapter;
 
 /**
  * Class MySQLHandler
@@ -22,7 +22,7 @@ use Panda\Contracts\Database\ConnectionHandler;
  * @package Panda\Database\Handlers
  * @version 0.1
  */
-class MySQLHandler extends mysqli implements ConnectionHandler
+class MySQLAdapter extends mysqli implements DatabaseAdapter
 {
     /**
      * Start a database transaction.

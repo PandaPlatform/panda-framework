@@ -15,7 +15,10 @@ use Closure;
 use Exception;
 use HttpResponseException;
 use LogicException;
+use Panda\Container\Container;
+use Panda\Foundation\Application;
 use Panda\Http\Request;
+use Panda\Routing\Traits\RouteDependencyResolverTrait;
 use Panda\Routing\Validators\HostValidator;
 use Panda\Routing\Validators\MethodValidator;
 use Panda\Routing\Validators\UriValidator;
@@ -35,6 +38,8 @@ use UnexpectedValueException;
  */
 class Route
 {
+    use RouteDependencyResolverTrait;
+
     /**
      * @var array
      */
@@ -80,6 +85,16 @@ class Route
      * @var array
      */
     private static $validators;
+
+    /**
+     * @var mixed
+     */
+    protected $controller;
+
+    /**
+     * @var Container
+     */
+    protected $container;
 
     /**
      * Create a new Route instance
@@ -241,7 +256,7 @@ class Route
      *
      * @return array
      */
-    public function parameterNames()
+    public function getParameterNames()
     {
         if (isset($this->parameterNames)) {
             return $this->parameterNames;
@@ -313,6 +328,32 @@ class Route
     }
 
     /**
+     * Get the key / value list of parameters without null values.
+     *
+     * @return array
+     */
+    public function getParametersWithoutNulls()
+    {
+        return array_filter($this->getParameters(), function ($p) {
+            return !is_null($p);
+        });
+    }
+
+    /**
+     * Get all of the parameter names for the route.
+     *
+     * @return array
+     */
+    public function parameterNames()
+    {
+        if (isset($this->parameterNames)) {
+            return $this->parameterNames;
+        }
+
+        return $this->parameterNames = $this->compileParameterNames();
+    }
+
+    /**
      * Get the domain defined for the route.
      *
      * @return string|null
@@ -360,48 +401,84 @@ class Route
      */
     public function run(Request $request)
     {
+        $this->container = $this->container ?: Application::getInstance();
+        $this->container->set(Request::class, $request);
+
         try {
-            // We have a direct Closure callback
-            if (!is_string($this->action['uses'])) {
-                return $this->runCallable($request);
+            // Check and run controller
+            if ($this->isControllerAction()) {
+                return $this->runController();
             }
 
-            // Run action controller
-            // todo implement runController
-            return $this->runController($request);
+            return $this->runCallable();
         } catch (HttpResponseException $e) {
             return $e->getMessage();
         }
     }
 
     /**
-     * Run the route action as callable and return the response.
+     * Checks whether the route's action is a controller.
      *
-     * @param Request $request
-     *
-     * @return mixed
+     * @return bool
      */
-    protected function runCallable(Request $request)
+    protected function isControllerAction()
     {
-        $parameters = (new ReflectionFunction($this->action['uses']))->getParameters();
-
-        /*$parameters = $this->resolveMethodDependencies(
-            $this->parametersWithoutNulls(), new ReflectionFunction($this->action['uses'])
-        );*/
-
-        return call_user_func_array($this->action['uses'], $parameters);
+        return is_string($this->action['uses']);
     }
 
     /**
-     * Run the route action as controller and return the response.
-     *
-     * @param Request $request
+     * Run the route action as callable and return the response.
      *
      * @return mixed
      */
-    protected function runController(Request $request)
+    protected function runCallable()
     {
-        list($class, $method) = explode('@', $this->action['uses']);
+        $parameters = $this->resolveMethodDependencies(
+            $this->getParametersWithoutNulls(), new ReflectionFunction($this->action['uses'])
+        );
+
+        $callable = $this->action['uses'];
+
+        return call_user_func_array($callable, $parameters);
+    }
+
+    /**
+     * Run the route action and return the response.
+     *
+     * @return mixed
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    protected function runController()
+    {
+        return (new ControllerDispatcher($this->container))->dispatch(
+            $this, $this->getController(), $this->getControllerMethod()
+        );
+    }
+
+    /**
+     * Get the controller instance for the route.
+     *
+     * @return mixed
+     */
+    protected function getController()
+    {
+        list($class) = explode('@', $this->action['uses']);
+        if (!$this->controller) {
+            $this->controller = $this->container->make($class);
+        }
+
+        return $this->controller;
+    }
+
+    /**
+     * Get the controller method used for the route.
+     *
+     * @return string
+     */
+    protected function getControllerMethod()
+    {
+        return explode('@', $this->action['uses'])[1];
     }
 
     /**

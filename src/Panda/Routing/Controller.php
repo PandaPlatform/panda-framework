@@ -13,6 +13,7 @@ namespace Panda\Routing;
 
 use BadMethodCallException;
 use Panda\Foundation\Application;
+use Panda\Http\Request;
 use Panda\Http\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -26,9 +27,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 abstract class Controller
 {
     /**
-     * The router instance.
-     *
-     * @var Router
+     * @var Router The router instance.
      */
     protected static $router;
 
@@ -65,6 +64,20 @@ abstract class Controller
     public function __construct(Application $app)
     {
         $this->app = $app;
+    }
+
+    /**
+     * Get the current running request.
+     *
+     * @return Request
+     */
+    public function getCurrentRequest()
+    {
+        if (empty(self::getRouter())) {
+            return null;
+        }
+
+        return self::getRouter()->getCurrentRequest();
     }
 
     /**

@@ -12,7 +12,7 @@
 namespace Panda\Database;
 
 use Exception;
-use Panda\Contracts\Database\ConnectionHandler;
+use Panda\Contracts\Database\DatabaseAdapter;
 
 /**
  * Database Connection Interface
@@ -23,9 +23,9 @@ use Panda\Contracts\Database\ConnectionHandler;
 class Connection
 {
     /**
-     * @var ConnectionHandler
+     * @var DatabaseAdapter
      */
-    protected $handler;
+    protected $adapter;
 
     /**
      * The transaction error.
@@ -37,11 +37,11 @@ class Connection
     /**
      * Create a new database connection instance.
      *
-     * @param ConnectionHandler $handler The database connection handler.
+     * @param DatabaseAdapter $adapter The database connection adapter.
      */
-    public function __construct(ConnectionHandler $handler)
+    public function __construct(DatabaseAdapter $adapter)
     {
-        $this->handler = $handler;
+        $this->adapter = $adapter;
     }
 
     /**
@@ -68,7 +68,7 @@ class Connection
         // Set query attributes
         foreach ($attr as $key => $value) {
             // Escape value
-            $value = $this->handler->escape($value);
+            $value = $this->adapter->escape($value);
 
             // Replace escaped value
             $query = str_replace('{' . $key . '}', $value, $query);
@@ -76,7 +76,7 @@ class Connection
 
         try {
             // Execute query to handler
-            return $this->handler->query($query, $commit);
+            return $this->adapter->query($query, $commit);
         } catch (Exception $ex) {
             // Store error message
             $this->error = $ex->getMessage();
@@ -87,18 +87,18 @@ class Connection
     }
 
     /**
-     * @return ConnectionHandler
+     * @return DatabaseAdapter
      */
-    public function getHandler()
+    public function getAdapter()
     {
-        return $this->handler;
+        return $this->adapter;
     }
 
     /**
-     * @param ConnectionHandler $handler
+     * @param DatabaseAdapter $adapter
      */
-    public function setHandler($handler)
+    public function setAdapter(DatabaseAdapter $adapter)
     {
-        $this->handler = $handler;
+        $this->adapter = $adapter;
     }
 }

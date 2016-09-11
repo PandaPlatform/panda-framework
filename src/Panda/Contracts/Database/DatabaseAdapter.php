@@ -12,12 +12,13 @@
 namespace Panda\Contracts\Database;
 
 /**
- * Database Connection Handler Interface.
+ * Interface DatabaseAdapter
  *
  * @package Panda\Contracts\Database
+ *
  * @version 0.1
  */
-interface ConnectionHandler
+interface DatabaseAdapter
 {
     /**
      * Begin a database transaction.
