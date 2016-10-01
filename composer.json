@@ -1,0 +1,27 @@
+{
+    "name": "panda/helpers",
+    "description": "The Panda PHP Framework Helpers component.",
+    "license": "MIT",
+    "homepage": "http://pandaphp.org",
+    "support": {
+        "issues": "https://github.com/PandaPlatform/panda-helpers/issues",
+        "source": "https://github.com/PandaPlatform/panda-helpers"
+    },
+    "authors": [
+        {
+            "name": "Ioannis Papikas",
+            "email": "papikas.ioan@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Panda\\Helpers\\": ""
+        }
+    }
+}
