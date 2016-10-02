@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Panda\Support\Helpers;
+namespace Panda\Helpers;
 
 /**
  * Class StringHelper
