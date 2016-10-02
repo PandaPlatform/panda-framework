@@ -31,13 +31,4 @@ interface FileProcessor
      * @return mixed
      */
     public function get($key, $locale, $package = 'default', $default = null);
-
-    /**
-     * Set the base literals directory.
-     *
-     * @param string $directory
-     *
-     * @return $this
-     */
-    public function setBaseDirectory($directory);
 }
