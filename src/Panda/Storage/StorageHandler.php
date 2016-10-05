@@ -68,7 +68,7 @@ class StorageHandler
                 // Get base directory
                 $directory = $this->getFilesystemBaseDirectory();
 
-                /** @var StorageInterface $storageHandler */
+                /** @var Filesystem $storageHandler */
                 $storageHandler = $this->app->make(Filesystem::class);
                 $storageHandler->setStorageDirectory($directory);
 

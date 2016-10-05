@@ -121,6 +121,6 @@ class MySQLAdapter extends mysqli implements DatabaseAdapter
      */
     public function escape($resource)
     {
-        $this->escape($resource);
+        return $this->escape($resource);
     }
 }

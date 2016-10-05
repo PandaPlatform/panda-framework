@@ -15,7 +15,7 @@ use Monolog\Handler\RotatingFileHandler;
 use Monolog\Processor\IntrospectionProcessor;
 use Monolog\Processor\PsrLogMessageProcessor;
 use Monolog\Processor\WebProcessor;
-use Panda\Contracts\Bootstrapper;
+use Panda\Contracts\Bootstrap\Bootstrapper;
 use Panda\Contracts\Configuration\ConfigurationHandler;
 use Panda\Foundation\Application;
 use Panda\Http\Request;

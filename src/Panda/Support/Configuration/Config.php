@@ -12,7 +12,7 @@
 namespace Panda\Support\Configuration;
 
 use Panda\Contracts\Configuration\ConfigurationHandler;
-use Panda\Support\Helpers\ArrayHelper;
+use Panda\Helpers\ArrayHelper;
 
 /**
  * Class Config
