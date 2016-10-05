@@ -11,8 +11,8 @@
 
 namespace Panda\Routing;
 
-use Panda\Http\Request;
 use Panda\Helpers\ArrayHelper;
+use Panda\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**

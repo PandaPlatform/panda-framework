@@ -14,9 +14,9 @@ namespace Panda\Foundation\Bootstrap;
 use Panda\Contracts\Bootstrap\Bootstrapper;
 use Panda\Contracts\Configuration\ConfigurationHandler;
 use Panda\Foundation\Application;
+use Panda\Helpers\ArrayHelper;
 use Panda\Http\Request;
 use Panda\Support\Configuration\Config;
-use Panda\Helpers\ArrayHelper;
 
 /**
  * Class Configuration
