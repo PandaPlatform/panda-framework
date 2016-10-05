@@ -11,7 +11,7 @@
 
 namespace Panda\Routing\Traits;
 
-use Panda\Support\Helpers\ArrayHelper;
+use Panda\Helpers\ArrayHelper;
 use ReflectionFunctionAbstract;
 use ReflectionMethod;
 use ReflectionParameter;

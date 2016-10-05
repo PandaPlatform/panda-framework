@@ -11,7 +11,7 @@
 
 namespace Panda\Foundation\Bootstrap;
 
-use Panda\Contracts\Bootstrapper;
+use Panda\Contracts\Bootstrap\Bootstrapper;
 use Panda\Foundation\Application;
 use Panda\Http\Request;
 use Panda\Support\Facades\Facade;

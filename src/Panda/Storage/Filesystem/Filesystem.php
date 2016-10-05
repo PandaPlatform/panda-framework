@@ -218,5 +218,7 @@ class Filesystem implements StorageInterface
     public function setStorageDirectory($directory)
     {
         $this->storageDirectory = $directory;
+
+        return $this;
     }
 }

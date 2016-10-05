@@ -11,7 +11,7 @@
 
 namespace Panda\Session;
 
-use Panda\Contracts\Bootstrapper;
+use Panda\Contracts\Bootstrap\Bootstrapper;
 use Panda\Http\Request;
 
 /**

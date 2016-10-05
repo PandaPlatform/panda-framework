@@ -13,7 +13,7 @@ namespace Panda\Foundation;
 
 use Exception;
 use Panda\Container\Container;
-use Panda\Contracts\Bootstrapper;
+use Panda\Contracts\Bootstrap\Bootstrapper;
 use Panda\Contracts\Configuration\ConfigurationHandler;
 use Panda\Contracts\Http\Kernel as KernelInterface;
 use Panda\Foundation\Http\Kernel;
@@ -64,7 +64,7 @@ class Application extends Container implements Bootstrapper
     }
 
     /**
-     * @return Application
+     * @return Application|Container
      */
     public static function getInstance()
     {
