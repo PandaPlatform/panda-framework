@@ -207,7 +207,7 @@ class UrlHelper
      *
      * @return mixed
      */
-    private function normalize($url)
+    private static function normalize($url)
     {
         return preg_replace('/\/{2,}/', '/', $url);
     }
