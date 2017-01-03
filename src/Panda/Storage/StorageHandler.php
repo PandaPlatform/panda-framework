@@ -74,8 +74,6 @@ class StorageHandler
 
                 return $storageHandler;
         }
-
-        return null;
     }
 
     /**

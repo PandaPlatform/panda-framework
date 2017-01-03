@@ -95,8 +95,6 @@ class RouteCollection
                 return $matchingRoute;
             }
         }
-
-        return null;
     }
 
     /**

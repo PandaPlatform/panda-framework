@@ -285,7 +285,7 @@ class Application extends Container implements Bootstrapper
         try {
             $config = $this->get(ConfigurationHandler::class);
         } catch (Exception $ex) {
-            return null;
+            return;
         }
 
         // Get value
