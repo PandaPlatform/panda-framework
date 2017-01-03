@@ -11,9 +11,6 @@
 
 namespace Panda\Contracts;
 
-use InvalidArgumentException;
-use Panda\Http\Request;
-
 /**
  * Interface Bootstrapper
  *
