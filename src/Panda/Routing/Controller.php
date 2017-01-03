@@ -74,7 +74,7 @@ abstract class Controller
     public function getCurrentRequest()
     {
         if (empty(self::getRouter())) {
-            return null;
+            return;
         }
 
         return self::getRouter()->getCurrentRequest();

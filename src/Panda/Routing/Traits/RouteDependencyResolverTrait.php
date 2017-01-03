@@ -98,8 +98,6 @@ trait RouteDependencyResolverTrait
         if ($class && !$this->alreadyInParameters($class->name, $parameters)) {
             return $this->container->make($class->name);
         }
-
-        return null;
     }
 
     /**
