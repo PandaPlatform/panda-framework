@@ -1,5 +1,6 @@
 # Composer files
 vendor
+composer.lock
 
 # OS Helper files
 .php_cs.cache
