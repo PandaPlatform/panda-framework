@@ -13,10 +13,7 @@ namespace Panda\Helpers;
 
 /**
  * Class ArrayHelper
- *
- * @package Panda\Support\Helpers
- *
- * @version 0.1
+ * @package Panda\Helpers
  */
 class ArrayHelper
 {
