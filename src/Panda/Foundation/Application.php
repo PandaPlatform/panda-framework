@@ -20,11 +20,8 @@ use Panda\Foundation\Http\Kernel;
 use Panda\Http\Request;
 
 /**
- * Panda application manager.
- *
+ * Class Application. Panda application manager.
  * @package Panda\Foundation
- *
- * @version 0.1
  */
 class Application extends Container implements Bootstrapper
 {
@@ -87,8 +84,8 @@ class Application extends Container implements Bootstrapper
 
         // Set container
         $this->set('app', $this);
-        $this->set('Panda\Foundation\Application', $this);
-        $this->set('Panda\Container\Container', $this);
+        $this->set(Application::class, $this);
+        $this->set(Container::class, $this);
 
         return $this;
     }
@@ -110,6 +107,16 @@ class Application extends Container implements Bootstrapper
         $this->set('env', $environment);
 
         return $this;
+    }
+
+    /**
+     * Get the current application environment.
+     *
+     * @return string
+     */
+    public function getEnvironment()
+    {
+        return $this->get('env');
     }
 
     /**
@@ -283,9 +290,10 @@ class Application extends Container implements Bootstrapper
     {
         // Get configuration
         try {
+            /** @var ConfigurationHandler $config */
             $config = $this->get(ConfigurationHandler::class);
         } catch (Exception $ex) {
-            return;
+            return null;
         }
 
         // Get value
