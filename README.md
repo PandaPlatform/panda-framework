@@ -20,10 +20,10 @@ Add the following line to your `composer.json` file:
 
 The package includes the following helpers:
 
-- ArrayHelper
-- EvalHelper
-- StringHelper
-- UrlHelper
+- [ArrayHelper](https://github.com/PandaPlatform/panda-helpers/blob/master/ArrayHelper.php)
+- [EvalHelper](https://github.com/PandaPlatform/panda-helpers/blob/master/EvalHelper.php)
+- [StringHelper](https://github.com/PandaPlatform/panda-helpers/blob/master/StringHelper.php)
+- [UrlHelper](https://github.com/PandaPlatform/panda-helpers/blob/master/UrlHelper.php)
 
 ## Contribution
 
