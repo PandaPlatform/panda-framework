@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Panda framework.
+ * This file is part of the Panda Contracts Package.
  *
  * (c) Ioannis Papikas <papikas.ioan@gmail.com>
  *
@@ -13,9 +13,7 @@ namespace Panda\Contracts\Storage;
 
 /**
  * Interface StorageInterface
- *
  * @package Panda\Contracts\Storage
- * @version 0.1
  */
 interface StorageInterface
 {

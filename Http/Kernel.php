@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Panda framework.
+ * This file is part of the Panda Contracts Package.
  *
  * (c) Ioannis Papikas <papikas.ioan@gmail.com>
  *
@@ -17,10 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Interface Kernel
- *
  * @package Panda\Contracts\Http
- *
- * @version 0.1
  */
 interface Kernel extends Bootstrapper
 {
