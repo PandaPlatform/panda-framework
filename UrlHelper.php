@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Panda Helpers component.
+ * This file is part of the Panda Helpers Package.
  *
  * (c) Ioannis Papikas <papikas.ioan@gmail.com>
  *
