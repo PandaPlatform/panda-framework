@@ -1,4 +1,4 @@
-# Panda Framework Helpers Component
+# Panda Helpers Package
 
 This is a simple and small package that offers a list of helpers to facilitate development of a web application.
 
@@ -6,7 +6,7 @@ This is a simple and small package that offers a list of helpers to facilitate d
 
 ## Installation
 
-This component is part of the [Panda Framework](https://github.com/PandaPlatform/panda-framework) but it's also available as a single package.
+This package is part of the [Panda Framework](https://github.com/PandaPlatform/panda-framework) but it's also available as a single package.
 
 ### Through the composer
 
