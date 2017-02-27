@@ -133,8 +133,8 @@ class UrlHelper
         } else {
             // Check if the url from the given domain
             $pattern = '/.*' . str_replace('.', '\.', $domain) . '$/i';
-            if (preg_match($pattern, $host) == 1) {
-                // Get subdomain
+            if (!empty($domain) && preg_match($pattern, $host) == 1) {
+                // Get sub-domain
                 $sub = str_replace($domain, '', $host);
                 $sub = (empty($sub) ? 'www' : $sub);
                 $sub = trim($sub, '.');
