@@ -58,6 +58,13 @@ class ArrayHelper
         // Recursive call
         $base = $keyParts[0];
         unset($keyParts[0]);
+
+        // Check if the base array exists
+        if (!isset($array[$base])) {
+            return $default;
+        }
+
+        // Get key, base array and continue
         $key = implode('.', $keyParts);
         $array = $array[$base];
 

@@ -11,6 +11,8 @@
 
 namespace Panda\Helpers;
 
+use InvalidArgumentException;
+
 /**
  * Class StringHelper
  * @package Panda\Helpers
@@ -21,26 +23,33 @@ class StringHelper
      * Check if a given string contains a given substring.
      *
      * @param string       $haystack
-     * @param string|array $needles
+     * @param string|array $needle
      *
      * @return bool
+     * @throws InvalidArgumentException
      */
-    public static function contains($haystack, $needles)
+    public static function contains($haystack, $needle)
     {
+        // Check arguments
         if (empty($haystack)) {
-            return false;
+            throw new InvalidArgumentException(__METHOD__ . ': The given haystack cannot be empty.');
+        }
+        if (empty($needle)) {
+            throw new InvalidArgumentException(__METHOD__ . ': The given needle cannot be empty.');
         }
 
-        if (!is_array($needles)) {
-            return mb_strpos($haystack, $needles) !== false;
+        // Needle is string
+        if (!is_array($needle)) {
+            return mb_strpos($haystack, $needle) !== false;
         }
 
-        foreach ((array)$needles as $needle) {
-            if ($needle != '' && mb_strpos($haystack, $needle) !== false) {
-                return true;
+        // Needle is array, check if haystack contains all items
+        foreach ((array)$needle as $str_needle) {
+            if (!empty($str_needle) && mb_strpos($haystack, $str_needle) === false) {
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 }
