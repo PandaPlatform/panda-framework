@@ -16,10 +16,7 @@ use RuntimeException;
 
 /**
  * Class Facade
- *
- * @package Panda\Model
- *
- * @version 0.1
+ * @package Panda\Support\Facades
  */
 abstract class Facade
 {
@@ -41,6 +38,10 @@ abstract class Facade
      * Get the root object behind the facade.
      *
      * @return mixed
+     * @throws RuntimeException
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     * @throws \InvalidArgumentException
      */
     public static function getFacadeRoot()
     {
@@ -65,6 +66,9 @@ abstract class Facade
      * @param string|object $name
      *
      * @return mixed
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     * @throws \InvalidArgumentException
      */
     protected static function resolveFacadeInstance($name)
     {
@@ -100,9 +104,11 @@ abstract class Facade
      * @param string $method
      * @param array  $args
      *
-     * @throws RuntimeException
-     *
      * @return mixed
+     * @throws RuntimeException
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     * @throws \InvalidArgumentException
      */
     public static function __callStatic($method, $args)
     {

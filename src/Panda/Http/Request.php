@@ -17,10 +17,8 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 /**
- * Http Request Handler.
- *
+ * Class Request
  * @package Panda\Http
- * @version 0.1
  */
 class Request extends SymfonyRequest
 {
@@ -74,6 +72,7 @@ class Request extends SymfonyRequest
      * Get the input source for the request.
      *
      * @return ParameterBag
+     * @throws \LogicException
      */
     protected function getInputSource()
     {
@@ -90,7 +89,8 @@ class Request extends SymfonyRequest
      * @param string            $key
      * @param string|array|null $default
      *
-     * @return string|array
+     * @return array|string
+     * @throws \LogicException
      */
     public function getInputValue($key = null, $default = null)
     {
@@ -169,6 +169,7 @@ class Request extends SymfonyRequest
      * @param mixed  $default
      *
      * @return mixed
+     * @throws \LogicException
      */
     public function getPayloadJSON($key = null, $default = null)
     {

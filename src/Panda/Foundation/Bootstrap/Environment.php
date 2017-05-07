@@ -20,11 +20,7 @@ use Panda\Session\Session;
 
 /**
  * Class Environment
- * Bootstrap the application environment including session, datetimer, debugger etc.
- *
  * @package Panda\Foundation\Bootstrap
- *
- * @version 0.1
  */
 class Environment implements Bootstrapper
 {
@@ -47,6 +43,10 @@ class Environment implements Bootstrapper
      * Run the initializer.
      *
      * @param Request $request
+     *
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     * @throws \InvalidArgumentException
      */
     public function boot($request)
     {

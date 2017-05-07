@@ -16,10 +16,7 @@ use Panda\Routing\Traits\RouteDependencyResolverTrait;
 
 /**
  * Class ControllerDispatcher
- *
  * @package Panda\Routing
- *
- * @version 0.1
  */
 class ControllerDispatcher
 {
@@ -73,6 +70,6 @@ class ControllerDispatcher
     protected static function methodExcludedByOptions($method, array $options)
     {
         return (isset($options['only']) && !in_array($method, (array)$options['only'])) ||
-        (!empty($options['except']) && in_array($method, (array)$options['except']));
+            (!empty($options['except']) && in_array($method, (array)$options['except']));
     }
 }

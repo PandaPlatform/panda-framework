@@ -20,10 +20,7 @@ use Panda\Localization\Locale;
 
 /**
  * Class Localization
- *
  * @package Panda\Foundation\Bootstrap
- *
- * @version 0.1
  */
 class Localization implements Bootstrapper
 {
@@ -53,6 +50,10 @@ class Localization implements Bootstrapper
      * Boot the bootstrapper.
      *
      * @param Request $request
+     *
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     * @throws \InvalidArgumentException
      */
     public function boot($request)
     {

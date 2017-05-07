@@ -18,10 +18,7 @@ use Panda\Support\Facades\Facade;
 
 /**
  * Class FacadeRegistry
- *
  * @package Panda\Foundation\Bootstrap
- *
- * @version 0.1
  */
 class FacadeRegistry implements Bootstrapper
 {

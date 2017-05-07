@@ -15,10 +15,7 @@ use Panda\Views\Viewer;
 
 /**
  * Class View
- *
  * @package Panda\Support\Facades
- *
- * @version 0.1
  */
 class View extends Facade
 {

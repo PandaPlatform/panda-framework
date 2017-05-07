@@ -17,9 +17,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class RouteCollection
- *
  * @package Panda\Routing
- * @version 0.1
  */
 class RouteCollection
 {
@@ -54,9 +52,9 @@ class RouteCollection
      *
      * @param Request $request
      *
-     * @throws NotFoundHttpException
-     *
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \UnexpectedValueException
      */
     public function match(Request $request)
     {

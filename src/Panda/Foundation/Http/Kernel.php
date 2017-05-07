@@ -27,11 +27,8 @@ use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 /**
- * Panda kernel
- *
+ * Class Kernel
  * @package Panda\Foundation\Http
- *
- * @version 0.1
  */
 class Kernel implements KernelInterface
 {
@@ -99,6 +96,7 @@ class Kernel implements KernelInterface
      * @param Request|SymfonyRequest $request
      *
      * @return Response
+     * @throws InvalidArgumentException
      */
     public function handle(SymfonyRequest $request)
     {

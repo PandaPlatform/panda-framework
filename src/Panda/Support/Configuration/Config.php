@@ -16,10 +16,7 @@ use Panda\Helpers\ArrayHelper;
 
 /**
  * Class Config
- *
  * @package Panda\Support\Configuration
- *
- * @version 0.1
  */
 class Config implements ConfigurationHandler
 {

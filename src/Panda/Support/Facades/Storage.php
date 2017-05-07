@@ -15,10 +15,7 @@ use Panda\Storage\StorageHandler;
 
 /**
  * Class Storage
- *
  * @package Panda\Support\Facades
- *
- * @version 0.1
  */
 class Storage extends Facade
 {

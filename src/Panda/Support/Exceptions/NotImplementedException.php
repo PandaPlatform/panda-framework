@@ -15,9 +15,7 @@ use Exception;
 
 /**
  * Class NotImplementedException
- *
  * @package Panda\Support\Exceptions
- * @version 0.1
  */
 class NotImplementedException extends Exception
 {

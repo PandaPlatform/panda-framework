@@ -24,12 +24,8 @@ use Panda\Storage\StorageHandler;
 use Psr\Log\LoggerInterface;
 
 /**
- * Class Configuration
- * Initializes configuration variables.
- *
+ * Class Logging
  * @package Panda\Foundation\Bootstrap
- *
- * @version 0.1
  */
 class Logging implements Bootstrapper
 {
@@ -66,6 +62,8 @@ class Logging implements Bootstrapper
      * Boot the bootstrapper.
      *
      * @param Request $request
+     *
+     * @throws \InvalidArgumentException
      */
     public function boot($request)
     {

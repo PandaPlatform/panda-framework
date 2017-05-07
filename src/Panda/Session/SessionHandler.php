@@ -12,10 +12,8 @@
 namespace Panda\Session;
 
 /**
- * File SessionHandler
- *
+ * Class SessionHandler
  * @package Panda\Session
- * @version 0.1
  */
 class SessionHandler
 {

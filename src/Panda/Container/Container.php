@@ -16,12 +16,11 @@ use DI\ContainerBuilder;
 use DI\Definition\Helper\DefinitionHelper;
 use DI\Definition\Helper\ObjectDefinitionHelper;
 use DI\NotFoundException;
+use InvalidArgumentException;
 
 /**
- * Application foundation manager.
- *
+ * Class Container
  * @package Panda\Container
- * @version 0.1
  */
 class Container extends ContainerBuilder
 {
@@ -79,7 +78,9 @@ class Container extends ContainerBuilder
      * @param string $name Entry name or a class name.
      *
      * @return mixed
+     * @throws InvalidArgumentException
      * @throws NotFoundException
+     * @throws \DI\DependencyException
      */
     public function get($name)
     {
@@ -92,9 +93,10 @@ class Container extends ContainerBuilder
      * @param string $name
      * @param array  $parameters
      *
-     * @throws NotFoundException
-     *
      * @return mixed
+     * @throws InvalidArgumentException
+     * @throws NotFoundException
+     * @throws \DI\DependencyException
      */
     public function make($name, $parameters = [])
     {
@@ -107,6 +109,7 @@ class Container extends ContainerBuilder
      * @param string $name
      *
      * @return bool
+     * @throws InvalidArgumentException
      */
     public function has($name)
     {

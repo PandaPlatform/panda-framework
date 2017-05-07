@@ -15,11 +15,8 @@ use Panda\Contracts\Bootstrap\Bootstrapper;
 use Panda\Http\Request;
 
 /**
- * Session Manager. Handles all session storage processes.
- *
+ * Class Session
  * @package Panda\Session
- *
- * @version 0.1
  */
 class Session implements Bootstrapper
 {

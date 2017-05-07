@@ -19,11 +19,8 @@ use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 /**
- * Application router.
- * Initiates all routers from the route folder.
- *
+ * Class Router
  * @package Panda\Routing
- * @version 0.1
  */
 class Router
 {
@@ -265,6 +262,12 @@ class Router
      * @param Request $request
      *
      * @return Response
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \UnexpectedValueException
      */
     public function dispatch(Request $request)
     {
@@ -281,6 +284,12 @@ class Router
      * @param Request $request
      *
      * @return mixed
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \UnexpectedValueException
      */
     public function dispatchToRoute(Request $request)
     {
@@ -317,6 +326,10 @@ class Router
      * @param Request $request
      *
      * @return mixed
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
      */
     protected function runRoute(Route $route, Request $request)
     {
@@ -330,6 +343,8 @@ class Router
      * @param Request $request
      *
      * @return Route
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \UnexpectedValueException
      */
     protected function getMatchingRoute($request)
     {

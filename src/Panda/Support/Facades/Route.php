@@ -15,10 +15,7 @@ use Panda\Routing\Router;
 
 /**
  * Class Route
- *
  * @package Panda\Support\Facades
- *
- * @version 0.1
  */
 class Route extends Facade
 {

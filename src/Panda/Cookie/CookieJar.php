@@ -13,10 +13,7 @@ namespace Panda\Cookie;
 
 /**
  * Class CookieJar
- * Creates, edits and deletes cookies.
- *
  * @package Panda\Cookie
- * @version 0.1
  */
 class CookieJar
 {

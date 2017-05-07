@@ -17,11 +17,8 @@ use ReflectionMethod;
 use ReflectionParameter;
 
 /**
- * Class RouteDependencyResolverTrait
- *
+ * Trait RouteDependencyResolverTrait
  * @package Panda\Routing\Traits
- *
- * @version 0.1
  */
 trait RouteDependencyResolverTrait
 {

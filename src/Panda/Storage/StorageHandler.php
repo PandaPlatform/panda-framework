@@ -18,11 +18,8 @@ use Panda\Storage\Filesystem\Filesystem;
 use RuntimeException;
 
 /**
- * Class Storage
- *
+ * Class StorageHandler
  * @package Panda\Storage
- *
- * @version 0.1
  */
 class StorageHandler
 {
@@ -59,6 +56,9 @@ class StorageHandler
      * @param string $name
      *
      * @return StorageInterface
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     * @throws \InvalidArgumentException
      */
     public function disk($name = '')
     {
@@ -100,9 +100,11 @@ class StorageHandler
      * @param string $method
      * @param array  $args
      *
-     * @throws RuntimeException
-     *
      * @return mixed
+     * @throws RuntimeException
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     * @throws \InvalidArgumentException
      */
     public function __call($method, $args)
     {

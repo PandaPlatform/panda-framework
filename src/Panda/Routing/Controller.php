@@ -19,10 +19,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class Controller
- *
  * @package Panda\Routing
- *
- * @version 0.1
  */
 abstract class Controller
 {
@@ -74,7 +71,7 @@ abstract class Controller
     public function getCurrentRequest()
     {
         if (empty(self::getRouter())) {
-            return;
+            return null;
         }
 
         return self::getRouter()->getCurrentRequest();

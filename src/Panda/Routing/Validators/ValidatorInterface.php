@@ -16,10 +16,7 @@ use Panda\Routing\Route;
 
 /**
  * Interface ValidatorInterface
- *
  * @package Panda\Routing\Validators
- *
- * @version 0.1
  */
 interface ValidatorInterface
 {

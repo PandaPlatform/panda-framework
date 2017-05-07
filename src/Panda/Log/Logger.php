@@ -15,11 +15,8 @@ use Monolog\Logger as MonoLogger;
 use Psr\Log\LoggerInterface;
 
 /**
- * Panda Logger interface
- *
+ * Class Logger
  * @package Panda\Log
- *
- * @version 0.1
  */
 class Logger extends MonoLogger implements LoggerInterface
 {

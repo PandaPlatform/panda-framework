@@ -20,7 +20,7 @@ use Panda\Foundation\Http\Kernel;
 use Panda\Http\Request;
 
 /**
- * Class Application. Panda application manager.
+ * Class Application
  * @package Panda\Foundation
  */
 class Application extends Container implements Bootstrapper
@@ -113,6 +113,9 @@ class Application extends Container implements Bootstrapper
      * Get the current application environment.
      *
      * @return string
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     * @throws \InvalidArgumentException
      */
     public function getEnvironment()
     {
@@ -133,6 +136,10 @@ class Application extends Container implements Bootstrapper
      *
      * @param Request $request
      * @param array   $bootstrappers
+     *
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     * @throws \InvalidArgumentException
      */
     public function boot($request, $bootstrappers = [])
     {

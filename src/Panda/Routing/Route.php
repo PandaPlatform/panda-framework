@@ -31,10 +31,7 @@ use UnexpectedValueException;
 
 /**
  * Class Route
- *
  * @package Panda\Routing
- *
- * @version 0.1
  */
 class Route
 {
@@ -102,6 +99,8 @@ class Route
      * @param array         $methods An array of all the methods that this route should listen to.
      * @param string        $uri     The uri to match for this route to execute the callback.
      * @param Closure|array $action  A callback function to be executed when this route is matched by the request.
+     *
+     * @throws UnexpectedValueException
      */
     public function __construct($methods, $uri, $action)
     {
@@ -146,6 +145,7 @@ class Route
      * @param Request $request
      *
      * @return $this
+     * @throws UnexpectedValueException
      */
     public function bind(Request $request)
     {
@@ -161,6 +161,7 @@ class Route
      * @param Request $request
      *
      * @return array
+     * @throws UnexpectedValueException
      */
     public function bindParameters(Request $request)
     {
@@ -203,6 +204,7 @@ class Route
      * @param array   $parameters
      *
      * @return array
+     * @throws UnexpectedValueException
      */
     protected function bindHostParameters(Request $request, $parameters)
     {
@@ -303,6 +305,7 @@ class Route
      * @param mixed  $value
      *
      * @return void
+     * @throws LogicException
      */
     public function setParameter($name, $value)
     {
@@ -331,6 +334,7 @@ class Route
      * Get the key / value list of parameters without null values.
      *
      * @return array
+     * @throws LogicException
      */
     public function getParametersWithoutNulls()
     {
@@ -398,6 +402,10 @@ class Route
      * @param Request $request
      *
      * @return mixed
+     * @throws LogicException
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     * @throws \InvalidArgumentException
      */
     public function run(Request $request)
     {
@@ -430,6 +438,7 @@ class Route
      * Run the route action as callable and return the response.
      *
      * @return mixed
+     * @throws LogicException
      */
     protected function runCallable()
     {
@@ -446,8 +455,9 @@ class Route
      * Run the route action and return the response.
      *
      * @return mixed
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     * @throws \InvalidArgumentException
      */
     protected function runController()
     {
@@ -460,6 +470,9 @@ class Route
      * Get the controller instance for the route.
      *
      * @return mixed
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
+     * @throws \InvalidArgumentException
      */
     protected function getController()
     {

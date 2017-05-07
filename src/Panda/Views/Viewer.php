@@ -17,11 +17,7 @@ use Panda\Http\Request;
 
 /**
  * Class Viewer
- * Manages application views and renders their content
- *
  * @package Panda\Views
- *
- * @version 0.1
  */
 class Viewer
 {
@@ -89,6 +85,7 @@ class Viewer
      * Render the view output.
      *
      * @return $this
+     * @throws InvalidArgumentException
      */
     public function render()
     {
@@ -123,6 +120,7 @@ class Viewer
      * Get the view output instead of sending it to buffer.
      *
      * @return mixed
+     * @throws InvalidArgumentException
      */
     public function getOutput()
     {

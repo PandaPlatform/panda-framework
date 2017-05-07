@@ -20,11 +20,7 @@ use Panda\Support\Configuration\Config;
 
 /**
  * Class Configuration
- * Initializes configuration variables.
- *
  * @package Panda\Foundation\Bootstrap
- *
- * @version 0.1
  */
 class Configuration implements Bootstrapper
 {

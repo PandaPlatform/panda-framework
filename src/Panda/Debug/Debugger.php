@@ -19,10 +19,7 @@ use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 /**
  * Class Debugger
- *
  * @package Panda\Debug
- *
- * @version 0.1
  */
 class Debugger implements Bootstrapper
 {
@@ -47,6 +44,8 @@ class Debugger implements Bootstrapper
      * @param Request $request
      *
      * @throws InvalidArgumentException
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
     public function boot($request)
     {

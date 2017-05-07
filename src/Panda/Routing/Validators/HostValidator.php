@@ -16,10 +16,7 @@ use Panda\Routing\Route;
 
 /**
  * Class HostValidator
- *
  * @package Panda\Routing\Validators
- *
- * @version 0.1
  */
 class HostValidator implements ValidatorInterface
 {
@@ -30,6 +27,7 @@ class HostValidator implements ValidatorInterface
      * @param Request $request
      *
      * @return bool
+     * @throws \UnexpectedValueException
      */
     public function matches(Route $route, Request $request)
     {

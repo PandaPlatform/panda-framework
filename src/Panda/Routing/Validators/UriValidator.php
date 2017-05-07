@@ -16,10 +16,7 @@ use Panda\Routing\Route;
 
 /**
  * Class UriValidator
- *
  * @package Panda\Routing\Validators
- *
- * @version 0.1
  */
 class UriValidator implements ValidatorInterface
 {

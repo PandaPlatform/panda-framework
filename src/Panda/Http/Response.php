@@ -14,10 +14,8 @@ namespace Panda\Http;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 /**
- * Http Response Handler.
- *
+ * Class Response
  * @package Panda\Http
- * @version 0.1
  */
 class Response extends SymfonyResponse
 {
@@ -28,6 +26,7 @@ class Response extends SymfonyResponse
      * @param int    $status
      *
      * @return $this
+     * @throws \InvalidArgumentException
      */
     public function redirect($url = '', $status = 302)
     {
