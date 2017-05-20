@@ -84,7 +84,7 @@ class Application extends Container implements Bootstrapper
 
         // Set container
         $this->set('app', $this);
-        $this->set(Application::class, $this);
+        $this->set(self::class, $this);
         $this->set(Container::class, $this);
 
         return $this;
@@ -289,7 +289,7 @@ class Application extends Container implements Bootstrapper
      *
      * @param string $name
      *
-     * @return mixed
+     * @return mixed|null
      *
      * @deprecated Use ConfigurationHandler directly.
      */
@@ -299,11 +299,12 @@ class Application extends Container implements Bootstrapper
         try {
             /** @var ConfigurationHandler $config */
             $config = $this->get(ConfigurationHandler::class);
+
+            // Get value
+            return $config->get($name);
         } catch (Exception $ex) {
-            return null;
         }
 
-        // Get value
-        return $config->get($name);
+        return null;
     }
 }

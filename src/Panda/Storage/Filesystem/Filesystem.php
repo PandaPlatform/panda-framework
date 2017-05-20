@@ -172,6 +172,7 @@ class Filesystem implements StorageInterface
      * @param string $contents The contents to be prepended.
      *
      * @return mixed The number of bytes that were written to the file, or False on failure.
+     *
      * @throws FileNotFoundException
      */
     public function prepend($path, $contents)
