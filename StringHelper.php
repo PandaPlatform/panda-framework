@@ -11,8 +11,6 @@
 
 namespace Panda\Helpers;
 
-use InvalidArgumentException;
-
 /**
  * Class StringHelper
  * @package Panda\Helpers
@@ -26,16 +24,12 @@ class StringHelper
      * @param string|array $needle
      *
      * @return bool
-     * @throws InvalidArgumentException
      */
     public static function contains($haystack, $needle)
     {
         // Check arguments
-        if (empty($haystack)) {
-            throw new InvalidArgumentException(__METHOD__ . ': The given haystack cannot be empty.');
-        }
-        if (empty($needle)) {
-            throw new InvalidArgumentException(__METHOD__ . ': The given needle cannot be empty.');
+        if (empty($haystack) || empty($needle)) {
+            return false;
         }
 
         // Needle is string
