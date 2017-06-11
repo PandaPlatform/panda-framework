@@ -9,11 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Panda\Helpers;
+namespace Panda\Support\Helpers;
 
 /**
  * Class ArrayHelper
- * @package Panda\Helpers
+ * @package Panda\Support\Helpers
  */
 class ArrayHelper
 {

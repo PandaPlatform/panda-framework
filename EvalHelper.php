@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Panda\Helpers;
+namespace Panda\Support\Helpers;
 
 use Closure;
 
 /**
  * Class EvalHelper
- * @package Panda\Helpers
+ * @package Panda\Support\Helpers
  */
 class EvalHelper
 {
